@@ -225,6 +225,51 @@ paraphrased, nothing quoted, no executed outputs reproduced).
 | `~/Projects/personal/investing/databasemanager.py` | snippet | `07-sql-and-databases/python-and-databases.md` (pymysql context-managed connections, parameterized queries) |
 | `~/Projects/friends-family/family-hist-app` (Laravel migrations) | examined-not-used | schema-as-code paradigm not needed once Pokemon ERD covered schema design |
 
+## Chapter 11 — Python Programming (CSE 111, BYU-Idaho + STAT 624, TAMU)
+
+Inventory: `.superpowers/sdd/ch11-inventory.md` · Report: `.superpowers/sdd/ch11-report.md`
+
+Fundamentals chapter (index + 9 topic pages + 1 notebook). Code snippets are my own CSE 111
+assignment programs; STAT 624 Week 1/9/10 lecture material is instructor-copyrighted (© 2023
+Scott A. Bruce, do-not-distribute) and only `summarized`. Files carrying the BYU-Idaho 2020
+starter-code header, and fixtures holding real names, are `examined-not-used` and never quoted.
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/11-python-programming/index.md` (existing thin scaffold) | examined-not-used | superseded by the new `11-python-programming/index.md` |
+| `course-files/11-python-programming/Week9_python_datastructures.ipynb` (© 2023 Scott A. Bruce, do-not-distribute) | summarized | `11-python-programming/data-structures.md`, `file-io.md` (concepts only) |
+| `course-files/11-python-programming/Week10_Function.ipynb` (© 2023 Scott A. Bruce, do-not-distribute) | summarized | `11-python-programming/functions.md`, `error-handling.md`, `modules-and-packaging.md` (concepts only) |
+| `course-files/11-python-programming/Week10_classes.ipynb` (© 2023 Scott A. Bruce, do-not-distribute) | summarized | `11-python-programming/classes-and-oop.md` (concepts only) |
+| `course-files/11-python-programming/Week10_classesInheritance.ipynb` (© 2023 Scott A. Bruce, do-not-distribute) | summarized | `11-python-programming/inheritance.md` (concepts only, no exercise text) |
+| `course-files/11-python-programming/Week1_Git.pdf` (STAT 624 Week 1; classmate repo URL scrubbed) | summarized | `11-python-programming/git-basics.md` (concepts paraphrased, no slide text) |
+| `course-files/11-python-programming/git-cheat-sheet-education.pdf` (GitHub Education, third-party copyright) | cited-only | `11-python-programming/git-basics.md` (command list informed; no layout/text reproduced) |
+| `.../python_assignments/dictionaries/dictionaries_periodic_table.py` (my own) | snippet, promoted-notebook | `11-python-programming/data-structures.md`; `notebooks/chemical-formula-parser.ipynb` |
+| `.../python_assignments/classes/classes_custom_exception.py` (my own; `FormulaError` + `parse_formula`) | snippet, promoted-notebook | `11-python-programming/classes-and-oop.md`, `error-handling.md`; `notebooks/chemical-formula-parser.ipynb` |
+| `.../python_assignments/functions/functions_physics_formulas.py` (my own) | snippet | `11-python-programming/functions.md`, `testing-with-pytest.md` |
+| `.../python_assignments/functions/pass_by_value_vs_reference.py` (my own) | snippet | `11-python-programming/functions.md` |
+| `.../python_assignments/loops/for_loop_compound_interest.py` (my own) | snippet | `11-python-programming/functions.md` |
+| `.../python_assignments/lists/lists_sorting_lambda.py` (my own; original roster fixture not shown) | snippet | `11-python-programming/data-structures.md` |
+| `.../python_assignments/error_handling/try_except_multiple.py` (my own) | snippet | `11-python-programming/error-handling.md` |
+| `.../python_assignments/error_handling/try_except_receipt.py` (my own) | snippet | `11-python-programming/error-handling.md`, `file-io.md` |
+| `.../python_assignments/error_handling/accidents.csv` (public aggregate NHTSA data) | cited-only | `11-python-programming/error-handling.md` |
+| `.../python_assignments/file_io/file_write_tire_log.py` (my own) | snippet | `11-python-programming/file-io.md` |
+| `.../python_assignments/file_io/products.csv`, `request.csv` (invented grocery fixtures) | cited-only | `11-python-programming/file-io.md`, `error-handling.md` |
+| `.../python_assignments/modules/math_module_tire_calc.py` (my own) | snippet | `11-python-programming/modules-and-packaging.md` |
+| `.../python_assignments/gui/gui_tkinter_basics.py` (my own UI wiring) | summarized | `11-python-programming/classes-and-oop.md` (tkinter aside; fresh minimal snippet written instead) |
+| `.../python_assignments/data_science/ml_random_forest.py` (my own) | summarized | `11-python-programming/functions.md`, `testing-with-pytest.md` (refactor-into-functions story) |
+| `.../python_assignments/data_science/explination.txt` (my own write-up) | summarized | `11-python-programming/functions.md`, `testing-with-pytest.md` |
+| `.../python_assignments/reflection.txt` (my own reflection) | summarized | `11-python-programming/testing-with-pytest.md` (paraphrased pull-quote), `functions.md` |
+| `.../python_assignments/file_io/students.csv` + `.../testing/pytest_csv_students.py` | examined-not-used | privacy (real student names + I-Numbers) |
+| `.../python_assignments/lists/pupils.csv` | examined-not-used | privacy (minors' name + DOB) |
+| `.../python_assignments/testing/pytest_string_functions.py` | examined-not-used | privacy (real family name literal) |
+| `.../python_assignments/testing/pytest_*.py` (remaining 7: molar-mass, periodic-table, products, random-lists, approx-floats, address, esteem) | examined-not-used | broken-imports (no runnable sibling module; 5 carry BYU-Idaho header) — pattern documented in `testing-with-pytest.md` |
+| `.../python_assignments/classes/classes_inheritance.py` (tkinter widget module, BYU-Idaho header) | examined-not-used | starter-code (not quoted) |
+| `.../python_assignments/gui/gui_tkinter_events.py` (BYU-Idaho header) | examined-not-used | starter-code |
+| `.../python_assignments/functions/functions_string_methods.py`, `functions_string_slicing.py` (BYU-Idaho header) | examined-not-used | starter-code |
+| `.../python_assignments/data_science/test.ipynb`, `nba_games.csv` (12.6 MB), `proposal.txt` | examined-not-used | over-budget (CSV) / notebook not re-executed; proposal is context only |
+| `.../python_assignments/file_io/csv_dict_lookup.py`, `csv_dict_for_loop.py` | examined-not-used | pattern reproduced from `try_except_receipt.py` instead (lookup version reads `students.csv`) |
+| `.../python_assignments/conditionals/`, `functions/functions_bmi_calculator.py`, `functions_if_else_survey.py`, `lists/lists_append_random.py`, `lists_random_choice.py`, `reference/python_cheat_sheet.py` | examined-not-used | own code, redundant with the snippets already chosen |
+
 ## Appendix
 
 The appendix pages (`docs/appendix/full-textbooks.md`, `misc-homework.md`,
