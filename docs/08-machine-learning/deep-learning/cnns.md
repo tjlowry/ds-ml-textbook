@@ -13,6 +13,11 @@ centerpiece model against classical baselines.
 
 ## How I did it
 
+!!! note "Full case study"
+    This section summarizes the CNN track; the complete write-up of the project — all three
+    approaches, the EDA, the accuracy figure, and the honest lessons — lives on the
+    [CIFAR-100 case-study page](../case-study-cifar100.md).
+
 Our group project on CIFAR-100 (100 classes, 32×32 color images) built up through three
 increasingly capable approaches, which is a nice illustration of *why* CNNs win on images:
 

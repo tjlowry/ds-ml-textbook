@@ -164,6 +164,7 @@ nav:
       - Recommender Systems: 08-machine-learning/other/recommenders.md
       - PageRank & Graph Methods: 08-machine-learning/other/pagerank.md
       - Frequent Itemset Mining: 08-machine-learning/other/itemset-mining.md
+    - "Case Study: CIFAR-100": 08-machine-learning/case-study-cifar100.md
     - Notebooks:
       - Mini-GPT From Scratch: 08-machine-learning/notebooks/mini-gpt-from-scratch.ipynb
       - MLP Fundamentals: 08-machine-learning/notebooks/mlp-fundamentals.ipynb

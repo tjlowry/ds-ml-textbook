@@ -85,6 +85,11 @@ the ECEN 758 lecture instead of pretending I have an implementation.
 - [PageRank & Graph Methods](other/pagerank.md)
 - [Frequent Itemset Mining](other/itemset-mining.md)
 
+### Case Study
+
+- [CIFAR-100 Image Classification](case-study-cifar100.md) — Random Forest vs custom CNN vs
+  CLIP transfer learning on 100 classes, and an honest lesson about finishing the write-up.
+
 ## Key Takeaways
 
 - **Know which half you're in.** Supervised (labels) vs unsupervised (structure) changes

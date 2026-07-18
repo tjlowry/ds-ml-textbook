@@ -40,6 +40,11 @@ that the [CNN](../deep-learning/cnns.md) then more than doubled.
 Source: our ECEN 758 CIFAR-100 group project report
 (`course-files/appendix/Homework/ecen758_hw/group_project/CNN_draft2.pdf`)
 
+!!! note "Full case study"
+    This forest was one of three approaches we compared on CIFAR-100. The whole
+    story — EDA, the CNN that beat it, and the honest lessons — is on the
+    [CIFAR-100 case-study page](../case-study-cifar100.md).
+
 ## Gotchas
 
 - **Forests fix variance, not bias.** Averaging trees tames overfitting, but if every tree
