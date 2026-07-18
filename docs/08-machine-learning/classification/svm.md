@@ -27,8 +27,9 @@ solutions.*
 sepal width — and fit a linear-kernel SVM (scikit-learn defaults, `random_state=0`). Write
 down the equation of the separating hyperplane for each class.
 
-**How I solved it.** With three classes, scikit-learn fits the SVM one-vs-rest: one linear
-boundary per class, each of the form
+**How I solved it.** With three classes the assignment reports one linear boundary per
+class — the one-vs-rest decomposition (what `LinearSVC` fits; see the multi-class gotcha
+below). Each boundary has the form
 
 $$w_1 x_1 + w_2 x_2 + w_0 = 0,$$
 
@@ -90,9 +91,12 @@ space, which is a curved boundary back in the original two features.
   misclassification; the RBF `gamma` sets how local each support vector's influence is.
   Both need cross-validation — and note that `gamma="scale"` (used above) reads `gamma` off
   the data variance, which is a reasonable default but still worth tuning.
-- **One boundary per class in multi-class.** The three hyperplanes above come from
-  scikit-learn's one-vs-rest wrapper; SVM is binary at heart, and the reported `coef_` is a
-  row per class, not a single global boundary.
+- **Know which multi-class scheme your estimator actually uses.** SVM is binary at heart.
+  `LinearSVC` fits one-vs-rest — `coef_` is a row per class, like the table above. But the
+  kernel `SVC` trains one-vs-one under the hood: for 3 classes its `coef_` also happens to
+  have 3 rows, yet they're the *pairwise* boundaries (setosa-vs-versicolor, ...), not
+  per-class ones — and `decision_function_shape="ovr"` only reshapes the scores, it doesn't
+  change the fit. Easy to misread one as the other since the row counts coincide at 3 classes.
 - **Doesn't scale to huge datasets.** Kernel SVMs are roughly quadratic in sample count,
   which is why gradient-boosted trees and neural nets took over most large-scale tabular
   and image tasks.

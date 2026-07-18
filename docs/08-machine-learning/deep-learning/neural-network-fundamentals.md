@@ -77,7 +77,7 @@ derivative enters the gradient — $\partial J / \partial w_j = e \cdot (-1)\cdo
 $$w_1 \to 2.00064, \qquad w_2 \to -0.99968, \qquad b \to 1.00032.$$
 
 The lesson is in the contrast: the perceptron rule moved $w_1$ by $0.036$, but backprop moved
-it by only $0.00064$ — about 50× smaller — on the *same* neuron and the *same* learning rate.
+it by only $0.00064$ — about 56× smaller — on the *same* neuron and the *same* learning rate.
 The difference is the factor $\sigma(\text{net})(1 - \sigma(\text{net})) \approx 0.982 \times 0.018 \approx 0.0177$:
 a saturated sigmoid has a tiny slope, so the gradient signal through it is tiny. That is
 **vanishing-gradient in miniature** — the concrete reason ReLU and careful initialization
