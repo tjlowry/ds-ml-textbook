@@ -19,11 +19,13 @@ Homework assignments and projects from various courses.
 - Assignment 1 — Local: `course-files/appendix/Homework/ecen758_hw/HW 1/Assignment_1_ECEN_758.pdf` | Solution — Local: `course-files/appendix/Homework/ecen758_hw/HW 1/HW1_Lowry.pdf`
 - Assignment 2 — Local: `course-files/appendix/Homework/ecen758_hw/HW 2/Assignment_2_ECEN_758-2.pdf` | Solution — Local: `course-files/appendix/Homework/ecen758_hw/HW 2/HW 2.pdf`
 - Assignment 3 — Local: `course-files/appendix/Homework/ecen758_hw/Assignment_3_ECEN_758.pdf` | Solution — Local: `course-files/appendix/Homework/ecen758_hw/Hw_3/assignment3_tlowry.pdf`
+- Assignment 4 Solutions — Local: `course-files/appendix/Homework/ecen758_hw/Assignment_4_ECEN_758_Solutions.pdf`
 
 ### Exam Materials
 
 - Midterm Review — Local: `course-files/appendix/Homework/ecen758_hw/Midterm review.pdf`
 - Midterm Cheat Sheet — Local: `course-files/appendix/Homework/ecen758_hw/Midterm review cheat sheet.pdf`
+- Final Review — Local: `course-files/appendix/Homework/ecen758_hw/ECEN758 Final review.pdf`
 
 ### Group Project
 
