@@ -179,6 +179,21 @@ nav:
       - Senior Project Pipeline: 09-time-series-forecasting/notebooks/senior-project-pipeline.ipynb
       - Distribution Feature Engineering Demo: 09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb
 
+  - Scientific ML:
+    - Overview: 12-scientific-ml/index.md
+    - Foundations:
+      - Discretization & Autodiff: 12-scientific-ml/discretization-and-autodiff.md
+      - How PINNs Work: 12-scientific-ml/pinns.md
+      - Self-Adaptive PINNs: 12-scientific-ml/sa-pinns.md
+    - Final Project:
+      - The Optimizer Study: 12-scientific-ml/optimizer-study.md
+      - Results & Lessons: 12-scientific-ml/results-and-lessons.md
+    - Notebooks:
+      - PINN Burgers From Scratch: 12-scientific-ml/notebooks/pinn-burgers-demo.ipynb
+      - SA-PINN Optimizer Results: 12-scientific-ml/notebooks/sa-pinn-optimizer-results.ipynb
+
+  - Sources: sources.md
+
   - Appendix:
     - Full Textbooks: appendix/full-textbooks.md
     - Course Homework: appendix/misc-homework.md
