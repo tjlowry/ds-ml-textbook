@@ -49,9 +49,8 @@ AUC is the better model-comparison metric.
 
 > **A caveat on near-perfect AUC.** An AUC this high partly reflects an easy problem: "top-quartile
 > weight" is nearly a deterministic function of the size features the model gets to see, so the
-> classes are almost linearly separable. On messier real problems (my
-> [demand-forecasting](../09-time-series-forecasting/index.md) classifications of demand *patterns*,
-> for instance) AUC lands far lower, and the shape of the curve — not just the area — is where the
+> classes are almost linearly separable. On messier real problems the signal is nowhere near that
+> clean — AUC lands far lower, and the shape of the curve — not just the area — is where the
 > tradeoffs live.
 
 ## Reading the curve, not just the number

@@ -29,13 +29,15 @@ df["roll_mean_7"] = df["demand"].rolling(7).mean()
 df["roll_mean_7"] = df["demand"].shift(1).rolling(7).mean()
 ```
 
-![Leakage-safe vs leaky rolling features over a train/test timeline](img/leakage-timeline.png)
+![Leakage-safe vs leaky rolling windows: the safe feature at week 8 uses weeks 5–7; the leaky
+unshifted window covers weeks 6–8 and includes week 8 itself, the target](img/leakage-timeline.png)
 
-The top track is safe: the feature at week 8 is built from weeks 5–7, all strictly in its past.
-The bottom track leaks: a centered/unshifted window at week 8 pulls in weeks 7–9, so it "sees" week
-9 — future information relative to the prediction. Train a model on the leaky features and the test
-score looks fantastic; deploy it and the future columns are `NaN`, because the future hasn't
-happened yet.
+The top track is safe: the feature at week 8 is built from weeks 5–7 (a 3-week window in the
+figure for legibility), all strictly in its past. The bottom track leaks: the unshifted window at
+week 8 covers weeks 6–8 — it includes week 8 itself, the very value the model is being trained to
+predict. Train on that and the test score looks fantastic; in production, week *t*'s demand doesn't
+exist yet when you're forecasting week *t*, so the feature either can't be computed at all or gets
+silently filled with something stale — and the score collapses.
 
 This is documented in depth in
 [Time Series → Feature Engineering](../09-time-series-forecasting/ml/feature-engineering.md#avoiding-data-leakage).
