@@ -47,6 +47,25 @@ Notebook promotion checklist (per promoted notebook):
 - Strip embedded data; keep the file under ~2MB. `execute: false` in CI means
   whatever outputs you commit are what renders.
 
+Instructor-content rules (the site is PUBLIC; personal use ≠ license to republish):
+- Never reproduce instructor slide text, figures, or worked examples verbatim. Math,
+  theorems, and algorithms are ideas — re-derive and re-express them in Tyler's/our
+  own words with our own examples. Cite the local original:
+  `From ECEN 758 Lec N (local: course-files/<...>.pdf)`.
+- **Remake key diagrams and graphs.** Where a lecture's important concept is visual
+  (a geometry picture, a convergence plot, an algorithm flow), regenerate it ourselves
+  — matplotlib PNG committed under `docs/<chapter>/img/` (follow the dataviz skill),
+  or a mermaid block for flow/structure diagrams. Never screenshot slides.
+- **Modern-ML concept mapping.** Where it genuinely fits, connect the classical
+  concept to modern ML Tyler cares about (embeddings, LLMs/attention, residuals,
+  low-rank/LoRA, PCA) with a short example or figure — visuals teach Tyler best.
+- **Private Drive slide links.** Lecture PDFs cited on a page also get a
+  `Full slides: [Drive](<url>)` line IF a private-Drive copy exists (Tyler-only
+  sharing). Upload cited PDFs to Drive folder `textbook-course-slides/<chapter>/`
+  during drafting if access allows; skip the line rather than fake a URL.
+- Instructor-provided public links (their own Colab/GitHub) may be linked directly —
+  but only URLs actually extracted from the source PDFs.
+
 Then: add the chapter + pages to `nav:` in `mkdocs.yml`, add notebooks under a
 "Notebooks" sub-item, update `docs/roadmap.md` (remove the filled chapter), and update
 the chapter list in `docs/index.md`.
