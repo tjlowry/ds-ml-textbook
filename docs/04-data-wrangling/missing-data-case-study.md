@@ -62,9 +62,10 @@ summary_table = pd.DataFrame({
 })
 ```
 
-I read Orlando as the worst — ~26% of flights delayed and the longest average delay at 1.13
-hours. Using proportion *and* average length together avoids being fooled by a busy airport
-with many but short delays.
+By these metrics the answer is split: San Francisco (SFO) is delayed most often — ~26% of
+flights — while Chicago O'Hare (ORD) has the longest average delay at 1.13 hours. Using
+proportion *and* average length together avoids being fooled by a busy airport with many but
+short delays.
 
 ## Step 3 — drop rows missing the grouping key
 
@@ -146,6 +147,11 @@ or a chart.
 
 ## Gotchas
 
+- **Decode airport codes before writing conclusions.** My original DS 250 report named
+  "Orlando" the worst airport — but there is no Orlando in this dataset. I misread `ORD`
+  (Chicago O'Hare) as Orlando, and blended SFO's 26% delay rate with ORD's 1.13-hour average
+  delay into one airport that doesn't exist. The summary table was right; my reading of it
+  wasn't.
 - **A numeric sentinel is the dangerous kind.** A string like `"NA"` at least forces an
   `object` dtype you'll notice; `-999` hides in a numeric column and silently corrupts every
   aggregate. Always scan numeric columns for impossible values before trusting a `.mean()`.
