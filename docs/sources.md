@@ -92,6 +92,37 @@ inference/regression pages, and general **DS 350 R coursework** (BYU-Idaho) infl
 descriptive-stats framing. If chapter 03 is ever re-passed through the `fill-chapter` workflow,
 replace this note with real rows.
 
+### MATH 425 enhancement (BYU-Idaho, Winter 2024) — tracked
+
+Report: `.superpowers/sdd/ch03-enhancement-report.md`. Two source trees were mined: Tyler's
+annotated **Statistics-Notebook** (upstream [byuistats/Statistics-Notebook](https://github.com/byuistats/Statistics-Notebook),
+**GPL-3.0** — adapted material carries an attribution admonition) and his **MATH425** Winter
+2024 coursework. Data-generating x-variables are public/built-in R datasets or his own data
+(NBA stats, his 3D-printing shop); no client data was used.
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `statistics-notebook/Analyses/t Tests/Examples/SleepOneSamplet.Rmd` (his) | snippet | `03-statistics/inference/hypothesis-testing.md` (one-sample t, `sleep`, p=0.1088) |
+| `statistics-notebook/Analyses/t Tests/HighSchoolSeniors.Rmd` (his edits) | snippet | `03-statistics/inference/hypothesis-testing.md` (two-sample t, reaction time, p=0.1246) |
+| `statistics-notebook/Analyses/Chi Squared Tests/MyChiSquaredTest.Rmd` (his edits) | snippet | `03-statistics/inference/hypothesis-testing.md` (chi-squared, GSS divorce×politics, p=0.4021) |
+| `statistics-notebook/Analyses/ANOVA/MyTwoWayANOVA.Rmd` (his edits, his NBA 2K21 data) | snippet | `03-statistics/inference/hypothesis-testing.md` (two-way ANOVA, hand×posture) |
+| `statistics-notebook/Analyses/Linear Regression/MySimpleLinearRegression.Rmd` (his edits) | snippet | `03-statistics/regression/simple-linear.md` (Suns wins~all_stars, slope 8.431) |
+| `statistics-notebook/Analyses/Linear Regression/CarPrices.Rmd` (his) | snippet | `03-statistics/regression/multiple-linear.md` (Cavalier two-line model + reduction) |
+| `statistics-notebook/Analyses/consulting.Rmd` (his, own 3D-print shop data) | snippet | `03-statistics/regression/logistic.md` (print success~time, no personal names) |
+| `statistics-notebook/Analyses/Wilcoxon Tests/RecallingWords.Rmd` (his) | snippet | `03-statistics/inference/nonparametric.md` (Wilcoxon rank-sum, `Friendly`, p=0.378) |
+| `statistics-notebook/Analyses/Kruskal-Wallis Test/Food.Rmd` (his edits) | snippet | `03-statistics/inference/nonparametric.md` (Kruskal-Wallis, GPA~diet, p=0.1924) |
+| `statistics-notebook/permutation_practice.Rmd` (his) | snippet | `03-statistics/inference/nonparametric.md` (permutation tests: mtcars, diamonds, paired) |
+| `MATH425/SkillsQuiz-DiagnosticsTransformations.Rmd` (his) | snippet | `03-statistics/regression/assumptions.md` (`Davis` outlier, `Orange` Box-Cox √) |
+| `MATH425/SkillsQuiz-ConfidenceAndPredictionIntervals.Rmd` (his) | snippet | `03-statistics/inference/confidence-intervals.md` (`BGSall`, test slope=2, PI vs CI) |
+| `MATH425/ClassActivity-RegressionDiagnostics-1.Rmd` (his) | snippet | `03-statistics/regression/regression-battleship.md`; `assumptions.md` (simulate-then-break) |
+| `MATH425/SamplingDistributions-1.Rmd` (his) | snippet | `03-statistics/regression/regression-battleship.md` (sampling dist. of β̂, N=5000) |
+| `MATH425/RegressionBattleshipCreatingYourData.Rmd` (his) | summarized | `03-statistics/regression/regression-battleship.md` (exercise rules; template left as stubs) |
+| `statistics-notebook/Analyses/ANOVA/anovap2.Rmd` (his, warpbreaks) | examined-not-used | duplicates upstream `warpbreaksTwoWayANOVA`; used his own NBA 2K21 two-way ANOVA instead |
+| `MATH425/MidtermExamReview.Rmd` (his) | examined-not-used | learning-objectives outline; confirmed topic coverage, no numbers to quote |
+| `statistics-notebook/Analyses/Stephanie.Rmd` | examined-not-used | contains real personal names — excluded under privacy rules |
+| `statistics-notebook/Analyses/Rent.Rmd` (his edits) | examined-not-used | redundant with SLR/diagnostics coverage already sourced |
+| Two client-data CSVs in `MATH425/` (names withheld) | examined-not-used | **client data — never loaded, quoted, referenced, or described** |
+
 ## Chapter 04 — Data Wrangling (DS 250, BYU-Idaho + STAT 624, TAMU)
 
 Inventory: `.superpowers/sdd/ch04-inventory.md` · Report: `.superpowers/sdd/ch04-report.md`

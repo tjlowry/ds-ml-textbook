@@ -724,3 +724,53 @@ for var in model.params.index:
 4. **Report odds ratios** with confidence intervals for interpretation
 5. **Consider calibration** - do predicted probabilities match actual rates?
 6. **Compare to baseline** - is your model better than simple rules?
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+For my logistic-regression project I used data from my own 3D-printing shop: the last **40
+prints** on an Ultimaker S5, recording each print's **time** and whether it **succeeded or
+failed**. My hunch was that longer prints fail more often, so I modeled the probability of
+success as a function of print time:
+
+$$
+  P(Y_i = 1 \mid x_i) = \frac{e^{\beta_0 + \beta_1 x_i}}{1 + e^{\beta_0 + \beta_1 x_i}} = \pi_i
+$$
+
+where $Y_i = 1$ is a successful print and $x_i$ is the print time in minutes.
+
+```r
+myglm <- glm(status ~ time, data = printing, family = binomial)
+summary(myglm) %>% pander()
+b <- coef(myglm)
+
+# With few repeated x-values, check fit with Hosmer-Lemeshow rather than a deviance test:
+library(ResourceSelection)
+hoslem.test(myglm$y, myglm$fitted, g = 3) %>% pander()
+
+# Plot the fitted logistic curve over the data:
+plot(status ~ time, data = printing,
+     xlab = "Time (min)", ylab = "P(print succeeded)")
+curve(exp(b[1] + b[2]*x) / (1 + exp(b[1] + b[2]*x)), add = TRUE)
+```
+
+The Hosmer-Lemeshow test (p > 0.05) said a logistic curve was a reasonable fit. But the slope
+came out at $b_1 = -0.0003857$ with **p = 0.195** — not significant — so I failed to reject
+$H_0: \beta_1 = 0$. Print time on its own does **not** predict success or failure; the real
+drivers are things like model complexity, print speed, and quality settings.
+
+$$
+  \hat{\pi}_i \approx \frac{e^{\,1.795 \,-\, 0.0003857\, x_i}}{1 + e^{\,1.795 \,-\, 0.0003857\, x_i}}
+$$
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/consulting.Rmd`
+
+### Gotchas
+
+- **Use Hosmer-Lemeshow when x-values rarely repeat.** With 40 mostly-distinct print times the
+  usual goodness-of-fit deviance test isn't reliable; H-L bins the fitted probabilities and
+  compares observed vs. expected, which is the right check here.
+- **`family = binomial` is mandatory.** Leave it off and `glm` silently fits an ordinary
+  linear model — the fitted "probabilities" will then wander outside [0, 1].
+- **Interpret the sign, then exponentiate for odds.** A negative $\beta_1$ means longer prints
+  are *less* likely to succeed, and $e^{\beta_1}$ is the odds multiplier per extra minute — but
+  none of that matters here because the coefficient wasn't significant.

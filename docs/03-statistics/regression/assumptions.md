@@ -730,3 +730,77 @@ When assumptions are severely violated, consider:
 - Robust methods
 - Non-parametric approaches
 - Different model classes (GLM, GAM)
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+The MATH 425 diagnostics skills quiz was all about *reading* the assumption plots and fixing
+what they reveal. Two examples from my work.
+
+### An outlier that flips the whole regression (`Davis`)
+
+Regressing height on weight in the `Davis` data (`library(car)`), observation #12 is a famous
+data-entry error — someone's height and weight were swapped, giving a 166 kg "person." One
+point was enough to drag the entire fitted line. The fix is to refit without it and compare:
+
+```r
+mylm_all <- lm(height ~ weight, data = Davis)                 # distorted by obs #12
+filtered <- filter(Davis, weight != 166)
+mylm     <- lm(height ~ weight, data = filtered)              # outlier removed
+
+ggplot(Davis, aes(weight, height)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, aes(color = "with outlier")) +
+  geom_smooth(method = "lm", se = FALSE, data = filtered, aes(color = "without outlier")) +
+  theme_bw()
+
+plot(mylm, which = 1)      # residuals-vs-fitted, now well-behaved
+```
+
+Overlaying the two lines makes the leverage obvious — a single mis-typed row can pivot the
+slope and torch the $R^2$.
+
+### A Box-Cox transformation (`Orange`)
+
+Regressing trunk `circumference` on tree `age` (the built-in `Orange` data), the residual-vs-
+fitted plot showed a fanning pattern — non-constant variance. Rather than guess the transform,
+I let a **Box-Cox** analysis pick the power for me:
+
+```r
+lm5 <- lm(circumference ~ age, data = Orange)
+plot(lm5, which = 1:2)          # curved / fanning residuals
+
+boxcox_result <- boxcox(lm5)    # suggested lambda near 0.5  ->  sqrt(Y)
+
+tran_lm <- lm(sqrt(circumference) ~ age, data = Orange)   # refit in transformed space
+plot(tran_lm, which = 1:2)      # diagnostics look better
+```
+
+Box-Cox pointed to $\lambda \approx 0.5$, i.e. a **$\sqrt{Y}$** transformation; refitting
+`sqrt(circumference) ~ age` cleaned up the residual plot. The catch is that predictions come
+out in $\sqrt{\text{cm}}$ and have to be squared back to the original units before they mean
+anything.
+
+Source: `~/Projects/school/byui-undergrad/MATH425/SkillsQuiz-DiagnosticsTransformations.Rmd`
+
+### Seeing violations on purpose
+
+A companion class activity built data from a *known* true model and then deliberately violated
+each assumption in turn — non-linearity, non-constant variance, non-normal errors, outliers —
+so I could learn what each one looks like on a residual plot before diagnosing real data. That
+"simulate then break it" approach is written up in the
+[Regression Battleship case study](regression-battleship.md).
+
+Source: `~/Projects/school/byui-undergrad/MATH425/ClassActivity-RegressionDiagnostics-1.Rmd`
+
+### Gotchas
+
+- **One outlier can own the model.** Always look at residual-vs-fitted and Q-Q *before*
+  trusting the slope; the `Davis` fit changed materially from a single bad row.
+- **Let Box-Cox choose the transform.** Eyeballing "looks like a log" is guesswork; `boxcox()`
+  gives you the $\lambda$, and you snap it to the nearest interpretable power ($\tfrac12$, 0,
+  −1, …).
+- **Remember to back-transform.** After fitting `sqrt(Y) ~ X`, every prediction and interval is
+  in transformed units — square them back (and the interval is no longer symmetric in the
+  original units).
+- **Fixed-x and independent errors matter too.** Beyond the residual-vs-fitted and Q-Q plots, a
+  residuals-vs-order plot catches the independence violations the other two miss.

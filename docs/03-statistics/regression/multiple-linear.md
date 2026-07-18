@@ -764,3 +764,51 @@ print(f"95% CI: [${pred_ci['obs_ci_lower'].values[0]:,.0f}, ${pred_ci['obs_ci_up
 4. **Consider interactions** when effects might depend on other variables
 5. **Validate** on held-out test data
 6. **Report confidence intervals** for coefficients, not just point estimates
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+My multiple-regression analysis used the `CarPrices` data, filtered to one model (the Chevrolet
+Cavalier), to ask a two-part question: does **cruise control** change the price, and does it
+change how fast the car **depreciates with mileage**? That's a classic **two-line regression** —
+a continuous predictor (`Mileage`), an indicator (`Cruise`, 0/1), and their **interaction**:
+
+$$
+  \underbrace{Y_i}_{\text{Price}} = \beta_0 + \beta_1 \underbrace{X_{i1}}_{\text{Mileage}}
+  + \beta_2 \underbrace{X_{i2}}_{\text{Cruise}} + \beta_3 \underbrace{X_{i1}X_{i2}}_{\text{Interaction}} + \epsilon_i
+$$
+
+```r
+CarPrices <- filter(CarPrices, Model == "Cavalier")
+
+carlm  <- lm(Price ~ Mileage + Cruise + Mileage:Cruise, data = CarPrices)  # full two-line
+summary(carlm) %>% pander()
+```
+
+The interaction $\beta_3$ (different depreciation slopes) came back at **p = 0.5872** — not
+significant — so I dropped it and refit. In the additive model, the `Cruise` main effect was
+still insignificant (**p = 0.2238**), so I dropped that too, landing on a simple regression of
+price on mileage alone:
+
+```r
+carlm2 <- lm(Price ~ Mileage + Cruise,  data = CarPrices)  # Cruise p = 0.2238 -> drop
+carlm3 <- lm(Price ~ Mileage,           data = CarPrices)  # final model
+summary(carlm3) %>% pander()
+```
+
+Mileage was overwhelmingly significant (**p = 1.299e-16**). The takeaway: for a used Cavalier,
+cruise control doesn't move the price in either direction — only mileage does — and these cars
+don't hold their value well as they rack up miles.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/Linear Regression/CarPrices.Rmd`
+
+### Gotchas
+
+- **Test the interaction before the main effects.** If $\beta_3$ (the interaction) isn't
+  significant, remove it *first*, then reassess the main effects — interpreting a main effect
+  while a live interaction term is in the model is misleading.
+- **Simplify deliberately, one term at a time.** I removed the interaction, refit, *then*
+  removed `Cruise` — not both at once — so each p-value was judged in the model it actually
+  belonged to.
+- **An indicator + interaction is literally two lines.** `Cruise` shifts the intercept and
+  `Mileage:Cruise` tilts the slope; picturing it as two fitted lines (cruise vs. no-cruise) is
+  what makes the coefficients interpretable.

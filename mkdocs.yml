@@ -83,11 +83,13 @@ nav:
       - Hypothesis Testing: 03-statistics/inference/hypothesis-testing.md
       - Confidence Intervals: 03-statistics/inference/confidence-intervals.md
       - P-values: 03-statistics/inference/p-values.md
+      - Nonparametric Tests: 03-statistics/inference/nonparametric.md
     - Regression:
       - Simple Linear: 03-statistics/regression/simple-linear.md
       - Multiple Linear: 03-statistics/regression/multiple-linear.md
       - Logistic: 03-statistics/regression/logistic.md
       - Assumptions: 03-statistics/regression/assumptions.md
+      - "Case Study: Regression Battleship": 03-statistics/regression/regression-battleship.md
 
   - Data Wrangling:
     - Overview: 04-data-wrangling/index.md
