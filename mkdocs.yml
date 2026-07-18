@@ -51,6 +51,24 @@ nav:
   - Home: index.md
   - Roadmap: roadmap.md
 
+  - Linear Algebra:
+    - Overview: 02-linear-algebra/index.md
+    - Solving & Factoring:
+      - Linear Systems: 02-linear-algebra/linear-systems.md
+      - Least Squares: 02-linear-algebra/least-squares.md
+      - Eigenvalues & Eigenvectors: 02-linear-algebra/eigenvalues-eigenvectors.md
+      - Singular Value Decomposition: 02-linear-algebra/svd.md
+      - Perron-Frobenius: 02-linear-algebra/perron-frobenius.md
+    - Optimization:
+      - Dynamic Programming: 02-linear-algebra/dynamic-programming.md
+      - Gradient Descent: 02-linear-algebra/gradient-descent.md
+      - Convex Optimization: 02-linear-algebra/convex-optimization.md
+      - Compressed Sensing: 02-linear-algebra/compressed-sensing.md
+    - Reference:
+      - Theorem Reference: 02-linear-algebra/theorem-reference.md
+    - Notebooks:
+      - Projected Gradient Descent: 02-linear-algebra/notebooks/projected-gradient-descent.ipynb
+
   - Statistics:
     - Overview: 03-statistics/index.md
     - Descriptive:

@@ -13,6 +13,7 @@ to come back to any topic and re-learn it from **work I actually did**, not gene
 
 ## Chapters
 
+- [Linear Algebra](02-linear-algebra/index.md) — systems, least squares, eigen/SVD, and optimization (MATH 677)
 - [Statistics](03-statistics/index.md) — probability, inference, regression (STAT 650)
 - [Data Visualization](06-data-visualization/index.md) — matplotlib/seaborn/plotly, ggplot2, BI
 - [Machine Learning](08-machine-learning/index.md) — classification, clustering, ensembles, deep learning (ECEN 758/740)
