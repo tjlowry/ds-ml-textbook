@@ -39,10 +39,19 @@ motivates nonlinear methods.
 
 **On images.** In our ECEN 758 CIFAR-100 group project, PCA and normalization were used as
 dimensionality-reduction / preprocessing steps to reduce the feature space before the
-classical models, alongside the HOG features feeding the random forest.
+classical models, alongside the HOG features feeding the random forest. Concretely, we
+reduced each image to **50 principal components** and then ran t-SNE on top of that to
+visualize the classes in 2-D — a standard "PCA-then-t-SNE" pipeline that keeps t-SNE
+tractable. The 2-D map showed no clean class clusters, an early signal that 100-way
+classification would be hard.
 
 Source: our ECEN 758 CIFAR-100 group project report
-(`course-files/appendix/Homework/ecen758_hw/group_project/ecen758_group_report.pdf`)
+(`course-files/appendix/Homework/ecen758_hw/group_project/ecen758_group_report.pdf` and
+`CNN_draft2.pdf`)
+
+!!! note "Full case study"
+    The full CIFAR-100 project — this PCA/t-SNE step plus the three models that followed —
+    is written up on the [CIFAR-100 case-study page](../case-study-cifar100.md).
 
 ## Course notebook
 
