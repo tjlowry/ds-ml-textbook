@@ -68,8 +68,9 @@ distribution chart — is in
 [Name-Popularity EDA](notebooks/name-popularity-eda.ipynb). I trimmed my original DS 250
 notebook down to just the names exploration (it also carried some unrelated coding-challenge
 and modeling answers that belong to the [Data Wrangling](../04-data-wrangling/index.md) and
-[Machine Learning](../08-machine-learning/index.md) chapters), added a context cell, and
-re-ran it top to bottom against the public dataset.
+[Machine Learning](../08-machine-learning/index.md) chapters), added a context cell and
+standard first-look summary cells (`shape`/`dtypes`/`describe`) that weren't in the original,
+and re-ran it top to bottom against the public dataset.
 
 ## Gotchas
 

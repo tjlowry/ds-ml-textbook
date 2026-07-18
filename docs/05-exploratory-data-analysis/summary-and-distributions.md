@@ -40,8 +40,8 @@ the rows that matter and then counting the values of a column answers a surprisi
 them. Here I narrow to movies, then count the MPAA `rating` values:
 
 ```python
-# Keep just the movies
-movies = df[df["type"] == "movie"]
+# Keep just the movies — the column stores "Movie" / "TV Show", capitalized
+movies = df[df["type"] == "Movie"]
 
 # How many rows survived the filter?
 movies["rating"].count()
@@ -109,10 +109,11 @@ to *see* the distribution.
 - **`value_counts()` drops `NaN` by default.** Missing values silently vanish from the
   counts, so the bars can sum to fewer rows than you have. Pass `dropna=False` when "how much
   is missing" is part of the question.
-- **A filter that matches nothing returns an empty frame, not an error.** `df[df["type"] ==
-  "movie"]` gives back zero rows if the column actually stores `"Movie"`. Check `.shape` (or
-  `value_counts()` the column first) before trusting a subset — string case and stray
-  whitespace are the usual culprits.
+- **A filter that matches nothing returns an empty frame, not an error.** My original CSE 450
+  script filtered on `df["type"] == "movie"` — lowercase — but the column stores `"Movie"`,
+  so the subset was silently empty (the snippet above is the corrected version). Check
+  `.shape` (or `value_counts()` the column first) before trusting a subset — string case and
+  stray whitespace are the usual culprits.
 - **`count()` counts non-null, `len()`/`.shape[0]` counts rows.** They disagree exactly when
   a column has missing values, which is often the thing you're trying to measure. Know which
   one you're asking for.
