@@ -19,6 +19,7 @@ to come back to any topic and re-learn it from **work I actually did**, not gene
 - [SQL & Databases](07-sql-and-databases/index.md) — queries, schema design, Python integration, NoSQL & compute (STAT 624 / DS 250)
 - [Machine Learning](08-machine-learning/index.md) — classification, clustering, ensembles, deep learning (ECEN 758/740)
 - [Time Series Forecasting](09-time-series-forecasting/index.md) — senior project + distribution demand forecasting
+- [Model Evaluation](10-model-evaluation/index.md) — metrics, cross-validation, and leakage, synthesized across chapters (STAT 650 / ECEN 758)
 - [Scientific Machine Learning & PINNs](12-scientific-ml/index.md) — physics-informed neural networks + SA-PINN optimizer study (ECEN 744)
 - [Sources](sources.md) — per-chapter ledger of the files each page was built from
 - [Appendix](appendix/full-textbooks.md) — textbooks and homework archive

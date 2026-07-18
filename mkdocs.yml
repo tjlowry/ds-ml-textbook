@@ -179,6 +179,18 @@ nav:
       - Senior Project Pipeline: 09-time-series-forecasting/notebooks/senior-project-pipeline.ipynb
       - Distribution Feature Engineering Demo: 09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb
 
+  - Model Evaluation:
+    - Overview: 10-model-evaluation/index.md
+    - Metrics:
+      - Regression & Forecast Metrics: 10-model-evaluation/regression-and-forecast-metrics.md
+      - Classification Metrics: 10-model-evaluation/classification-metrics.md
+      - ROC & AUC: 10-model-evaluation/roc-auc.md
+    - Validation:
+      - Cross-Validation & Splitting: 10-model-evaluation/cross-validation-and-splitting.md
+      - Leakage Patterns: 10-model-evaluation/leakage-patterns.md
+    - Notebooks:
+      - Classification Metrics Demo: 10-model-evaluation/notebooks/classification-metrics-demo.ipynb
+
   - Scientific ML:
     - Overview: 12-scientific-ml/index.md
     - Foundations:
