@@ -70,6 +70,8 @@ np.linalg.lstsq(A, b, rcond=None)[0]        # same answer, via QR
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 ### Residuals are what's left to explain
 
 Rotate the projection picture into "data space" and the residual `b − b̂` becomes the stack

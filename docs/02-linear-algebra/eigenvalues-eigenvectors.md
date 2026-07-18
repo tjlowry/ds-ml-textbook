@@ -76,6 +76,8 @@ matrix.*
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 ### Eigenvectors of the covariance matrix are PCA
 
 Point a cloud of data at its own covariance matrix and the eigenvectors are the **principal

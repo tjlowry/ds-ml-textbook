@@ -36,6 +36,8 @@ I restate in the [theorem reference](theorem-reference.md#invertibility-the-big-
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 ### The dot product is cosine similarity
 
 Every "how similar are these two things?" question in ML is a dot product in disguise. For

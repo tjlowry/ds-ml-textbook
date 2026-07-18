@@ -53,6 +53,7 @@ nav:
 
   - Linear Algebra:
     - Overview: 02-linear-algebra/index.md
+    - Linear Algebra in ML: 02-linear-algebra/linear-algebra-in-ml.md
     - Solving & Factoring:
       - Linear Systems: 02-linear-algebra/linear-systems.md
       - Least Squares: 02-linear-algebra/least-squares.md

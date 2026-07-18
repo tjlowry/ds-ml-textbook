@@ -43,6 +43,8 @@ statement that "long-run growth rate = dominant eigenvalue."
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 **PageRank is Perron-Frobenius.** The web is a giant column-stochastic transition matrix; the
 PageRank vector is its Perron eigenvector — the unique steady-state distribution of a random
 surfer. The "damping factor" (teleportation) is a trick to *force* the matrix strictly

@@ -34,6 +34,10 @@ to LoRA, eigenvectors to [PCA](../08-machine-learning/dimensionality-reduction/p
 
 ## Topics
 
+- [Linear Algebra in ML](linear-algebra-in-ml.md) — the consolidated concept map:
+  embeddings, attention, low-rank/LoRA, least squares, eigenvectors, and gradient descent
+  all in one place, each linking back to its full page.
+
 ### Solving and factoring
 
 - [Linear Systems](linear-systems.md) — `Ax = b`, row reduction, and the vector/matrix

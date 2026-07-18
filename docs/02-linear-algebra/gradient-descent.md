@@ -111,6 +111,8 @@ hold — and several Newton's-method iterations for comparison.*
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 Every optimizer I use — SGD, Adam, the whole training loop of the
 [neural networks](../08-machine-learning/deep-learning/neural-network-fundamentals.md) and
 [Mini-GPT](../08-machine-learning/notebooks/mini-gpt-from-scratch.ipynb) in the ML chapter — is

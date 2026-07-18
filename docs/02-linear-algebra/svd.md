@@ -31,6 +31,8 @@ almost-flat direction — the seed of low-rank approximation.
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 ### Low-rank approximation: the idea behind LoRA
 
 Keep only the top `r` singular values (zero the rest) and you get the **best rank-`r`

@@ -377,6 +377,112 @@ def fig_perron():
     save(fig, "perron-steady-state.png")
 
 
+# 13. Word-analogy parallelogram (king - man + woman ~= queen) ----------------
+# ILLUSTRATIVE 2-D layout — hand-placed points, NOT a trained embedding.
+def fig_word_analogy():
+    # Two orthogonal-ish "concept axes" laid out by hand so the arithmetic is exact.
+    gender = np.array([2.1, 0.3])      # man -> woman direction
+    royalty = np.array([0.3, 2.4])     # commoner -> royal direction
+    man = np.array([0.5, 0.6])
+    woman = man + gender
+    king = man + royalty
+    queen = woman + royalty            # = king - man + woman, by construction
+    boy = man + np.array([0.0, 1.0])
+    girl = boy + gender
+    computed = king - man + woman      # the analogy result
+
+    fig, ax = plt.subplots(figsize=(6.8, 5.0))
+    clean(ax, grid=True)
+
+    # parallelogram edges: gender edges (blue), royalty edges (green)
+    def edge(p, q, color):
+        ax.annotate("", xy=q, xytext=p,
+                    arrowprops=dict(arrowstyle="-|>", color=color, lw=2.2))
+    edge(man, woman, BLUE)             # gender
+    edge(king, queen, BLUE)
+    edge(man, king, GREEN)             # royalty
+    edge(woman, queen, GREEN)
+    edge(boy, girl, BLUE)              # a second parallel gender pair
+
+    pts = {"man": man, "woman": woman, "king": king, "queen": queen,
+           "boy": boy, "girl": girl}
+    off = {"man": (-6, -14), "woman": (6, -14), "king": (-8, 8),
+           "queen": (8, 8), "boy": (-6, -14), "girl": (6, -14)}
+    for w, p in pts.items():
+        ax.scatter(*p, s=44, color=INK, zorder=5)
+        ax.annotate(w, p, textcoords="offset points", xytext=off[w],
+                    fontsize=11, weight="bold", color=INK)
+
+    # the computed point lands exactly on "queen"
+    ax.scatter(*computed, s=220, facecolor="none", edgecolor=RED, lw=2.2,
+               zorder=6)
+    ax.annotate("king - man + woman", computed, textcoords="offset points",
+                xytext=(12, -26), fontsize=10, color=RED, family="monospace")
+
+    # axis captions (the learned "concept directions")
+    ax.text(0.30, 0.05, "gender direction ->", transform=ax.transAxes,
+            fontsize=9, color=BLUE)
+    ax.text(0.02, 0.35, "royalty\ndirection", transform=ax.transAxes,
+            fontsize=9, color=GREEN, rotation=90, va="center")
+
+    ax.set_xlim(-0.4, 5.2); ax.set_ylim(-0.4, 5.4); ax.set_aspect("equal")
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_title("Analogy as vector addition: the same offset moves king->queen\n"
+                 "and man->woman (illustrative 2-D layout, not a trained model)",
+                 fontsize=11)
+    save(fig, "word-analogy-parallelogram.png")
+
+
+# 14. Low-rank parameter count: full W vs rank-r LoRA factors ------------------
+def fig_lora_params():
+    d, r = 4096, 16
+    full = d * d                       # 16,777,216
+    lora = 2 * d * r                   #    131,072
+    fig, (axL, axR) = plt.subplots(1, 2, figsize=(9.4, 3.9),
+                                    gridspec_kw={"width_ratios": [1.15, 1]})
+
+    # -- left: block schematic, concrete dimensions --
+    axL.axis("off")
+    def block(x, y, w, h, color, label, sub):
+        axL.add_patch(plt.Rectangle((x, y), w, h, facecolor=color, alpha=0.20,
+                                    edgecolor=color, lw=1.6))
+        axL.text(x + w / 2, y + h / 2, label, ha="center", va="center",
+                 fontsize=13, color=INK)
+        axL.text(x + w / 2, y - 0.22, sub, ha="center", va="top",
+                 fontsize=8.5, color=SECOND)
+    block(0.1, 0.3, 2.0, 2.0, BLUE, r"$W$", "4096 x 4096")
+    axL.text(2.45, 1.3, r"$\approx$", fontsize=20, ha="center", va="center")
+    block(2.8, 0.3, 0.32, 2.0, GREEN, r"$B$", "4096 x 16")
+    axL.text(3.35, 1.3, r"$\times$", fontsize=15, ha="center", va="center")
+    block(3.6, 1.98, 2.0, 0.32, ORANGE, r"$A$", "16 x 4096")
+    axL.set_xlim(0, 5.9); axL.set_ylim(-0.4, 2.7)
+    axL.set_title("Freeze $W$, learn the skinny factors $B,A$", fontsize=10.5)
+
+    # -- right: parameter-count magnitude (bar chart) --
+    clean(axR, grid=False)
+    labels = ["full  W\n(4096 x 4096)", "LoRA  BA\n(rank 16)"]
+    vals = [full, lora]
+    cols = [BLUE, GREEN]
+    ypos = [1, 0]
+    axR.barh(ypos, vals, color=cols, height=0.55, zorder=3)
+    axR.set_yticks(ypos); axR.set_yticklabels(labels, fontsize=9)
+    axR.set_xlim(0, full * 1.18)
+    axR.set_xticks([])
+    for yp, v in zip(ypos, vals):
+        axR.text(v + full * 0.015, yp, f"{v:,}", va="center", fontsize=10,
+                 color=INK, weight="bold")
+    axR.text(full * 0.5, -0.62,
+             f"{full:,} vs {lora:,}  ->  {full/lora:.0f}x fewer parameters",
+             ha="center", fontsize=9.5, color=SECOND)
+    axR.set_title("Trainable parameters per layer", fontsize=10.5)
+    for s in ("left",):
+        axR.spines[s].set_visible(False)
+    axR.tick_params(length=0)
+    fig.suptitle("Low-rank structure: a rank-16 update replaces a 4096x4096 weight matrix",
+                 fontsize=12, y=1.02)
+    save(fig, "lora-parameter-count.png")
+
+
 if __name__ == "__main__":
     print("Generating linear-algebra figures...")
     fig_ls_projection()
@@ -391,4 +497,6 @@ if __name__ == "__main__":
     fig_cosine()
     fig_attention()
     fig_perron()
+    fig_word_analogy()
+    fig_lora_params()
     print("Done.")

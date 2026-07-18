@@ -44,6 +44,8 @@ to zero (feature selection), while the `ℓ₂`/ridge penalty only shrinks them.
 
 ## In modern ML
 
+*Consolidated view: [Linear Algebra in ML](linear-algebra-in-ml.md) collects this and the chapter's other ML connections on one page.*
+
 The `ℓ₁`-drives-things-to-zero mechanism shows up all over:
 
 - **LASSO / sparse regression** — automatic feature selection, the direct application of this
