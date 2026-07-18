@@ -36,6 +36,8 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
+![Scatter plot of engine displacement vs highway MPG for the mpg dataset](img/ggplot2-02.png)
+
 **Visual description**: A scatter plot showing the relationship between engine displacement (x-axis) and highway miles per gallon (y-axis) for various car models.
 
 ## Aesthetic Mappings
@@ -66,6 +68,8 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy, color = class, size = cyl))
 ```
 
+![Scatter plot of displacement vs highway MPG with point color mapped to vehicle class and point size mapped to cylinder count](img/ggplot2-03.png)
+
 ### Setting vs Mapping Aesthetics
 
 ```r
@@ -80,6 +84,8 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy), color = "blue", size = 3)
 ```
 
+![Scatter plot of displacement vs highway MPG with point color and size set to fixed values rather than mapped to data](img/ggplot2-04.png)
+
 ## Geometric Objects (Geoms)
 
 ### Points: `geom_point()`
@@ -90,6 +96,8 @@ library(ggplot2)
 ggplot(data = mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = class), size = 3, alpha = 0.7)
 ```
+
+![Scatter plot of displacement vs highway MPG with points colored by class, sized and semi-transparent](img/ggplot2-05.png)
 
 ### Lines: `geom_line()` and `geom_path()`
 
@@ -112,6 +120,8 @@ ggplot(econ_long, aes(x = date, y = value, color = metric)) +
   geom_line(size = 1)
 ```
 
+![Line chart of personal savings rate and unemployment duration over time, colored by economic metric](img/ggplot2-06.png)
+
 ### Smooth Lines: `geom_smooth()`
 
 ```r
@@ -132,6 +142,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy, color = drv)) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
+
+![Scatter plot of displacement vs highway MPG with separate linear trend lines for each drivetrain type](img/ggplot2-07.png)
 
 ### Bars: `geom_bar()` and `geom_col()`
 
@@ -165,6 +177,8 @@ ggplot(data = mpg) +
   geom_bar(mapping = aes(x = class, fill = drv), position = "fill")
 ```
 
+![Stacked bar chart showing the proportion of drivetrain types within each vehicle class](img/ggplot2-08.png)
+
 ### Histograms: `geom_histogram()`
 
 ```r
@@ -184,6 +198,8 @@ ggplot(data = mpg, aes(x = hwy, fill = drv)) +
   geom_histogram(bins = 20, alpha = 0.7, position = "identity")
 ```
 
+![Overlapping histograms of highway MPG colored by drivetrain type](img/ggplot2-09.png)
+
 ### Density: `geom_density()`
 
 ```r
@@ -197,6 +213,8 @@ ggplot(data = mpg, aes(x = hwy)) +
 ggplot(data = mpg, aes(x = hwy, fill = drv)) +
   geom_density(alpha = 0.5)
 ```
+
+![Overlapping density curves of highway MPG for each drivetrain type](img/ggplot2-10.png)
 
 ### Box Plots: `geom_boxplot()`
 
@@ -222,6 +240,8 @@ ggplot(data = mpg, aes(x = class, y = hwy)) +
   geom_boxplot(notch = TRUE)
 ```
 
+![Boxplot of highway MPG by vehicle class with notches showing the confidence interval of the median](img/ggplot2-11.png)
+
 ### Violin Plots: `geom_violin()`
 
 ```r
@@ -237,6 +257,8 @@ ggplot(data = mpg, aes(x = class, y = hwy)) +
   geom_boxplot(width = 0.1)
 ```
 
+![Violin plot of highway MPG by vehicle class with a boxplot overlaid inside each violin](img/ggplot2-12.png)
+
 ### Area: `geom_area()`
 
 ```r
@@ -245,6 +267,8 @@ library(ggplot2)
 ggplot(data = economics, aes(x = date, y = unemploy)) +
   geom_area(fill = "steelblue", alpha = 0.7)
 ```
+
+![Area chart of unemployment count over time from the economics dataset](img/ggplot2-13.png)
 
 ### Text and Labels: `geom_text()` and `geom_label()`
 
@@ -271,6 +295,8 @@ ggplot(data = mpg_summary, aes(x = count, y = avg_hwy)) +
   geom_label(aes(label = class), nudge_y = 1)
 ```
 
+![Scatter plot of vehicle count vs average highway MPG per class, labeled with class names](img/ggplot2-14.png)
+
 ## Faceting
 
 Faceting creates small multiples, splitting data across multiple panels.
@@ -296,6 +322,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   facet_wrap(~ class, scales = "free")
 ```
 
+![Scatter plot of displacement vs highway MPG faceted by vehicle class with free axis scales](img/ggplot2-15.png)
+
 ### `facet_grid()`
 
 ```r
@@ -316,6 +344,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   facet_grid(. ~ cyl)
 ```
+
+![Scatter plot of displacement vs highway MPG faceted into columns by cylinder count](img/ggplot2-16.png)
 
 ## Scales
 
@@ -343,6 +373,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   scale_y_reverse()
 ```
+
+![Scatter plot of displacement vs highway MPG with the y-axis reversed](img/ggplot2-17.png)
 
 ### Color Scales
 
@@ -375,6 +407,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy, color = cty)) +
   scale_color_viridis_c()
 ```
 
+![Scatter plot of displacement vs highway MPG with point color mapped to city MPG using a viridis color scale](img/ggplot2-18.png)
+
 ### Fill Scales
 
 ```r
@@ -384,6 +418,8 @@ ggplot(data = mpg, aes(x = class, fill = class)) +
   geom_bar() +
   scale_fill_brewer(palette = "Pastel1")
 ```
+
+![Bar chart of vehicle class counts filled with a Pastel1 color brewer palette](img/ggplot2-19.png)
 
 ## Coordinate Systems
 
@@ -412,6 +448,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   coord_cartesian(xlim = c(2, 5), ylim = c(20, 40))
 ```
 
+![Scatter plot with smooth trend line zoomed into a specific displacement and MPG range without clipping data](img/ggplot2-20.png)
+
 ## Labels and Annotations
 
 ```r
@@ -429,6 +467,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy, color = class)) +
   )
 ```
 
+![Scatter plot of displacement vs highway MPG colored by class with title, subtitle, caption, and axis labels](img/ggplot2-21.png)
+
 ### Adding Annotations
 
 ```r
@@ -442,6 +482,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   annotate("segment", x = 5, y = 38, xend = 4, yend = 35,
            arrow = arrow(length = unit(0.2, "cm")))
 ```
+
+![Scatter plot of displacement vs highway MPG with a text annotation, highlighted rectangle, and arrow annotation](img/ggplot2-22.png)
 
 ## Themes
 
@@ -477,6 +519,8 @@ p + theme_dark()
 p + theme_void()
 ```
 
+![Scatter plot of displacement vs highway MPG colored by class rendered with the void theme (no axes or gridlines)](img/ggplot2-23.png)
+
 ### Custom Theme Elements
 
 ```r
@@ -507,6 +551,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy, color = class)) +
   )
 ```
 
+![Scatter plot of displacement vs highway MPG colored by class with custom theme styling for titles, axis text, legend, and panel background](img/ggplot2-24.png)
+
 ## Combining Multiple Layers
 
 ```r
@@ -525,6 +571,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   labs(title = "Engine Size vs Fuel Efficiency",
        subtitle = "SUVs highlighted")
 ```
+
+![Scatter plot of displacement vs highway MPG with SUVs highlighted in red, a linear trend line, and a text annotation](img/ggplot2-25.png)
 
 ## Statistical Transformations
 
@@ -545,6 +593,8 @@ ggplot(data = mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   stat_smooth(method = "loess", span = 0.3)
 ```
+
+![Scatter plot of displacement vs highway MPG with a loess smooth curve fit using a span of 0.3](img/ggplot2-26.png)
 
 ## Saving Plots
 

@@ -171,3 +171,29 @@ plot_acf(residuals, lags=30)
 import matplotlib.pyplot as plt
 plt.hist(residuals, bins=30)
 ```
+
+## How I did it
+
+The senior project's ETS was Holt-Winters with additive weekly seasonality and no trend term — statsmodels `ExponentialSmoothing`:
+
+```python
+def run_ets(train, test):
+    model = ExponentialSmoothing(
+        train['Qty'],
+        trend=None,
+        seasonal='add',
+        seasonal_periods=7
+    )
+    ets_model = model.fit()
+    forecast = ets_model.forecast(len(test))
+    return forecast, run_time
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_ets`)
+
+## Gotchas
+
+- **`trend=None` was a deliberate choice.** The pipeline let differencing/features handle trend elsewhere and kept ETS as a pure seasonal smoother. If you flip this to `trend='add'` on a series with a strong linear trend, watch the long-horizon forecast — undamped additive trends extrapolate aggressively.
+- **`seasonal_periods` must match the real cycle.** It's hard-coded to 7 here. With weak weekly seasonality that setting didn't buy much, echoing the seasonal-naive result.
+- **Multiplicative seasonality needs strictly positive data.** `seasonal='mul'` errors on zeros/negatives; the project stuck with `'add'` partly to sidestep that.
+- **ETS did not win.** Per `docs/takeaways.md`, ETS landed mid-pack; square-root transform gave it a *moderate* boost but it never approached XGBoost on this data.

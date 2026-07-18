@@ -211,3 +211,69 @@ model.fit(X_train, y_train)
 importances = pd.Series(model.feature_importances_, index=X_train.columns)
 top_features = importances.nlargest(20).index.tolist()
 ```
+
+## How I did it
+
+This is the topic where the two projects contrast most sharply — the same idea (turn a series into supervised rows) at school-project scale vs production scale.
+
+**School project — one flat function on a single series.** `create_features` builds calendar fields plus two lags and two rolling stats, then drops the NaN rows:
+
+```python
+def create_features(df):
+    df_features = df.copy()
+    df_features['dayofweek'] = df_features.index.dayofweek
+    df_features['month'] = df_features.index.month
+    df_features['quarter'] = df_features.index.quarter
+    df_features['year'] = df_features.index.year
+    df_features['dayofyear'] = df_features.index.dayofyear
+    df_features['lag_1'] = df_features['Qty'].shift(1)
+    df_features['lag_7'] = df_features['Qty'].shift(7)
+    df_features['rolling_mean_7'] = df_features['Qty'].rolling(window=7).mean()
+    df_features['rolling_std_7'] = df_features['Qty'].rolling(window=7).std()
+    return df_features.dropna()
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`create_features`)
+
+**Production — a grouped, config-driven, leakage-tested feature layer.** My distribution demand-forecasting pipeline computes lags *per Stock/Warehouse group*, log-transforms before lagging, and filters out lags longer than 80% of a series' length (dynamic selection). The leakage rule is spelled out in the docstring and enforced by `.shift(lag)`:
+
+```python
+# DATA LEAKAGE PREVENTION:
+# - Uses pandas .shift(lag) which ONLY looks backward in time
+# - lag_1 at time t = demand at time t-1 (previous period)
+# - Features are computed per stock/warehouse group independently
+result[feature_name] = result.groupby(
+    ['Stock', 'Warehouse']
+)['_target_for_lag'].shift(lag)
+```
+
+Source: `demand-forecast/src/features/lag.py` (private distribution-forecasting repo; `LagFeatureEngineer.transform`)
+
+Rolling features apply `.shift(1)` **before** `.rolling()` so the current period is never inside its own window:
+
+```python
+def _calculate_rolling_stat(self, series, window, stat):
+    # Create rolling window (shifted to exclude current value)
+    rolling = series.shift(1).rolling(window=window, min_periods=self.min_periods)
+    if stat == 'mean':  return rolling.mean()
+    elif stat == 'std': return rolling.std()
+    # ... min / max / median / sum / var
+```
+
+Source: `demand-forecast/src/features/rolling.py` (private distribution-forecasting repo; `RollingFeatureEngineer._calculate_rolling_stat`)
+
+The production system also has temporal (cyclic sin/cos), hierarchical (class-level lagged aggregates), and SBC demand-pattern features — ~45 columns in total (`docs/technical_summary.md`).
+
+## Notebook
+
+See the rendered notebook: [Distribution Feature Engineering Demo](../notebooks/distribution-feature-engineering-demo.ipynb) — it recreates the leakage-safe lag/rolling logic on a synthetic weekly demand panel and asserts, the way `tests/test_data_leakage.py` does, that no feature at week *t* uses week *t*'s demand.
+
+Re-run locally: `jupyter lab docs/09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb`
+
+## Gotchas
+
+- **`.shift(1)` before `.rolling()` is the whole ballgame.** `series.rolling(7).mean()` includes the current value — that's leakage. The correct form is `series.shift(1).rolling(7).mean()`. The school project's `create_features` did *not* shift before rolling (`rolling_mean_7` includes the current row), which is fine-ish when you then split by index but is exactly the bug the production code was written to prevent.
+- **Group before you shift on a panel.** With multiple Stock/Warehouse series stacked in one frame, a plain `.shift(1)` leaks the *last row of the previous item* into the *first row of the next*. Production shifts inside `groupby(['Stock','Warehouse'])`.
+- **Long lags nuke short series.** A `lag_52` on a 30-week item is all-NaN. Dynamic selection (drop lags > 80% of length) keeps short SKUs usable instead of dropping them entirely.
+- **Log-transform before lagging, not after.** Demand is right-skewed; my distribution-forecasting pipeline applies `np.log1p` to the target *before* creating lags so the lag features live in the compressed space the model trains on.
+- **`.dropna()` costs you rows.** Every lag/rolling window eats warm-up rows off the front. On short series that adds up fast — another reason dynamic selection matters.

@@ -101,3 +101,25 @@ stationary = detrend(series)
 - **Machine learning models** (XGBoost, Random Forest) don't require stationarity—they can learn from non-stationary patterns
 - **Statistical models** (ARIMA) handle some non-stationarity through integrated (I) component
 - Always check residuals for stationarity after fitting a model
+
+## How I did it
+
+In the senior project, both stationarity tests ran inside the EDA step — ADF and KPSS side by side, since they test opposite null hypotheses. KPSS is wrapped in `try/except` because it raises on some inputs, and I didn't want one test to kill the whole EDA run:
+
+```python
+# Stationarity tests
+print("\nStationarity Tests:")
+print("ADF Test: p-value", adfuller(df['Qty'].dropna())[1])
+try:
+    print("KPSS Test: p-value", kpss(df['Qty'].dropna())[1])
+except:
+    print("KPSS Test failed")
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_eda`)
+
+## Gotchas
+
+- **Run ADF *and* KPSS, not just one.** ADF's null is "non-stationary"; KPSS's null is "stationary." They disagree in informative ways — the case worth catching is ADF failing to reject *and* KPSS rejecting, which points to a series that needs differencing.
+- **KPSS throws.** It emits an `InterpolationWarning` and can error on short or oddly-shaped series, which is why the real code guards it with `try/except`. ADF was the reliable one in practice.
+- **Stationarity mattered far less than expected for the ML model.** The project's whole conclusion was that XGBoost won *without* any transformation or differencing (`docs/takeaways.md`). The stationarity workflow is essential for SARIMA/ETS but the tree model happily learned from the raw non-stationary series.

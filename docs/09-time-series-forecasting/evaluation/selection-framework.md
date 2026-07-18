@@ -238,3 +238,43 @@ Before finalizing your model:
 - [ ] Considered computational requirements
 - [ ] Evaluated prediction interval coverage (if applicable)
 - [ ] Documented model selection rationale
+
+## How I did it
+
+The most concrete selection framework I built is my distribution demand-forecasting production system's — and it's not a flowchart, it's a **classifier that routes each item to a model mix**. Every Stock/Warehouse series is classified by two statistics (SBC classification):
+
+- **ADI** (Average Demand Interval): mean number of periods between non-zero sales — *how often* does it sell?
+- **CV²**: `(std / mean)²` of the non-zero quantities — *how variable* is the amount?
+
+The cutoffs `ADI = 1.32` and `CV² = 0.49` split items into four classes, and the class decides which model gets weight:
+
+| | CV² ≤ 0.49 (consistent qty) | CV² > 0.49 (variable qty) |
+|---|---|---|
+| **ADI ≤ 1.32** (sells often) | **Smooth** — LightGBM / ARIMA lean | **Erratic** — Two-Stage handles the variance |
+| **ADI > 1.32** (sells rarely) | **Intermittent** — Croston's specialty | **Lumpy** — Two-Stage for zero-inflation |
+
+Source: `demand-forecast/docs/technical_summary.md` (private distribution-forecasting repo; SBC classification) and `src/features/demand_patterns.py` (simplified reconstruction)
+
+```python
+def sbc_classify(demand):
+    nz = demand[demand > 0]
+    adi = len(demand) / len(nz)                 # avg periods between sales
+    cv2 = (nz.std() / nz.mean()) ** 2           # variability of nonzero qty
+    if   adi <= 1.32 and cv2 <= 0.49: return 'SMOOTH'
+    elif adi <= 1.32 and cv2 >  0.49: return 'ERRATIC'
+    elif adi >  1.32 and cv2 <= 0.49: return 'INTERMITTENT'
+    else:                             return 'LUMPY'
+```
+
+The [Distribution Feature Engineering notebook](../notebooks/distribution-feature-engineering-demo.ipynb) runs this classifier on synthetic weekly series so you can see ADI/CV² land items in each quadrant.
+
+**School-project framework — qualitative.** The senior project's version was a decision *narrative* rather than a router: apply transforms only when diagnostics justify it, and prefer the model that empirically wins the sweep. From `docs/takeaways.md`:
+
+> "Transformations should be applied selectively based on diagnostic tests rather than by default."
+
+## Gotchas
+
+- **Classify before you model.** The big lesson from production: a steady-selling item and a sporadic one should *not* be forecast the same way. SBC turns "which model when" into a computed label instead of a judgment call — the qualitative senior-project framework couldn't do that.
+- **Intermittent demand breaks the usual toolkit.** For high-zero series, MAPE is undefined and plain ARIMA/ETS forecast a smooth line through data that's mostly zeros. That's why the intermittent/lumpy classes route to Croston and a Two-Stage (P(demand>0) × E[qty | demand>0]) model.
+- **The cutoffs (1.32, 0.49) are the standard SBC thresholds**, not tuned per client — a reminder that some of the framework is established method, not something to re-derive each time.
+- **Selection is per-item, not per-dataset.** The school sweep picks one best combo for the whole series; production picks a model *mix per Stock/Warehouse*. On a heterogeneous catalog, one global winner is the wrong abstraction.

@@ -155,3 +155,55 @@ For data with multiple seasonal patterns (e.g., daily and weekly), consider:
 | Complexity | Simpler | More complex |
 | Use case | Non-seasonal data | Seasonal data |
 | Fitting time | Faster | Slower |
+
+## How I did it
+
+SARIMA was the most involved of the statistical models. `run_sarima` picks a seasonal period from the data length, uses `pmdarima.auto_arima` to search orders, fits the chosen model with statsmodels `ARIMA` (using `seasonal_order`), and — importantly — guards against two failure modes: a flat-line forecast and an outright fit exception.
+
+```python
+def run_sarima(train, test):
+    # Pick a seasonal period from series length
+    s_values = [7, 12, 30, 365] if len(train) >= 730 else \
+               [7, 12, 30] if len(train) >= 365 else \
+               [7] if len(train) >= 52 else [12]
+    best_s = s_values[0]
+
+    try:
+        from pmdarima import auto_arima
+        auto_model = auto_arima(
+            train['Qty'], start_p=0, start_q=0, max_p=3, max_q=3, max_d=2,
+            start_P=0, start_Q=0, max_P=2, max_Q=2, max_D=1,
+            m=best_s, seasonal=True, stepwise=True,
+            error_action='ignore', suppress_warnings=True)
+        best_order = auto_model.order
+        best_seasonal_order = auto_model.seasonal_order
+    except ImportError:
+        best_order = (1, 1, 1)
+        best_seasonal_order = (1, 1, 1, best_s)
+
+    try:
+        model = ARIMA(train['Qty'], order=best_order,
+                      seasonal_order=best_seasonal_order)
+        sarima_model = model.fit()
+        forecast = sarima_model.forecast(steps=len(test))
+
+        # Guard: reject a flat-line forecast, retry with different orders
+        if np.std(forecast) < 1e-6 * np.std(train['Qty']):
+            model = ARIMA(train['Qty'], order=(2, 1, 2),
+                          seasonal_order=(1, 1, 1, best_s))
+            forecast = model.fit().forecast(steps=len(test))
+    except Exception as e:
+        forecast = np.array([train['Qty'].iloc[-1]] * len(test))  # naive fallback
+    return forecast, run_time, (best_order, best_seasonal_order)
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_sarima`)
+
+The [Senior Project Pipeline notebook](../notebooks/senior-project-pipeline.ipynb) runs SARIMA against the synthetic series (with a fixed order for speed instead of the `auto_arima` search). In my distribution demand-forecasting production system, ARIMA is one of four ensemble members and uses auto-ARIMA per stock — it tends to earn its weight on the *smooth* SBC class where trends are clean.
+
+## Gotchas
+
+- **`auto_arima` is the slow part of the whole pipeline.** With `m=365`, the seasonal search is very expensive — this is why the notebook fixes the order and why weekly aggregation (smaller `m`) was often the practical choice.
+- **SARIMA can silently predict a flat line.** When the search lands on a degenerate model, `forecast()` returns a near-constant series. The `np.std(forecast) < 1e-6 * np.std(train)` check catches that and retries with `(2,1,2)(1,1,1,s)`; without it you get a "model" that's just a horizontal line.
+- **Always wrap the fit.** SARIMA fits throw on ill-conditioned data far more than ETS does, so the code falls back to a naive forecast rather than crashing the sweep.
+- **The project has no standalone plain-ARIMA function** — see the [ARIMA page](arima.md). SARIMA with `seasonal_order` was the only ARIMA-family model actually implemented.

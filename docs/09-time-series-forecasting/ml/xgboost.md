@@ -210,3 +210,47 @@ Key insights:
 3. **Time-based validation**: Never use random splits for time series
 4. **Monitor overfitting**: Compare train and validation errors
 5. **Consider ensemble**: Combine XGBoost with statistical methods
+
+## How I did it
+
+XGBoost was the winning model in the senior project. `run_xgboost` drops non-numeric/ID columns, standard-scales the features, and (optionally) tunes hyperparameters with `RandomizedSearchCV` over a **`TimeSeriesSplit`** — the CV strategy matters as much as the model:
+
+```python
+def run_xgboost(train_features, test_features, tune_hyperparams=False):
+    drop_cols = ['Qty'] + [c for c in train_features.columns
+                           if c != 'Qty' and (c == 'StockID'
+                           or train_features[c].dtype == 'object')]
+    X_train = train_features.drop(drop_cols, axis=1, errors='ignore').select_dtypes('number')
+    X_test  = test_features.drop(drop_cols, axis=1, errors='ignore').select_dtypes('number')
+
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled  = scaler.transform(X_test)
+
+    if tune_hyperparams and len(X_train) > 30:
+        tscv = TimeSeriesSplit(n_splits=3)             # time-aware CV
+        search = RandomizedSearchCV(
+            xgb.XGBRegressor(objective='reg:squarederror'),
+            param_grid, n_iter=10, scoring='neg_mean_absolute_error',
+            cv=tscv, random_state=42, n_jobs=-1)
+        search.fit(X_train_scaled, y_train)
+        model = search.best_estimator_
+    else:
+        model = xgb.XGBRegressor(objective='reg:squarederror', n_estimators=100)
+        model.fit(X_train_scaled, y_train)
+
+    return model.predict(X_test_scaled), run_time, model
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_xgboost`)
+
+The [Senior Project Pipeline notebook](../notebooks/senior-project-pipeline.ipynb) runs this against the synthetic series and shows XGBoost's forecast alongside the statistical models.
+
+**Production contrast — LightGBM, not XGBoost.** My distribution demand-forecasting system swapped XGBoost for **LightGBM** as its primary model, tuned with **Optuna** (Bayesian) instead of `RandomizedSearchCV`, and forecasts each horizon with a *separate direct model* rather than recursively (`docs/technical_summary.md`, "Direct LightGBM"). The README even documents that adding XGBoost back is a 4-file change (`README.md`, "Adding New Models") — the model is pluggable; the feature and ensemble layers don't care which tree library you use.
+
+## Gotchas
+
+- **`TimeSeriesSplit`, never `KFold`.** The single most important line is `cv=TimeSeriesSplit(...)`. Ordinary k-fold shuffles time and leaks the future into training — your CV score looks great and your holdout collapses.
+- **Drop ID columns explicitly.** `StockID` and other object columns had to be dropped by hand (`drop_cols`) or the model would treat an identifier as a numeric feature. `select_dtypes('number')` is the backstop.
+- **XGBoost won *without* transforming the target.** Best MAE (33.67) came from the raw series — trees don't need variance stabilization the way ARIMA/ETS do (`docs/takeaways.md`). Log/box-cox mostly *hurt* it.
+- **`early_stopping_rounds` moved.** In recent XGBoost it's a constructor arg / callback, not a `.fit()` kwarg — the older `model.fit(..., early_stopping_rounds=10)` pattern shown earlier on this page raises on current versions.

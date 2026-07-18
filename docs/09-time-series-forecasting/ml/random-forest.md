@@ -206,3 +206,17 @@ OOB error uses samples not included in each tree's bootstrap sample for validati
 3. **Use time-based CV**: Never randomly shuffle time series data
 4. **Feature engineering matters**: Random Forest performance depends on good lag and rolling features
 5. **Consider computation**: Random Forest can be memory-intensive with many features/samples
+
+## In my projects (honest note)
+
+I did **not** actually build a Random Forest forecaster in either project — so there's no real snippet to show here, and I'm not going to invent one.
+
+- The senior project's plan (`course-files/09-time-series-forecasting/time-series-forecasting/docs/outline.md`) listed Random Forest as a candidate method, and `docs/model_info.md` describes when RF excels, but the only tree-ensemble model that got *implemented* was XGBoost (`run_xgboost`). See the [XGBoost page](xgboost.md).
+- My distribution demand-forecasting production system uses gradient-boosted trees (**LightGBM**), not Random Forest, as its primary ML model. The two are close cousins (both tree ensembles), but the production choice was boosting, not bagging.
+
+Everything above the fold on this page is standard RF theory and the sklearn API — correct and useful, just not something I have project code behind. If you want the tree-model code I actually wrote, it's on the [XGBoost page](xgboost.md) (school project) and in the [Feature Engineering notebook](../notebooks/distribution-feature-engineering-demo.ipynb) context (production).
+
+## Gotchas
+
+- **RF vs boosting is a real fork, not a synonym.** When I reached for a tree ensemble, I chose boosting (XGBoost / LightGBM) both times because it edged out on accuracy for these demand series. RF's advantage is robustness/less tuning, not top-line accuracy here.
+- **Never random-split a time series for RF.** The same rule as every other model: time-based split only. RF's OOB score is *not* a valid time-series validation estimate because bootstrap sampling shuffles time order.

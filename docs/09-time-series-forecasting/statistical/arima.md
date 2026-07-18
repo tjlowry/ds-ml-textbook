@@ -152,3 +152,25 @@ lb_test = acorr_ljungbox(fitted.resid, lags=10)
 | Autocorrelation in residuals | Ljung-Box fails | Adjust p or q |
 | Poor fit | High AIC, bad diagnostics | Try different orders or different model |
 | Overfitting | Good training, poor test | Reduce model complexity |
+
+## How I did it
+
+Honest note: the senior project never wrote a *standalone* plain-ARIMA function. It went straight to SARIMA, using statsmodels' `ARIMA` class with a `seasonal_order` — a non-seasonal ARIMA is just that same call with the seasonal term set to `(0,0,0,0)`. The relevant fit lives inside `run_sarima`:
+
+```python
+from statsmodels.tsa.arima.model import ARIMA
+
+model = ARIMA(train['Qty'], order=best_order,
+              seasonal_order=best_seasonal_order)
+fitted = model.fit()
+forecast = fitted.forecast(steps=len(test))
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_sarima`)
+
+In my distribution demand-forecasting production pipeline, ARIMA *is* a first-class model (`src/models/arima_model.py`, auto-ARIMA per stock) and one of the four ensemble members. So the standalone-ARIMA treatment shows up in the production system, not the school project. See the full walkthrough on the [SARIMA page](sarima.md).
+
+## Gotchas
+
+- **Don't claim more than was built.** `docs/outline.md` listed ARIMA (and VAR, SVR, LSTM, Prophet, Random Forest) as candidate methods, but the implemented ARIMA-family model was SARIMA only. This page's general theory is textbook; the project-specific code is the SARIMA call above.
+- **`statsmodels` has two ARIMA entry points.** The project used `statsmodels.tsa.arima.model.ARIMA` (which accepts `seasonal_order`), not the older `SARIMAX` shown in some examples — they overlap but the newer `ARIMA` was the one actually wired in.

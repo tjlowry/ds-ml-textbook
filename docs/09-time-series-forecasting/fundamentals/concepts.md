@@ -68,3 +68,33 @@ Use when seasonal variations change proportionally with the level of the series 
 - **Horizon**: How far into the future to forecast
 - **Frequency**: How often observations are recorded (daily, weekly, etc.)
 - **Window**: A subset of consecutive observations used for calculations
+
+## How I did it
+
+Real series are rarely on a clean, regular grid — the synthetic generator I used deliberately injects missing values and ~3% dropped days precisely because the real retail export had the same messiness. The senior project's fix was a resampling utility: reindex onto a regular frequency, then interpolate the holes.
+
+```python
+def resample_time_series(df, qty_col, freq='D', method='linear'):
+    """Regularize an irregular series and interpolate missing values."""
+    regular_index = pd.date_range(start=df.index.min(),
+                                  end=df.index.max(), freq=freq)
+    regular_series = df[qty_col].reindex(regular_index)   # gaps -> NaN
+    if method in ('pad', 'ffill'):
+        filled = regular_series.ffill()
+    elif method == 'bfill':
+        filled = regular_series.bfill()
+    else:
+        filled = regular_series.interpolate(method=method)
+    out = pd.DataFrame(index=regular_index); out[qty_col] = filled
+    return out
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/resampling-utilities.py` (`resample_time_series`)
+
+My distribution demand-forecasting pipeline does the analogous thing at the aggregation step — daily transactions are summed into weekly totals and missing weeks are filled with zeros, because a gap in the calendar would silently corrupt every lag and rolling feature downstream (`demand-forecast/docs/technical_summary.md`, private distribution-forecasting repo, "Preprocessor").
+
+## Gotchas
+
+- **A DatetimeIndex is assumed everywhere.** The utility raises if the index isn't datetime; the very first preprocessing step in both projects is `pd.to_datetime` + `set_index`.
+- **Interpolation vs zero-fill is a domain decision.** For the retail sales series, linear interpolation of a missing day is reasonable. For intermittent distribution demand, a "missing" week almost always means *no sale* — so my distribution-forecasting pipeline fills with **zeros**, not interpolation. Interpolating there would invent demand that never happened.
+- **Regularize before EDA and before statistical models.** SARIMA/ETS need a fixed frequency; ACF/decomposition need no NaNs. Doing this first avoids a class of confusing downstream errors.

@@ -217,3 +217,25 @@ print(f"Recommended D: {D}")
 | Forgetting to invert | Forecasts don't match scale | Apply inverse transform |
 | Wrong seasonal period | Seasonality remains after diff | Check m value |
 | NaN handling | Errors in calculations | Use `.dropna()` |
+
+## How I did it
+
+Differencing was the fourth branch of `apply_transformations` — and notably the only transform in the sweep whose inverse is `None`:
+
+```python
+elif transformation_type == 'diff':
+    # Simple differencing
+    df_transformed['Qty'] = df_transformed['Qty'].diff().fillna(0)
+    # Note: inverse requires cumulative sum when forecasting
+    inverse_func = None
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`apply_transformations`)
+
+In practice the project mostly leaned on SARIMA's built-in `d` parameter for differencing rather than this manual branch, because inverting a manual difference back to the original scale requires the last pre-forecast value plus a cumulative sum.
+
+## Gotchas
+
+- **`inverse_func = None` is a landmine.** Every other transform returns a real inverse; `diff` returns `None`. The sweep in `main()` wraps the inverse call in `try/except` and falls back to the un-inverted forecast — which means a differenced forecast is silently evaluated on the *differenced* scale unless you rebuild the level yourself with a cumulative sum. That's why I preferred SARIMA's `d` (it inverts internally) over this branch.
+- **`.diff().fillna(0)` fabricates the first row.** The first difference is undefined; filling it with 0 invents a data point. Fine for a quick transform, wrong if that first row matters.
+- **Difference vs stationarity is the point.** Differencing is the go-to for *trend* non-stationarity; use *seasonal* differencing (`.diff(m)`) for seasonal non-stationarity, and don't over-difference (a big negative ACF spike at lag 1 is the warning sign).

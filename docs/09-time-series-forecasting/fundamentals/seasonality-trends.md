@@ -130,3 +130,40 @@ result = stl.fit()
 - **Weak or irregular seasonality**: ML models may capture patterns better
 - **Multiple seasonalities**: Consider Facebook Prophet or feature engineering for ML
 - **Changing seasonality**: Use shorter training windows or adaptive methods
+
+## How I did it
+
+The senior project's EDA did an additive decomposition with `period=7` (daily data, weekly cycle), wrapped in `try/except` because decomposition fails on series that are too short for the chosen period:
+
+```python
+try:
+    decomposition = seasonal_decompose(df['Qty'], model='additive', period=7)
+    # ... plot observed / trend / seasonal / resid ...
+except:
+    print("Seasonal decomposition failed - may need longer time series")
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_eda`)
+
+Rather than hard-coding the seasonal period, the project also had a helper that *detects* it from the autocorrelation function — it picks the lags where the ACF has local maxima above a threshold, and falls back to sensible defaults (`[7, 14, 30]` for daily, `[4, 13, 52]` for weekly) when nothing clears the bar:
+
+```python
+def detect_seasonality_periods(time_series, max_lag=None, n_periods=3,
+                               correlation_threshold=0.1):
+    clean_series = time_series.dropna()
+    if max_lag is None:
+        max_lag = min(int(len(clean_series) / 3), 365)
+    acf_values = acf(clean_series, nlags=max_lag, fft=True)
+    # local maxima in the ACF, excluding lag 0
+    local_max = np.where((acf_values[1:-1] > acf_values[:-2]) &
+                         (acf_values[1:-1] > acf_values[2:]))[0] + 1
+    # ... rank peaks by correlation strength, pad with common periods ...
+```
+
+Source: `forecasting-pipeline.py` (`detect_seasonality_periods`)
+
+## Gotchas
+
+- **Decomposition throws on short series.** `seasonal_decompose` needs at least two full periods; below that it errors, hence the `try/except`. The fallback message ("may need longer time series") is the tell.
+- **`period=7` was hard-coded in the decomposition** even though `detect_seasonality_periods` existed. When the retail data turned out to have *weak* weekly seasonality, the assumed 7-day period wasn't doing much work — which is exactly why Seasonal Naive underperformed plain Naive (`docs/takeaways.md`).
+- **Additive vs multiplicative isn't automatic.** The code always used `model='additive'`. If seasonal swings grow with the level, that's the wrong choice and you should log-transform first (which turns multiplicative seasonality into additive).

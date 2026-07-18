@@ -226,3 +226,44 @@ From a retail forecasting comparison:
 | Naive | 52.33 | 71.22 | None |
 
 XGBoost achieved the lowest MAE and RMSE, indicating best overall performance.
+
+## How I did it
+
+**School project — MAE / RMSE / MAPE.** `evaluate_forecasts` builds a per-model metrics table, and MAPE is the only one that needs care (division by zero):
+
+```python
+def mean_absolute_percentage_error(y_true, y_pred):
+    """Calculate MAPE safely handling zero values"""
+    y_true, y_pred = np.array(y_true), np.array(y_pred)
+    mask = y_true != 0                 # skip zeros to avoid div-by-zero
+    if not np.any(mask):
+        return np.nan
+    return np.mean(np.abs((y_true[mask] - y_pred[mask]) / y_true[mask])) * 100
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`evaluate_forecasts`, `mean_absolute_percentage_error`)
+
+**Production — MASE is the headline metric.** The school project stopped at MAE/RMSE/MAPE. My distribution demand-forecasting system added **MASE** (Mean Absolute Scaled Error) and made it the primary metric, because for intermittent demand (lots of zeros) MAPE is undefined/misleading:
+
+```python
+def mase(y_true, y_pred, y_train=None, seasonality=1, frequency='monthly'):
+    """THE ONLY appropriate metric for intermittent demand.
+    MASE < 0.8 = good; < 1.0 = beats seasonal naive; > 1.0 = worse than naive."""
+    if seasonality == 1:
+        seasonality = 52 if frequency == 'weekly' else 12
+    # scale = MAE of an in-sample seasonal-naive forecast
+    naive_errors = np.abs(y_train[seasonality:] - y_train[:-seasonality])
+    scale = np.mean(naive_errors) if len(naive_errors) > 0 else 1.0
+    return np.mean(np.abs(y_true - y_pred)) / scale
+```
+
+Source: `demand-forecast/src/evaluation/metrics.py` (private distribution-forecasting repo; `mase`)
+
+That same module also tracks business-facing diagnostics the school project never had — `under_forecast_ratio` and `zero_forecast_ratio` — written to directly measure two failures of the old ERP system (75% under-forecasting, 30% zero-forecast gap).
+
+## Gotchas
+
+- **MAPE dies on zeros — and demand data is full of them.** Both projects mask zeros in MAPE, but masking changes *which* points you're scoring. For genuinely intermittent series, MAPE isn't just fragile, it's the wrong tool; MASE is the fix because it divides by a seasonal-naive scale instead of by the actuals.
+- **MASE needs the training series.** The scale factor is the in-sample MAE of a seasonal-naive forecast, so you must pass `y_train`, not just `y_true`/`y_pred`. Get the seasonality wrong (12 vs 52) and the scale — and every MASE number — shifts.
+- **Read MASE as "vs baseline."** < 1.0 beats seasonal naive, < 0.8 is genuinely good, > 1.0 means your model lost to "same period last year." It bakes the baseline comparison the school project did by hand into a single number.
+- **RMSE vs MAE changes the winner.** RMSE punishes big misses; with ~2% injected outliers in the retail series, model rankings can flip depending on which you optimize. Pick the metric that matches the business cost *before* you compare.

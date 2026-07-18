@@ -113,6 +113,9 @@ nav:
       - Metrics: 09-time-series-forecasting/evaluation/metrics.md
       - Model Comparison: 09-time-series-forecasting/evaluation/comparison.md
       - Selection Framework: 09-time-series-forecasting/evaluation/selection-framework.md
+    - Notebooks:
+      - Senior Project Pipeline: 09-time-series-forecasting/notebooks/senior-project-pipeline.ipynb
+      - Distribution Feature Engineering Demo: 09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb
 
   - Appendix:
     - Full Textbooks: appendix/full-textbooks.md

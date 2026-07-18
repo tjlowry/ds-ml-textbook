@@ -110,3 +110,21 @@ Choose square root when:
 3. Skewness is moderate (1-2 range)
 4. Working with count data
 5. You want a reversible transformation that's easy to interpret
+
+## How I did it
+
+Square root was the simplest branch of `apply_transformations` — `np.sqrt` forward, `np.square` back:
+
+```python
+elif transformation_type == 'sqrt':
+    df_transformed['Qty'] = np.sqrt(df_transformed['Qty'])
+    inverse_func = lambda x: np.square(x)
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`apply_transformations`)
+
+## Gotchas
+
+- **Sqrt handles zeros but not negatives.** `sqrt(0) = 0` is fine, but the branch has no offset logic, so a negative value would produce `NaN`. On the sales/demand data this never came up (quantities are non-negative), but it's an unguarded edge.
+- **This was the transform that actually helped a statistical model.** Per `docs/takeaways.md`, square root gave a *moderate* boost to SARIMA and ETS — the one place in the whole sweep where transforming paid off, and only for the statistical models, not XGBoost.
+- **`np.square` inverse is exact and cheap** — no lambda-parameter bookkeeping like Box-Cox, which is part of why it's a safe first thing to try for mild skew.

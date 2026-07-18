@@ -145,3 +145,53 @@ print(f"Optimal weights: SARIMA={weights[0]:.2f}, XGBoost={weights[1]:.2f}")
 - **Baselines matter**—if you can't beat naive, something's wrong
 - **Ensemble methods** often provide the best of both worlds
 - **Domain knowledge** should guide model selection alongside empirical performance
+
+## How I did it
+
+**School project — a brute-force sweep.** The comparison *was* the project: `main()` loops over 3 aggregation levels x 4 transformations x 5 models, records MAE/RMSE for every cell, and searches for the single best combination:
+
+```python
+aggregation_levels = ['D', 'W', 'M']
+transformations = [None, 'log', 'boxcox', 'sqrt']
+model_names = ['Naive', 'Seasonal Naive', 'SARIMA', 'ETS', 'XGBoost']
+
+# ... after filling aggregation_results[agg][transform] with a metrics table ...
+best_overall = {"MAE": float('inf'), "RMSE": float('inf')}
+for metric in ['MAE', 'RMSE']:
+    for agg_level in aggregation_levels:
+        for transform in transformations:
+            for model in model_names:
+                value = aggregation_results[agg_level][transform_name].loc[model, metric]
+                if value < best_overall[metric]:
+                    best_overall[metric] = value
+                    best_combo[metric] = {'Aggregation': agg_level, 'Model': model,
+                                          'Transform': transform_name, 'Value': value}
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`main`)
+
+The [Senior Project Pipeline notebook](../notebooks/senior-project-pipeline.ipynb) runs a compact version of this sweep (a transform x model MAE table) on synthetic data.
+
+**Production — an auto-tuned weighted ensemble instead of "pick one."** My distribution demand-forecasting system doesn't crown a single winner; it *combines* the four models with weights optimized on validation data via `scipy.optimize.minimize`, with per-model min/max bounds so no single model can dominate or vanish:
+
+```python
+def objective(weights):
+    combined = np.dot(pred_matrix, weights)
+    base_loss = np.sqrt(np.mean((combined - y_true) ** 2))   # RMSE
+    if self.l2_regularization > 0:                            # discourage extremes
+        base_loss += self.l2_regularization * np.sum((weights - 1.0/n_models) ** 2)
+    return base_loss
+
+constraints = {'type': 'eq', 'fun': lambda w: np.sum(w) - 1.0}   # weights sum to 1
+bounds = [(self.min_weight, self.max_weight)] * n_models          # e.g. 0.05..0.80
+result = minimize(objective, x0, method='SLSQP', bounds=bounds, constraints=constraints)
+```
+
+Source: `demand-forecast/src/ensemble/weighted.py` (private distribution-forecasting repo; `WeightedEnsemble._optimize_weights`)
+
+## Gotchas
+
+- **The sweep is combinatorial and slow.** 3 x 4 x 5 = 60 fits per run, and each SARIMA does an `auto_arima` search — the aggregation loop is what made the full run take real time. Narrow the grid once you see which cells matter.
+- **"Best on the holdout" can still be luck.** With a single 3-month holdout, the winning combo is one draw. The production ensemble guards against overfitting-to-one-test-set with min/max weight **bounds** and optional **L2 regularization** toward equal weights — exactly the discipline a single-holdout sweep lacks.
+- **Manual/equal weights vs optimized weights.** The school project's `create_weighted_ensemble` used equal (or hand-set) weights; production *learns* them per stock. Equal-weight ensembling is a fine baseline, but auto-tuning is where the ensemble started beating its members.
+- **Compare on the *original* scale.** In the sweep, transformed forecasts are inverted before scoring (`original_test = df.loc[test.index]`) — comparing a log-space forecast against raw actuals would make that model look artificially great.

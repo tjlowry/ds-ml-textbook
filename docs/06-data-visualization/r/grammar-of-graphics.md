@@ -56,6 +56,8 @@ ggplot(mpg, aes(x = class, y = hwy)) +
   stat_summary(fun = mean, geom = "bar")
 ```
 
+![Bar chart showing mean highway MPG for each vehicle class computed with stat_summary](img/grammar-of-graphics-02.png)
+
 The transformation layer answers: **How should we process the data?**
 
 ### 3. Scales
@@ -74,6 +76,8 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   scale_x_continuous(limits = c(1, 7)) +
   scale_color_brewer(palette = "Set1")
 ```
+
+![Scatter plot of displacement vs highway MPG colored by class with a constrained x-axis and Set1 color palette](img/grammar-of-graphics-03.png)
 
 The scale layer answers: **How do data values become visual values?**
 
@@ -102,6 +106,8 @@ ggplot(mpg, aes(x = class)) +
   coord_flip()
 ```
 
+![Bar chart of vehicle class counts with coordinates flipped so bars run horizontally](img/grammar-of-graphics-04.png)
+
 The coordinate layer answers: **How is position space organized?**
 
 ### 5. Geometric Elements (Marks)
@@ -125,6 +131,8 @@ ggplot(economics, aes(x = date, y = unemploy)) +
 ggplot(economics, aes(x = date, y = unemploy)) +
   geom_point()   # Scatter plot
 ```
+
+![Scatter plot of unemployment count over time from the economics dataset](img/grammar-of-graphics-05.png)
 
 The geometry layer answers: **What visual marks represent the data?**
 
@@ -155,6 +163,8 @@ ggplot(mpg, aes(
   geom_point()
 ```
 
+![Scatter plot of displacement vs highway MPG with color mapped to class, size to cylinders, and transparency to model year](img/grammar-of-graphics-06.png)
+
 The aesthetic layer answers: **How do data variables map to visual properties?**
 
 ### 7. Guides (Legends and Axes)
@@ -177,6 +187,8 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   )
 ```
 
+![Scatter plot of displacement vs highway MPG colored by class with a two-column legend and custom axis labels](img/grammar-of-graphics-07.png)
+
 The guide layer answers: **How do readers interpret the visual encodings?**
 
 ### Faceting (Bonus Layer)
@@ -194,6 +206,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point() +
   facet_grid(drv ~ cyl)
 ```
+
+![Scatter plot of displacement vs highway MPG faceted by drivetrain and cylinder count](img/grammar-of-graphics-08.png)
 
 The facet layer answers: **How should we split the data into subplots?**
 
@@ -241,6 +255,8 @@ ggplot(
   theme_minimal()
 ```
 
+![Scatter plot of displacement vs highway MPG colored by class with a linear trend line, constrained scales, faceted by year, and a minimal theme](img/grammar-of-graphics-09.png)
+
 ## Design Principles from the Grammar
 
 ### Principle 1: Separate Data from Representation
@@ -253,6 +269,8 @@ p1 <- ggplot(mpg, aes(x = class)) + geom_bar()
 p2 <- ggplot(mpg, aes(x = class)) + geom_bar() + coord_polar()
 p3 <- ggplot(mpg, aes(x = class)) + geom_bar() + coord_flip()
 ```
+
+![Bar chart of vehicle class counts with coordinates flipped](img/grammar-of-graphics-10.png)
 
 ### Principle 2: Use Appropriate Scales
 
@@ -269,6 +287,8 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
   geom_point() +
   scale_color_brewer(palette = "Set1")
 ```
+
+![Scatter plot of displacement vs highway MPG colored by class using a Set1 color brewer palette](img/grammar-of-graphics-11.png)
 
 ### Principle 3: Layer Information
 
@@ -291,6 +311,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   # Layer 4: Annotation
   annotate("text", x = 6, y = 35, label = "2-seaters")
 ```
+
+![Scatter plot of displacement vs highway MPG with a trend line, 2-seater cars highlighted in red, and a text annotation](img/grammar-of-graphics-12.png)
 
 ### Principle 4: Encode the Most Important Variables with the Most Effective Channels
 
@@ -320,6 +342,8 @@ ggplot(mpg, aes(
 )) +
   geom_point()
 ```
+
+![Scatter plot of displacement vs highway MPG with point position encoding the primary relationship and color encoding vehicle class](img/grammar-of-graphics-13.png)
 
 ## The Grammar in Other Libraries
 
@@ -393,6 +417,8 @@ library(patchwork)
 p1 + p2
 ```
 
+![Scatter plot of displacement vs highway MPG for compact cars only, with a linear trend line](img/grammar-of-graphics-14.png)
+
 ### Pattern 2: Small Multiples
 
 ```r
@@ -401,6 +427,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~ class, scales = "free")
 ```
+
+![Scatter plot of displacement vs highway MPG with linear trend lines, faceted by vehicle class with free scales](img/grammar-of-graphics-15.png)
 
 ### Pattern 3: Layered Annotations
 
@@ -412,6 +440,8 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   annotate("text", x = 6, y = mean(mpg$hwy) + 2,
            label = paste("Mean:", round(mean(mpg$hwy), 1)))
 ```
+
+![Scatter plot of displacement vs highway MPG with a trend line, a dashed mean reference line, and a text annotation showing the mean highway MPG](img/grammar-of-graphics-16.png)
 
 ## Summary
 

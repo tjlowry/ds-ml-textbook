@@ -111,3 +111,29 @@ In practice, seasonal naive sometimes outperforms complex models on highly seaso
 > "Seasonal Naive approach performed significantly worse than even simple Naive forecasting, suggesting weak weekly seasonality patterns in the data."
 
 This finding highlights the importance of understanding your data's characteristics before selecting a forecasting method.
+
+## How I did it
+
+Both naive baselines were a single small function. Last-value naive is one line; seasonal naive walks back one weekly cycle per horizon step:
+
+```python
+def run_naive_forecast(train, test):
+    # Last value forecast
+    naive_forecast = np.array([train['Qty'].iloc[-1]] * len(test))
+
+    # Seasonal naive (same day last week)
+    seasonal_naive = []
+    for i in range(len(test)):
+        seasonal_naive.append(train['Qty'].iloc[-(7 + (i % 7))])
+    return naive_forecast, seasonal_naive
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_naive_forecast`)
+
+My distribution demand-forecasting production pipeline keeps a seasonal-naive path too, but as a **fallback** (`_apply_seasonal_naive_fallback` in `src/pipeline.py`) for stocks where the trained models can't beat it — and it measures everything in MASE, which is literally "how much better than seasonal naive is this?" (MASE < 1.0 means you beat the baseline). The baseline is baked into the metric.
+
+## Gotchas
+
+- **Seasonal naive is *not* a safe default.** The headline finding was that it did *worse* than plain last-value naive, because the retail series had weak weekly seasonality. If the season you assume isn't really there, seasonal naive just injects noise.
+- **Index the seasonal lookback carefully.** `iloc[-(7 + (i % 7))]` reaches back exactly one weekly cycle and cycles through the days — off-by-one here silently shifts the whole forecast by a day.
+- **Always ship a baseline.** In practice "beat naive" is the bar. The production system enforces this by reporting MASE against seasonal naive for every single stock.

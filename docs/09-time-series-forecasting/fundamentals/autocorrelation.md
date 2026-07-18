@@ -127,3 +127,23 @@ plot_acf(residuals, lags=30)
 ```
 
 If significant autocorrelation remains in residuals, the model hasn't captured all the temporal structure.
+
+## How I did it
+
+The senior project produced stacked ACF/PACF plots as part of EDA, dropping NaNs first (ACF/PACF choke on missing values):
+
+```python
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+plot_acf(df['Qty'].dropna(), ax=ax1)
+plot_pacf(df['Qty'].dropna(), ax=ax2)
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`run_eda`)
+
+Beyond eyeballing the plots, I used the ACF *programmatically* to pick seasonal periods — finding local maxima and ranking them by correlation strength (see `detect_seasonality_periods` on the [Seasonality & Trends](seasonality-trends.md) page). That turns "read the spikes off the chart" into an automatic step.
+
+## Gotchas
+
+- **Drop NaNs first.** `plot_acf` / `plot_pacf` and `acf()` error on missing values; the real code calls `.dropna()` every time. If your series has gaps, regularize and interpolate *before* looking at autocorrelation.
+- **`fft=True` for long series.** In `detect_seasonality_periods` the ACF is computed with `acf(..., fft=True)` — much faster once `max_lag` gets into the hundreds.
+- **A slowly-decaying ACF is a differencing signal, not a model choice.** On the raw (non-stationary) retail series the ACF stayed high for many lags; that's the cue to difference (or, for the tree model, to just add lag features and move on).

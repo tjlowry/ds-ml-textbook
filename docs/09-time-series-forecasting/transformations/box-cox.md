@@ -168,3 +168,32 @@ Apply Box-Cox transformation only when:
 4. **Model diagnostics** show non-normal residuals
 
 If the optimal λ is close to 1, the transformation isn't adding value—use the original data.
+
+## How I did it
+
+The Box-Cox branch of `apply_transformations` handles the "strictly positive" requirement by shifting the series up if needed, then builds the inverse *manually* from the fitted lambda (rather than relying on `scipy.special.inv_boxcox`):
+
+```python
+elif transformation_type == 'boxcox':
+    # Need to ensure all values are positive
+    min_val = df_transformed['Qty'].min()
+    if min_val <= 0:
+        df_transformed['Qty'] = df_transformed['Qty'] - min_val + 1
+
+    transformed_data, lambda_param = stats.boxcox(df_transformed['Qty'].values)
+    df_transformed['Qty'] = transformed_data
+
+    # Create inverse function manually
+    if lambda_param == 0:
+        inverse_func = lambda x: np.exp(x)
+    else:
+        inverse_func = lambda x: np.power((x * lambda_param + 1), 1 / lambda_param)
+```
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` (`apply_transformations`)
+
+## Gotchas
+
+- **The offset breaks the inverse.** When `min_val <= 0` the code shifts by `-min_val + 1` before transforming — but the manually-built `inverse_func` never *subtracts that offset back off*. So a Box-Cox forecast on shifted data comes back on the wrong scale. It happened to be harmless on this strictly-positive sales data, but it's a real latent bug (contrast the [Log page](log.md), where the offset is likewise dropped, and the [Yeo-Johnson page](yeo-johnson.md), which sidesteps the whole offset problem).
+- **`lambda == 0` needs its own branch.** At λ=0 Box-Cox *is* the log transform, and `np.power((x*0+1), 1/0)` divides by zero — hence the explicit `if lambda_param == 0` case.
+- **λ is sensitive to outliers.** With ~2% injected outliers in the series, the fitted lambda wobbles; `docs/takeaways.md` concluded transforms should be applied "selectively based on diagnostic tests rather than by default," and Box-Cox in particular didn't beat the untransformed series for the tree model.

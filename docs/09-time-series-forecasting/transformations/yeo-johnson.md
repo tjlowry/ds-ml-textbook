@@ -158,3 +158,18 @@ For time series forecasting, you typically want `standardize=False` to preserve 
 | Contains negatives | Yeo-Johnson |
 | Need interpretable λ | Box-Cox (λ values more intuitive) |
 | General purpose | Yeo-Johnson |
+
+## In my projects (honest note)
+
+Neither project actually implemented Yeo-Johnson, so there's no real snippet here. The senior project's `apply_transformations` supported only `log`, `boxcox`, `sqrt`, and `diff` — Yeo-Johnson shows up only as a *conceptual* mention in the project notes:
+
+> "Yeo-Johnson Transformation — Modern alternative to Box-Cox that works with negative values. Automatically finds optimal lambda parameter. Often produces better results for complex distributions."
+
+Source: `course-files/09-time-series-forecasting/time-series-forecasting/docs/takeaways.md`
+
+The code above (scipy `yeojohnson`, sklearn `PowerTransformer`) is the standard API, included for completeness — just flagging that it's reference material, not something I have project code behind.
+
+## Gotchas
+
+- **Where it *would* have earned its keep:** the [Differencing](differencing.md) branch produces negative values, and Box-Cox refuses negatives (needs an offset). Yeo-Johnson handles negatives natively, so "transform the differenced series" is the one spot in this project where reaching for Yeo-Johnson over Box-Cox would have been the cleaner call.
+- **`PowerTransformer(standardize=True)` also rescales.** For forecasting you usually want `standardize=False` so the output keeps an interpretable scale — otherwise you've bundled a z-score into your transform.
