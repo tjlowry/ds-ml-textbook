@@ -36,7 +36,7 @@ def test_water_column_height():
 def test_pressure_gain_from_water_height():
     assert pressure_gain_from_water_height(0) == 0
     # 998.2 * 9.80665 * 30 / 1000
-    assert pressure_gain_from_water_height(30) == pytest.approx(293.71, abs=0.01)
+    assert pressure_gain_from_water_height(30) == pytest.approx(293.67, abs=0.01)
 ```
 
 Run it with `pytest`, and a green dot per test means the math still holds; a failure prints the
