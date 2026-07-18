@@ -35,7 +35,7 @@ byui = pd.read_sql_query(
 )
 ```
 
-Source: `~/Projects/school/byui-undergrad/DS_250/Project 3/project3.py` (my own, DS 250).
+Source: `~/Projects/school/byui-undergrad/DS_250/Project 3/project3.qmd` (my own, DS 250).
 
 The database does the join and filter (fast, and it never loads unrelated rows into
 memory); pandas just receives the finished result set. This is the workflow the
