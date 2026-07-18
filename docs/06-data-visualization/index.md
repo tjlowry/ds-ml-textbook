@@ -1,29 +1,10 @@
 # Data Visualization
 
-## Overview
+Visualization across the stacks I've actually used: Python, R (DS 350), and BI tools.
 
-Creating effective visualizations to communicate insights from data.
+- **Python:** [Matplotlib](python/matplotlib.md), [Seaborn](python/seaborn.md), [Plotly](python/plotly.md)
+- **R:** [ggplot2](r/ggplot2.md), [Grammar of Graphics](r/grammar-of-graphics.md)
+- **BI:** [DAX](bi/dax.md), [Dashboards](bi/dashboards.md)
+- **Best practices:** [Chart Selection](best-practices/chart-selection.md), [Design Principles](best-practices/design-principles.md)
 
-## Topics
-
-### Python Visualization
-- [Matplotlib Fundamentals](python/matplotlib.md)
-- [Seaborn for Statistical Plots](python/seaborn.md)
-- [Plotly for Interactive Viz](python/plotly.md)
-
-### R Visualization
-- [ggplot2 Fundamentals](r/ggplot2.md)
-- [Grammar of Graphics](r/grammar-of-graphics.md)
-
-### Business Intelligence
-- [DAX Fundamentals](bi/dax.md)
-- [Dashboard Design](bi/dashboards.md)
-
-### Best Practices
-- [Choosing the Right Chart](best-practices/chart-selection.md)
-- [Design Principles](best-practices/design-principles.md)
-
-## Source Materials
-- DS 350 R Visualization
-- Visualization Projects
-- DAX Documentation
+Raw course material: `course-files/06-data-visualization/` (local-only).

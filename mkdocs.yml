@@ -1,5 +1,5 @@
 site_name: Data Science & Machine Learning Textbook
-site_description: A comprehensive reference compiled from coursework and notes
+site_description: My personal DS/ML reference, built from my own coursework and projects
 site_author: Tyler Lowry
 
 theme:
@@ -44,30 +44,18 @@ plugins:
   - search
 
 nav:
-  - Home: README.md
+  - Home: index.md
+  - Roadmap: roadmap.md
 
-  - 1. Introduction:
-    - Overview: 01-introduction/index.md
-    - What is Data Science?: 01-introduction/what-is-data-science.md
-    - Workflow: 01-introduction/workflow.md
-    - Python Setup: 01-introduction/python-setup.md
-    - Tools & Environment: 01-introduction/tools-environment.md
-
-  - 2. Linear Algebra:
-    - Overview: 02-linear-algebra/index.md
-    - Vectors: 02-linear-algebra/vectors.md
-    - Matrices: 02-linear-algebra/matrices.md
-    - Matrix Operations: 02-linear-algebra/matrix-operations.md
-    - Eigenvalues & Eigenvectors: 02-linear-algebra/eigenvalues-eigenvectors.md
-    - Linear Transformations: 02-linear-algebra/linear-transformations.md
-    - Applications in ML: 02-linear-algebra/applications-ml.md
-
-  - 3. Statistics:
+  - Statistics:
     - Overview: 03-statistics/index.md
     - Descriptive:
       - Central Tendency: 03-statistics/descriptive/central-tendency.md
       - Spread: 03-statistics/descriptive/spread.md
       - Distributions: 03-statistics/descriptive/distributions.md
+    - Probability:
+      - Fundamentals: 03-statistics/probability/fundamentals.md
+      - Bayes Theorem: 03-statistics/probability/bayes.md
     - Inference:
       - Hypothesis Testing: 03-statistics/inference/hypothesis-testing.md
       - Confidence Intervals: 03-statistics/inference/confidence-intervals.md
@@ -77,32 +65,8 @@ nav:
       - Multiple Linear: 03-statistics/regression/multiple-linear.md
       - Logistic: 03-statistics/regression/logistic.md
       - Assumptions: 03-statistics/regression/assumptions.md
-    - Probability:
-      - Fundamentals: 03-statistics/probability/fundamentals.md
-      - Bayes Theorem: 03-statistics/probability/bayes.md
 
-  - 4. Data Wrangling:
-    - Overview: 04-data-wrangling/index.md
-    - Pandas Intro: 04-data-wrangling/pandas-intro.md
-    - Data I/O: 04-data-wrangling/data-io.md
-    - Missing Data: 04-data-wrangling/missing-data.md
-    - Data Cleaning: 04-data-wrangling/data-cleaning.md
-    - Transformation: 04-data-wrangling/transformation.md
-    - Merging & Joining: 04-data-wrangling/merging-joining.md
-    - Reshaping: 04-data-wrangling/reshaping.md
-    - Feature Engineering: 04-data-wrangling/feature-engineering.md
-
-  - 5. Exploratory Data Analysis:
-    - Overview: 05-exploratory-data-analysis/index.md
-    - EDA Process: 05-exploratory-data-analysis/eda-process.md
-    - Univariate Analysis: 05-exploratory-data-analysis/univariate.md
-    - Bivariate Analysis: 05-exploratory-data-analysis/bivariate.md
-    - Multivariate Analysis: 05-exploratory-data-analysis/multivariate.md
-    - Correlation: 05-exploratory-data-analysis/correlation.md
-    - Outliers: 05-exploratory-data-analysis/outliers.md
-    - Profiling: 05-exploratory-data-analysis/profiling.md
-
-  - 6. Data Visualization:
+  - Data Visualization:
     - Overview: 06-data-visualization/index.md
     - Python:
       - Matplotlib: 06-data-visualization/python/matplotlib.md
@@ -118,42 +82,7 @@ nav:
       - Chart Selection: 06-data-visualization/best-practices/chart-selection.md
       - Design Principles: 06-data-visualization/best-practices/design-principles.md
 
-  - 7. SQL & Databases:
-    - Overview: 07-sql-and-databases/index.md
-    - SQL Fundamentals: 07-sql-and-databases/sql-fundamentals.md
-    - SELECT Queries: 07-sql-and-databases/select-queries.md
-    - Filtering & Sorting: 07-sql-and-databases/filtering-sorting.md
-    - Joins: 07-sql-and-databases/joins.md
-    - Aggregations: 07-sql-and-databases/aggregations.md
-    - Subqueries: 07-sql-and-databases/subqueries.md
-    - Window Functions: 07-sql-and-databases/window-functions.md
-    - SQLite & Python: 07-sql-and-databases/sqlite-python.md
-
-  - 8. Machine Learning:
-    - Overview: 08-machine-learning/index.md
-    - Fundamentals:
-      - ML Overview: 08-machine-learning/fundamentals/overview.md
-      - Supervised vs Unsupervised: 08-machine-learning/fundamentals/supervised-unsupervised.md
-      - Bias-Variance Tradeoff: 08-machine-learning/fundamentals/bias-variance.md
-      - Validation: 08-machine-learning/fundamentals/validation.md
-    - Classification:
-      - K-Nearest Neighbors: 08-machine-learning/classification/knn.md
-      - Decision Trees: 08-machine-learning/classification/decision-trees.md
-      - Random Forests: 08-machine-learning/classification/random-forests.md
-      - Support Vector Machines: 08-machine-learning/classification/svm.md
-    - Regression:
-      - Linear Regression: 08-machine-learning/regression/linear.md
-      - Regularization: 08-machine-learning/regression/regularization.md
-    - Ensemble Methods:
-      - Bagging: 08-machine-learning/ensemble/bagging.md
-      - Boosting: 08-machine-learning/ensemble/boosting.md
-      - XGBoost: 08-machine-learning/ensemble/xgboost.md
-    - Unsupervised:
-      - K-Means: 08-machine-learning/unsupervised/kmeans.md
-      - Hierarchical Clustering: 08-machine-learning/unsupervised/hierarchical.md
-      - PCA: 08-machine-learning/unsupervised/pca.md
-
-  - 9. Time Series Forecasting:
+  - Time Series Forecasting:
     - Overview: 09-time-series-forecasting/index.md
     - Fundamentals:
       - Concepts: 09-time-series-forecasting/fundamentals/concepts.md
@@ -161,12 +90,12 @@ nav:
       - Seasonality & Trends: 09-time-series-forecasting/fundamentals/seasonality-trends.md
       - Autocorrelation: 09-time-series-forecasting/fundamentals/autocorrelation.md
     - Statistical Methods:
+      - Naive Methods: 09-time-series-forecasting/statistical/naive-methods.md
       - Moving Averages: 09-time-series-forecasting/statistical/moving-averages.md
       - Exponential Smoothing: 09-time-series-forecasting/statistical/ets.md
       - ARIMA: 09-time-series-forecasting/statistical/arima.md
       - SARIMA: 09-time-series-forecasting/statistical/sarima.md
-      - Naive Methods: 09-time-series-forecasting/statistical/naive-methods.md
-    - ML for Time Series:
+    - ML Methods:
       - Feature Engineering: 09-time-series-forecasting/ml/feature-engineering.md
       - Random Forest: 09-time-series-forecasting/ml/random-forest.md
       - XGBoost: 09-time-series-forecasting/ml/xgboost.md
@@ -181,38 +110,6 @@ nav:
       - Model Comparison: 09-time-series-forecasting/evaluation/comparison.md
       - Selection Framework: 09-time-series-forecasting/evaluation/selection-framework.md
 
-  - 10. Model Evaluation:
-    - Overview: 10-model-evaluation/index.md
-    - Classification:
-      - Accuracy, Precision, Recall: 10-model-evaluation/classification/accuracy-precision-recall.md
-      - F1 Score: 10-model-evaluation/classification/f1-score.md
-      - ROC & AUC: 10-model-evaluation/classification/roc-auc.md
-      - Confusion Matrix: 10-model-evaluation/classification/confusion-matrix.md
-    - Regression:
-      - Error Metrics: 10-model-evaluation/regression/error-metrics.md
-      - R-squared: 10-model-evaluation/regression/r-squared.md
-      - MAPE: 10-model-evaluation/regression/mape.md
-    - Validation:
-      - Train-Test Split: 10-model-evaluation/validation/train-test.md
-      - K-Fold CV: 10-model-evaluation/validation/k-fold.md
-      - Time Series CV: 10-model-evaluation/validation/time-series-cv.md
-    - Model Selection:
-      - Hyperparameter Tuning: 10-model-evaluation/selection/hyperparameter-tuning.md
-      - Search Methods: 10-model-evaluation/selection/search-methods.md
-      - Comparison: 10-model-evaluation/selection/comparison.md
-
-  - 11. Python Programming:
-    - Overview: course-files/11-python-programming/index.md
-
   - Appendix:
-    - Overview: appendix/index.md
-    - Datasets: appendix/datasets.md
     - Full Textbooks: appendix/full-textbooks.md
-    - External Resources: appendix/external-resources.md
     - Course Homework: appendix/misc-homework.md
-    - Miscellaneous: appendix/miscellaneous.md
-    - Python Cheat Sheet: appendix/python-cheatsheet.md
-    - Pandas Cheat Sheet: appendix/pandas-cheatsheet.md
-    - SQL Cheat Sheet: appendix/sql-cheatsheet.md
-    - Formulas: appendix/formulas.md
-    - Glossary: appendix/glossary.md
