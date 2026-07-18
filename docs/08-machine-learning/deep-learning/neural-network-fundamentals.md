@@ -54,6 +54,41 @@ initialization paired with different activations, **BatchNorm** and its train/ev
 behavior, a **dropout** sweep to find the regularization sweet spot, and an optimizer
 comparison visualized as trajectories on a 2-D loss surface.
 
+### Backprop by hand, with numbers
+
+I also worked a single neuron end-to-end by hand in ECEN 758 Assignment 4 — the smallest
+example that shows *why the update rule you pick matters*. Take one perceptron with inputs
+$x_1 = 2$, $x_2 = 1$, weights $w_1 = 2$, $w_2 = -1$, bias $b = 1$, sigmoid activation, and a
+target $d = 1$.
+
+**Forward pass.** The pre-activation is $\text{net} = b + w_1 x_1 + w_2 x_2 = 1 + 2(2) + (-1)(1) = 4$,
+so
+
+$$y = \sigma(4) = \frac{1}{1 + e^{-4}} \approx 0.982, \qquad e = d - y \approx 0.018.$$
+
+**Perceptron learning rule** ($w_j^\text{new} = w_j^\text{old} + \eta\, e\, x_j$, with $\eta = 1$):
+
+$$w_1 \to 2 + (1)(0.018)(2) = 2.036, \quad w_2 \to -1 + (1)(0.018)(1) = -0.982, \quad b \to 1.018.$$
+
+**Backprop / SGD on squared error** $J = \tfrac12 (d - y)^2$ instead. Now the sigmoid
+derivative enters the gradient — $\partial J / \partial w_j = e \cdot (-1)\cdot \sigma(\text{net})\,(1 - \sigma(\text{net}))\cdot x_j$
+— and $w_j^\text{new} = w_j^\text{old} - \eta\,\partial J/\partial w_j$ gives
+
+$$w_1 \to 2.00064, \qquad w_2 \to -0.99968, \qquad b \to 1.00032.$$
+
+The lesson is in the contrast: the perceptron rule moved $w_1$ by $0.036$, but backprop moved
+it by only $0.00064$ — about 50× smaller — on the *same* neuron and the *same* learning rate.
+The difference is the factor $\sigma(\text{net})(1 - \sigma(\text{net})) \approx 0.982 \times 0.018 \approx 0.0177$:
+a saturated sigmoid has a tiny slope, so the gradient signal through it is tiny. That is
+**vanishing-gradient in miniature** — the concrete reason ReLU and careful initialization
+matter once you stack many of these layers. (The assignment extends the same hand-derivation
+to a one-hidden-layer network, $y \approx 0.378$ on its forward pass, which is the two-layer
+chain-rule bookkeeping the from-scratch project above then automates.)
+
+Source: my ECEN 758 Assignment 4 solutions
+(`course-files/appendix/Homework/ecen758_hw/Assignment_4_ECEN_758_Solutions.pdf`, my own work;
+instructor prompt paraphrased).
+
 ## Notebook
 
 See the rendered notebook: [MLP Fundamentals](../notebooks/mlp-fundamentals.ipynb) — the
