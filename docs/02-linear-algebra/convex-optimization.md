@@ -35,8 +35,9 @@ each principal direction, and convexity is "curves up in every direction."
 
 ## Why it matters
 
-- **Local = global.** On a convex problem, the first-order condition `∇f = 0` (plus feasibility)
-  is *sufficient* for the global optimum — no restarts, no "did I find the real minimum?" doubt.
+- **Local = global.** On a convex problem, any local minimum is the global one — no restarts,
+  no "did I find the real minimum?" doubt. Unconstrained, `∇f = 0` is sufficient; with
+  constraints, the analogous certificate is the KKT conditions.
 - **Strict convexity ⇒ unique.** A strictly convex objective has exactly one minimizer, so the
   answer is well-defined.
 - **The feasible set counts too.** Minimizing a convex function over a non-convex set can still
