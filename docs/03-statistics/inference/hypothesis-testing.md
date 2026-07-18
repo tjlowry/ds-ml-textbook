@@ -727,3 +727,96 @@ ab_test(control, treatment)
 3. P-values do not measure the probability that H0 is true
 4. Always report effect sizes alongside p-values
 5. Consider the context and consequences of both error types
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+The examples above use synthetic data to show mechanics. Here are the same tests run on real
+data in R during MATH 425 (Winter 2024), each with an actual conclusion.
+
+### One-sample t-test — does a drug add sleep?
+
+Using R's built-in `sleep` data (extra hours of sleep for 10 patients on a soporific drug), I
+tested whether the mean extra sleep is greater than zero. A Q-Q plot first confirmed the data
+were plausibly normal, which is what the one-sample t-test needs:
+
+```r
+sleep1 <- sleep[sleep$group == 1, c("ID", "extra")]
+qqPlot(sleep1$extra)                                   # normality check first
+t.test(sleep1$extra, mu = 0, alternative = "greater")  # H0: mu = 0, Ha: mu > 0
+```
+
+The sample averaged **0.75** extra hours, but with **p = 0.1088** I failed to reject $H_0$ —
+no evidence the drug reliably increases sleep.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/t Tests/Examples/SleepOneSamplet.Rmd`
+
+### Two-sample t-test — reaction time by sex
+
+From the High School Seniors survey I compared reaction times of male vs. female students.
+The raw data had extreme typos, so I first filtered to reaction times under 3 seconds
+(leaving roughly 150 female and 160 male responses — large enough to lean on the CLT):
+
+```r
+HSS2 <- filter(HSS, Reaction_time < 3) %>% na.omit()
+t.test(Reaction_time ~ Gender, data = HSS2,
+       mu = 0, alternative = "two.sided", conf.int = 0.95) %>% pander()
+```
+
+Males looked slightly faster on the boxplot, but **p = 0.1246** — not significant, so I could
+not conclude the mean reaction times differ.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/t Tests/HighSchoolSeniors.Rmd`
+
+### Chi-squared test of independence — divorce vs. political views
+
+Using the 2021 General Social Survey, I asked whether having been divorced is associated with
+political orientation (a 7-point liberal-to-conservative scale):
+
+```r
+gss <- filter(gss2021, !is.na(DIVORCE) & !is.na(POLVIEWS))
+mytable <- table(gss$POLVIEWS, gss$DIVORCE)
+
+chi <- chisq.test(mytable)
+chi                 # test result
+chi$expected        # all > 5, so the test is valid
+chi$residuals       # largest was only ~1.39
+```
+
+Every expected count exceeded 5 (so the chi-squared approximation is valid), and the test gave
+**p = 0.4021** — political views and divorce are independent in these data.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/Chi Squared Tests/MyChiSquaredTest.Rmd`
+
+### Two-way ANOVA — my own reaction-time experiment
+
+For a two-factor design I collected my own data: **36 attempts** at a reaction-time minigame
+in NBA 2K21, crossing two factors — the `hand` used (left/right) and `posture` (sitting/
+standing) — with the interaction term:
+
+```r
+time.aov <- aov(reaction_time ~ hand + posture + hand:posture, data = ReactionTime)
+summary(time.aov) %>% pander()
+```
+
+| Effect | p-value | Verdict |
+|---|---|---|
+| `hand` | 0.7931 | not significant (Left 399.8 ms vs Right 401.5 ms) |
+| `posture` | 0.2394 | not significant (Sitting 404.4 ms vs Standing 396.9 ms) |
+| `hand:posture` | 0.05495 | borderline — just misses $\alpha = 0.05$ |
+
+None of the effects cleared the 0.05 bar, though the interaction was close enough that I noted
+more data (or more factors) would be needed to settle it.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/ANOVA/MyTwoWayANOVA.Rmd`
+
+### Gotchas
+
+- **Filter typos before testing, and say so.** The reaction-time data only made sense after
+  dropping impossible values; that filtering step is part of the analysis, not a footnote.
+- **Check the expected counts for chi-squared.** The test is only trustworthy when expected
+  cell counts are (roughly) all $\geq 5$ — I report `chi$expected` every time.
+- **A borderline p-value (0.055) is a "fail to reject," not a "trend."** The interaction above
+  missed the cutoff; the honest write-up is "not significant, collect more data."
+- **Normality is a prerequisite, not an afterthought.** For the one-sample t-test I checked the
+  Q-Q plot *before* trusting the p-value; when that check fails, the
+  [nonparametric tests](nonparametric.md) are the right move instead.

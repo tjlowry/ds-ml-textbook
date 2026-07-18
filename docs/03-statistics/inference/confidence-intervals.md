@@ -656,3 +656,51 @@ else:
 3. Wider intervals provide more confidence but less precision
 4. Sample size planning can achieve desired precision before data collection
 5. Always consider practical significance alongside statistical results
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+A fun MATH 425 problem tested a piece of folk wisdom: *"measure a child at age 2 and double it
+to predict adult height."* Using the `BGSall` data (Berkeley children born 1928–29,
+`library(alr4)`), I regressed 18-year height on 2-year height and turned the folk claim into a
+hypothesis about the slope — if doubling is right, the slope should be exactly **2**:
+
+```r
+mylm <- lm(HT18 ~ HT2, data = BGSall)   # n = 136, so df = 134
+summary(mylm)
+```
+
+The estimated slope was $b_1 = 1.4441$ with standard error 0.1901. Instead of the default test
+against zero, I tested it against 2 by hand:
+
+```r
+t  <- (1.4441 - 2) / 0.1901         # = -2.924
+2 * pt(-abs(t), 134)                # two-sided p-value = 0.00403
+```
+
+With **p = 0.004** I rejected $H_0: \beta_1 = 2$ — the slope is significantly **less** than 2,
+so the "double it" rule systematically **over**predicts adult height.
+
+Then the two-interval distinction that trips everyone up. To predict *one specific child's*
+adult height I used a **prediction interval** (about individual variation), not a confidence
+interval (about the mean response):
+
+```r
+# a child measured at 83.82 cm at age 2:
+predict(mylm, data.frame(HT2 = 83.82), interval = "prediction")
+
+confint(mylm)   # 95% CIs for the intercept and slope
+```
+
+Source: `~/Projects/school/byui-undergrad/MATH425/SkillsQuiz-ConfidenceAndPredictionIntervals.Rmd`
+
+### Gotchas
+
+- **You can test a slope against any value, not just 0.** `summary()` gives you the test
+  against zero; for "is the slope 2?" you form $t = (b_1 - 2)/SE$ yourself and compare to
+  `pt(..., df)`. Here that turned folk wisdom into a falsifiable claim.
+- **Prediction interval ≠ confidence interval.** `interval = "prediction"` (a single new
+  observation) is always wider than `interval = "confidence"` (the mean response) because it
+  adds the individual error variance on top of the estimation uncertainty. Pick the one that
+  matches the question.
+- **Watch the df.** With $n = 136$ the reference distribution has 134 degrees of freedom — using
+  a z-value instead of $t_{134}$ would understate the interval, especially for smaller samples.

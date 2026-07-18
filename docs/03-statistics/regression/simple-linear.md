@@ -499,3 +499,45 @@ for i, budget in enumerate(new_budget):
 - One continuous response variable
 - Linear relationship expected
 - Want to predict Y from X or understand X-Y relationship
+
+## How I Did It — MATH 425 (BYU-Idaho)
+
+For my simple-linear-regression writeup I collected my own dataset: the Phoenix Suns' regular-
+season **wins** versus their number of **NBA All-Stars** each season from 2000–2023 (pulled
+from basketball-reference.com). The question was how much one All-Star is "worth" in wins.
+
+```r
+suns.lm <- lm(wins ~ all_stars, data = df)
+
+plot(wins ~ all_stars, data = df, pch = 21, bg = "steelblue",
+     xlab = "Number of All-Stars", ylab = "Wins",
+     main = "All-Stars vs. Wins, Phoenix Suns 2000-2023")
+abline(suns.lm, lwd = 3)
+
+pander(summary(suns.lm))
+```
+
+The fitted model was
+
+$$
+  \underbrace{\hat{Y}_i}_\text{Wins} = 32.6 + 8.431 \, \underbrace{X_i}_\text{All-Stars}
+$$
+
+with a slope p-value of **3.116e-10** — strongly significant. Interpretation: the baseline is
+about 33 wins with no All-Stars, and **each additional All-Star is associated with about 8.4
+more wins** that season. Residual-vs-fitted and Q-Q plots showed a couple of outliers but no
+serious violations, so I treated the linearity/normality/constant-variance assumptions as met.
+
+Source: `~/Projects/school/byui-undergrad/statistics-notebook/Analyses/Linear Regression/MySimpleLinearRegression.Rmd`
+
+### Gotchas
+
+- **Label the coefficient you're reporting.** In my original writeup I called 32.6 the "slope"
+  — it's the **intercept**; the slope is 8.431. Easy to transpose under time pressure, and the
+  interpretation flips entirely, so double-check which is which against `summary()`.
+- **`abline(model)` only works for simple regression.** It draws the single fitted line
+  straight from a one-predictor `lm`; with two or more predictors there's no single line to
+  draw.
+- **A tiny p-value is about the slope being non-zero, not about the effect being large.** The
+  3e-10 says All-Stars clearly matter; the *size* of the effect is the 8.4 wins, read
+  separately from the coefficient.
