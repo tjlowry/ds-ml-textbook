@@ -42,6 +42,10 @@ extra_javascript:
 
 plugins:
   - search
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+      include: ["*.ipynb"]
 
 nav:
   - Home: index.md
