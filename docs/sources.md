@@ -194,31 +194,36 @@ Inventory: `.superpowers/sdd/task-6-inventory.md` · Report: `.superpowers/sdd/t
 | `scripts/` top-level (`brame_prophet.py`, `functions.py`, notebooks; private distribution-forecasting repo) | examined-not-used | lower quality/superseded, historical color only |
 | `monthly_forecast-2024/` (private distribution-forecasting repo) | examined-not-used | superseded by `demand-forecast/`, same privacy concerns |
 
-## Chapter 07 — SQL & Databases — inventoried, chapter pending
+## Chapter 07 — SQL & Databases (STAT 624, TAMU + DS 250, BYU-Idaho)
 
-Inventory: `.superpowers/sdd/ch07-inventory.md`. **This chapter has not been drafted yet** —
-everything below was surveyed for scope/feasibility only; nothing has landed on a page.
+Inventory: `.superpowers/sdd/ch07-inventory.md` · Report: `.superpowers/sdd/ch07-report.md`
 
-| Path | Disposition | Note |
+Deliberately lighter chapter (6 pages + 1 notebook). STAT 624 lecture material is
+instructor/TA-copyrighted — every row below sourced from it is `summarized` (concepts
+paraphrased, nothing quoted, no executed outputs reproduced).
+
+| Path | Disposition | Where it landed |
 |---|---|---|
-| `course-files/07-sql-and-databases/Week 2_Docker.pdf` | inventoried-pending | STAT 624 lecture, treat as restricted (same course as flagged copyrighted files) |
-| `course-files/07-sql-and-databases/STAT624_Docker_082523.pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
-| `course-files/07-sql-and-databases/Week 3_RDBM.pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
-| `course-files/07-sql-and-databases/Week 4_Basics of SQL.pdf` | inventoried-pending | treat as restricted (same course/instructor) |
-| `course-files/07-sql-and-databases/Week 6_Aggregation_Window Functions.pdf` | inventoried-pending | treat as restricted (same course/instructor) |
-| `course-files/07-sql-and-databases/Week 11_NoSQL (1).pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
-| `course-files/07-sql-and-databases/Week7_sqlalchemy_pythonintro.ipynb` | inventoried-pending | "© Texas A&M" banner; mixed instructor scaffold + Tyler's answers; needs live docker Postgres to run |
-| `course-files/07-sql-and-databases/Week13_daskparallelization.ipynb` | inventoried-pending | "© Scott A. Bruce. Do not distribute." |
-| `course-files/07-sql-and-databases/Week14_Dask_Scheduler_Cluster (1).ipynb` | inventoried-pending | "Copyright @ Seung-Yeon Ha 2025"; needs TAMU HPRC GPU cluster |
-| `course-files/07-sql-and-databases/Dask-Ch13_ML (2).ipynb` | inventoried-pending | copied from O'Reilly "Scaling Python with Dask" book repo, not original |
-| `course-files/07-sql-and-databases/db_assignment/pokemon_erd.sql` | inventoried-pending | Tyler's own MySQL Workbench schema (2023, BYU-Idaho, not STAT 624) |
-| `course-files/07-sql-and-databases/db_assignment/pokemon.mwb`, `Queries.txt`, `How to add a pokemon.txt`, `Stuff for Insert Into.txt`, `sql_converter.py`, `pokemon_test.csv` | inventoried-pending | Tyler's own (BYU-Idaho) |
-| `course-files/07-sql-and-databases/baseball-report-sql.qmd` | inventoried-pending | Tyler's own (DS 250, BYU-Idaho), misfiled into TAMU folder |
-| `course-files/07-sql-and-databases/baseball-sql-analysis.py` / `sqlite.py` | inventoried-pending | Tyler's own (DS 250, BYU-Idaho) |
-| `course-files/07-sql-and-databases/week06.ipynb` | inventoried-pending | 2-cell orphan stub, duplicate of baseball script opening |
-| `~/Projects/school/byui-undergrad/DS_250/Project 3/` (`project3.qmd`, `project3.py`, `project3.html`, `week06.ipynb`, `lahmansbaseballdb.sqlite`) | inventoried-pending | better, self-contained copy of the baseball project (has the actual DB file) |
-| `~/Projects/personal/investing/databasemanager.py` | inventoried-pending | complementary own-code (pymysql production-style DB manager) |
-| `~/Projects/friends-family/family-hist-app` (Laravel migrations) | inventoried-pending | supplementary schema-as-code example, different paradigm |
+| `course-files/07-sql-and-databases/Week 2_Docker.pdf` | summarized | `07-sql-and-databases/docker-and-compute.md` |
+| `course-files/07-sql-and-databases/STAT624_Docker_082523.pdf` | summarized | `07-sql-and-databases/docker-and-compute.md` (© 2023 Scott A. Bruce, do-not-distribute; cited-only, not reproduced) |
+| `course-files/07-sql-and-databases/Week 3_RDBM.pdf` | summarized | `07-sql-and-databases/schema-design.md` (© 2023 Scott A. Bruce; relational-fundamentals framing) |
+| `course-files/07-sql-and-databases/Week 4_Basics of SQL.pdf` | examined-not-used | SQL basics covered from Tyler's own DS 250 queries instead; lecture not directly cited |
+| `course-files/07-sql-and-databases/Week 6_Aggregation_Window Functions.pdf` | summarized | `07-sql-and-databases/sql-essentials.md` (aggregation/window-function concept source) |
+| `course-files/07-sql-and-databases/Week 11_NoSQL (1).pdf` | summarized | `07-sql-and-databases/database-types.md` (© 2023 Scott A. Bruce; CAP/NoSQL categories paraphrased) |
+| `course-files/07-sql-and-databases/Week7_sqlalchemy_pythonintro.ipynb` | summarized | `07-sql-and-databases/python-and-databases.md` (© Texas A&M; SQLAlchemy/Postgres concept source, cited-only, needs live docker Postgres) |
+| `course-files/07-sql-and-databases/Week13_daskparallelization.ipynb` | summarized | `07-sql-and-databases/docker-and-compute.md` (© Scott A. Bruce, do-not-distribute; Dask concepts, not reproduced) |
+| `course-files/07-sql-and-databases/Week14_Dask_Scheduler_Cluster (1).ipynb` | summarized | `07-sql-and-databases/docker-and-compute.md` (© Seung-Yeon Ha 2025; HPC/cluster concepts, needs TAMU HPRC, cited-only) |
+| `course-files/07-sql-and-databases/Dask-Ch13_ML (2).ipynb` | examined-not-used | copied O'Reilly "Scaling Python with Dask" book code, not Tyler's; excluded |
+| `course-files/07-sql-and-databases/db_assignment/pokemon_erd.sql` | snippet, figure-basis, promoted-notebook | `07-sql-and-databases/schema-design.md` (ERD remade as mermaid, bugs → Gotchas); `07-sql-and-databases/notebooks/pokemon-sql.ipynb` (adapted to SQLite) |
+| `course-files/07-sql-and-databases/db_assignment/Queries.txt` | snippet | `07-sql-and-databases/sql-essentials.md` (master-key LEFT JOIN pattern); notebook |
+| `course-files/07-sql-and-databases/db_assignment/Stuff for Insert Into.txt` | snippet | `07-sql-and-databases/notebooks/pokemon-sql.ipynb` (region/generation/rarity seed data) |
+| `course-files/07-sql-and-databases/db_assignment/pokemon.mwb`, `How to add a pokemon.txt`, `sql_converter.py`, `pokemon_test.csv` | examined-not-used | binary model file / workflow notes / loader script — not incorporated |
+| `course-files/07-sql-and-databases/baseball-report-sql.qmd`, `baseball-sql-analysis.py`, `sqlite.py`, `week06.ipynb` | examined-not-used | superseded by the better self-contained copy in DS_250/Project 3 (below) |
+| `~/Projects/school/byui-undergrad/DS_250/Project 3/project3.qmd` | snippet | `07-sql-and-databases/sql-essentials.md`, `python-and-databases.md` (real SELECT/JOIN/GROUP BY queries) |
+| `~/Projects/school/byui-undergrad/DS_250/Project 3/project3.py` | snippet | `07-sql-and-databases/python-and-databases.md` (sqlite3 + pandas pattern) |
+| `~/Projects/school/byui-undergrad/DS_250/Project 3/lahmansbaseballdb.sqlite` (66 MB, referenced by absolute path, never copied into repo) | snippet | `07-sql-and-databases/notebooks/pokemon-sql.ipynb` (Part 2 baseball queries, executed live) |
+| `~/Projects/personal/investing/databasemanager.py` | snippet | `07-sql-and-databases/python-and-databases.md` (pymysql context-managed connections, parameterized queries) |
+| `~/Projects/friends-family/family-hist-app` (Laravel migrations) | examined-not-used | schema-as-code paradigm not needed once Pokemon ERD covered schema design |
 
 ## Appendix
 

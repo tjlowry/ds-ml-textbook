@@ -105,6 +105,16 @@ nav:
       - Chart Selection: 06-data-visualization/best-practices/chart-selection.md
       - Design Principles: 06-data-visualization/best-practices/design-principles.md
 
+  - SQL & Databases:
+    - Overview: 07-sql-and-databases/index.md
+    - SQL Essentials: 07-sql-and-databases/sql-essentials.md
+    - Schema Design: 07-sql-and-databases/schema-design.md
+    - Python & Databases: 07-sql-and-databases/python-and-databases.md
+    - Database Types: 07-sql-and-databases/database-types.md
+    - Docker & Compute: 07-sql-and-databases/docker-and-compute.md
+    - Notebooks:
+      - Pokemon SQL: 07-sql-and-databases/notebooks/pokemon-sql.ipynb
+
   - Machine Learning:
     - Overview: 08-machine-learning/index.md
     - Fundamentals:
