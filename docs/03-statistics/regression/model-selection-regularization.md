@@ -23,8 +23,9 @@ median-rent estimates with American Community Survey (ACS) 5-year demographics v
 `price_overall` (median rent in dollars). The predictors are things like median household
 income, share of adults with a bachelor's degree, population density (logged), vacancy
 rate, and a family of **industry employment shares** (`pct_emp_professional`,
-`pct_emp_manufacturing`, …). That employment family matters later — the shares are
-mutually exclusive and sum to ~100%, which is a multicollinearity trap waiting to happen.
+`pct_emp_manufacturing`, …). With that many overlapping socioeconomic measures in one
+model, multicollinearity is the first thing to check — though where it actually showed up
+surprised me (see the Gotchas).
 
 The full OLS model with everything in it — 21 predictors after log-transforming the two
 population variables — is the thing to beat:
@@ -49,10 +50,13 @@ summary(fit_full)
 Source: `~/Projects/school/tamu-grad/stat654/regression_no_states.Rmd`
 
 Before selecting anything, it's worth checking *why* selection is even needed here. Running
-`car::vif()` on the full model showed severe multicollinearity — VIFs well above 10 on the
-employment-share predictors and on the income / education pair. That inflation is exactly
-the symptom that best-subsets and the L1/L2 penalties are built to treat. (The VIF diagnosis
-is written up on the [Assumptions page](assumptions.md#how-i-did-it-stat-654-tamu).)
+`car::vif()` on this 21-predictor model flags a correlated socioeconomic cluster — the
+bachelor's-degree share (VIF ≈ 8.4), median household income (≈ 6.1), and the
+professional-employment share (≈ 6.1) all track each other across cities. Nothing crosses
+the classic VIF > 10 line in this spec (my earlier 65-predictor version with state dummies
+did), but that shared signal is exactly what best-subsets and the L1/L2 penalties are built
+to arbitrate. (The VIF diagnosis is written up on the
+[Assumptions page](assumptions.md#how-i-did-it-stat-654-tamu).)
 
 ## Best subsets selection
 
@@ -171,6 +175,12 @@ cv_lasso$lambda.1se   # simplest model within 1 SE of the minimum (more regulari
 
 Source: `~/Projects/school/tamu-grad/stat654/lass0_ridge.Rmd`
 
+One thing the code above quietly relies on: `glmnet` standardizes the predictors internally
+by default (`standardize = TRUE`) and reports coefficients back on the original scale.
+That matters because the L1/L2 penalties are scale-sensitive — penalizing raw dollars and
+raw percentages equally would be meaningless — so if you ever turn that default off, you
+must standardize `X` yourself first.
+
 `cv.glmnet` returns two $\lambda$ values, and the choice between them is a genuine modeling
 decision: `lambda.min` gives the lowest cross-validation error, while `lambda.1se` is the
 most-regularized model whose error is still within one standard error of that minimum — a
@@ -217,7 +227,10 @@ zero.
 
 ![Dot plot comparing coefficient estimates from OLS, Ridge, and LASSO for each predictor, with a dashed vertical line at zero. OLS estimates are the most extreme, Ridge estimates are pulled toward zero, and several LASSO estimates sit exactly on the zero line.](../img/reg_coef_comparison.png)
 
-Source: `~/Projects/school/tamu-grad/stat654/regularization.Rmd`
+Source: `~/Projects/school/tamu-grad/stat654/regularization.Rmd` — note this figure comes
+from a companion run on a slimmer 16-predictor version of the model (8 employment
+categories, different seed), so the row count differs from the 21-predictor tables above;
+the shrinkage geometry it shows is the point, not the exact rows.
 
 ## Which model actually won?
 
@@ -262,16 +275,20 @@ density — carry the signal.
   the model, the `summary()` significance stars are optimistically biased because the same
   data chose the predictors *and* tested them. Report them as descriptive at best; judge
   models by cross-validated error instead.
-- **Mutually-exclusive shares are a collinearity trap.** The employment-share predictors
-  sum to ~100%, so they're nearly linearly dependent by construction — hence the sky-high
-  VIFs. This is precisely the situation where LASSO's "pick one, drop the rest" behavior and
-  Ridge's shrinkage are doing real work.
+- **Verify your data dictionary against the data.** My own data dictionary said the
+  employment shares were "mutually exclusive and sum to ~100%" — which would make them
+  nearly linearly dependent by construction. They actually sum to ~52% (the ACS table slice
+  I pulled is partial), so the structural collinearity I designed around wasn't there; the
+  collinearity that mattered was the education–income–professional cluster instead. One
+  `rowSums()` sanity check would have caught the false premise before it shaped the analysis.
 - **`lambda.min` vs. `lambda.1se` is a real choice.** `lambda.min` chases the lowest CV
   error; `lambda.1se` deliberately trades a hair of accuracy for a simpler, more stable
   model. Decide which you want *before* looking at the coefficients, not after.
 - **Set the seed before `cv.glmnet`.** The fold assignments are random, so the chosen
   $\lambda$ (and therefore the final coefficients) will drift run-to-run without
-  `set.seed()`. Reproducibility here isn't optional.
+  `set.seed()`. Reproducibility here isn't optional — a companion run of these same models
+  with a different seed moved Ridge's CV RMSE by about $11, so differences of a few dollars
+  in the table above are fold-assignment noise, not real rankings.
 - **Regularization is not a free accuracy boost.** With a comfortable $n/p$ ratio it will
   often *tie or slightly lose* to plain OLS, as it did here. That's not a failure — it's
   evidence your OLS model wasn't overfit in the first place.

@@ -817,16 +817,19 @@ fit_full <- lm(price_overall ~ ., data = df_model)   # ~20 demographic predictor
 vif(fit_full)
 ```
 
-Several predictors came back with VIFs **well above 10** — severe multicollinearity. Two
-distinct causes, both instructive:
+In my first, bigger specification (65 predictors including state dummies) several VIFs blew
+past 10. In the leaner 21-predictor model the picture was more instructive:
 
-- **A structural trap.** The industry employment-share predictors
-  (`pct_emp_professional`, `pct_emp_manufacturing`, `pct_emp_retail`, …) are mutually
-  exclusive and sum to ~100% of the workforce. That makes them *nearly linearly dependent
-  by construction* — knowing all but one lets you recover the last. No amount of data fixes
-  it; it's baked into how the variables are defined.
-- **A correlated pair.** Median household income and the share of adults with a bachelor's
-  degree track each other closely across cities, so each inflates the other's variance.
+- **A correlated cluster, not a structural trap.** The worst offenders were the
+  bachelor's-degree share (VIF ≈ 8.4), median household income (≈ 6.1), and the
+  professional-employment share (≈ 6.1) — three measures of the same "educated, high-earning
+  city" signal, each inflating the others' variance.
+- **The trap I expected wasn't there.** My data dictionary claimed the industry
+  employment shares (`pct_emp_professional`, `pct_emp_manufacturing`, …) were mutually
+  exclusive and summed to ~100%, which would make them nearly linearly dependent by
+  construction. Checking the actual data, they sum to ~52% — the ACS slice is partial — and
+  every employment share except professional had a VIF under 3. Verify constructed-variable
+  claims against the data before reasoning from them.
 
 The VIFs didn't hurt the model's *predictions* — $R^2$ and RMSE were fine — but they made
 the individual coefficients unstable and their standard errors untrustworthy, which is the
