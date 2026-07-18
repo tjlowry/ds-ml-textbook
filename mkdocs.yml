@@ -102,6 +102,13 @@ nav:
       - "Flights: Missing Data": 04-data-wrangling/notebooks/flights-data-wrangling.ipynb
       - Tidy Data Lesson: 04-data-wrangling/notebooks/tidy-data-lesson.ipynb
 
+  - Exploratory Data Analysis:
+    - Overview: 05-exploratory-data-analysis/index.md
+    - Summaries & Distributions: 05-exploratory-data-analysis/summary-and-distributions.md
+    - "Case Study: Name Popularity": 05-exploratory-data-analysis/case-study-name-popularity.md
+    - Notebooks:
+      - Name-Popularity EDA: 05-exploratory-data-analysis/notebooks/name-popularity-eda.ipynb
+
   - Data Visualization:
     - Overview: 06-data-visualization/index.md
     - Python:

@@ -148,6 +148,27 @@ re-hosted.
 | FiveThirtyEight Star Wars survey CSV ([public repo](https://github.com/fivethirtyeight/data/tree/master/star-wars-survey)) | cited-only | linked from the Star Wars case study; not re-hosted |
 | `docs/04-data-wrangling/img/tidy-vs-long.png` (+ `img/generators/make_reshape_figure.py`, my own) | figure-basis | `04-data-wrangling/tidy-data-reshaping.md` (wide↔long melt/pivot diagram, generated) |
 
+## 05 — Exploratory Data Analysis (DS 250 + CSE 450, BYU-Idaho; STAT 650, TAMU)
+
+Report: `.superpowers/sdd/ch05-report.md`
+
+Deliberately the book's lightest chapter (three pages + one notebook). The cleaning half of
+this work lives in [ch04](04-data-wrangling/index.md) and the polished plots in
+[ch06](06-data-visualization/index.md); ch05 covers only the exploration/summarization middle
+step. Built from my own worked coursework answers; instructor assignment prompts are
+paraphrased, never quoted. Public datasets (byuidatascience baby-names, the byui-cse Netflix
+teaching CSV) are linked/loaded at runtime, not re-hosted. The STAT 650 lecture is
+instructor-copyrighted and is `cited-only` — nothing from it is reproduced.
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/05-exploratory-data-analysis/name_pop_eda.ipynb` (my own, DS 250) | snippet, promoted-notebook | `case-study-name-popularity.md`; `notebooks/name-popularity-eda.ipynb` (trimmed to the names cells — the notebook's coding-challenge/dwellings-ML cells duplicated ch04/ch08 and were dropped; title/context markdown added, first-look summary cells added, warnings silenced, re-executed against the public URL) |
+| `course-files/05-exploratory-data-analysis/basic_data_eda.py` (my own worked answers; byui-cse CSE 450 exploration scaffold) | snippet | `summary-and-distributions.md` (first-look `head`/`dtypes`/`isna`, `value_counts`, subset-and-count, count plot in Altair/seaborn/pandas); instructor prompt checklist paraphrased |
+| `course-files/05-exploratory-data-analysis/star_wars_eda.ipynb` (my own, DS 250) | examined-not-used (cited-only) | redundant with the [ch04 Star Wars case study](04-data-wrangling/case-study-star-wars-survey.md) — same rename/clean/ordinal-encode/one-hot/RandomForest workflow, plus it reads a local `StarWars.csv`; nothing new for the EDA side |
+| `course-files/05-exploratory-data-analysis/STAT650-MWF-WK5-EDA with Pandas-Numpy-Scipy.html` (© Yoonsung Jung, STAT 650 lecture export) | cited-only | concept framing for the index/workflow only; **zero** text, code, or output reproduced (8-gram spot-checked) |
+| byuidatascience `names_year.csv` ([public repo](https://github.com/byuidatascience/data4names)) | cited-only | linked and loaded at runtime by the promoted notebook; not re-hosted |
+| byui-cse `netflix_titles.csv` ([public course repo](https://github.com/byui-cse/cse450-course)) | cited-only | linked from `summary-and-distributions.md`; not re-hosted |
+
 ## Chapter 06 — Data Visualization
 
 **Legacy — written before source tracking.** Same situation as chapter 03: no inventory/report
