@@ -123,6 +123,34 @@ annotated **Statistics-Notebook** (upstream [byuistats/Statistics-Notebook](http
 | `statistics-notebook/Analyses/Rent.Rmd` (his edits) | examined-not-used | redundant with SLR/diagnostics coverage already sourced |
 | Two client-data CSVs in `MATH425/` (names withheld) | examined-not-used | **client data — never loaded, quoted, referenced, or described** |
 
+### STAT 654 enhancement (TAMU) — tracked
+
+Report: `.superpowers/sdd/ch03-stat654-report.md`. Added the book's only R-language treatment of
+**model selection and regularization** — a new page `03-statistics/regression/model-selection-regularization.md`
+plus a VIF-on-real-data subsection in `assumptions.md`. All from my own STAT 654 graduate
+regression project modeling U.S. city median rent on Census demographics. Data is public
+(Apartment List rent estimates + ACS 5-year via `tidycensus`, 613 cities); the merged CSV was
+**described, not committed** (too large, and the analysis is reproducible from the documented
+sources). No author lists in any Rmd header — all are solo "STAT 654 Project" files, no teammate
+names to attribute. Four figures are my own rendered `ggsave()`/`plot()` output, provenance
+verified against the `ggsave()` call in the Rmd that produced each.
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `stat654/regression_no_states.Rmd` (mine) | snippet | `model-selection-regularization.md` (21-predictor OLS baseline, stepwise AIC); `assumptions.md` (VIF on rent, employment-share collinearity) |
+| `stat654/stepwise.Rmd` (mine) | snippet | `model-selection-regularization.md` (best subsets via `leaps`/`regsubsets`, AIC/BIC/Adj R² by size) |
+| `stat654/lass0_ridge.Rmd` (mine) | snippet + figures | `model-selection-regularization.md` (`glmnet` Ridge/LASSO CV, coefficient paths, final CV-RMSE comparison table) |
+| `stat654/regularization.Rmd` (mine) | snippet + figure | `model-selection-regularization.md` (L1/L2 penalty exposition, OLS-vs-Ridge-vs-LASSO coefficient comparison) |
+| `stat654/data/data_dict.md` (mine) | described | `model-selection-regularization.md` data-setup section (columns, source, unit of observation) — CSV itself not committed |
+| `stat654/figures/best_subsets_criteria.png` (my render, from `stepwise.Rmd`) | committed | `docs/03-statistics/img/` — best-subsets criteria by model size |
+| `stat654/figures/ridge_paths.png` (my render, from `lass0_ridge.Rmd`) | committed | `docs/03-statistics/img/` — Ridge coefficient paths |
+| `stat654/figures/lasso_paths.png` (my render, from `lass0_ridge.Rmd`) | committed | `docs/03-statistics/img/` — LASSO coefficient paths |
+| `stat654/figures/reg_coef_comparison.png` (my render, from `regularization.Rmd`) | committed | `docs/03-statistics/img/` — OLS vs Ridge vs LASSO coefficients |
+| `stat654/regression.Rmd` (mine) | examined-not-used | states-included version (65 predictors after `state_abbr` dummies); used the `regression_no_states.Rmd` companion for a cleaner, self-consistent narrative |
+| `stat654/654_project_r_code.Rmd` (mine) | examined-not-used | omnibus final-project file; its regression/selection sections are the same code sourced from the focused Rmds above, and its data-collection portion is summarized via the data dictionary |
+| `stat654/{regression,stepwise}.nb.html` | examined-not-used | rendered notebook exports; content sourced from the `.Rmd` files |
+| `stat654/STAT 654 Dataset(...).csv`, `stat654_rentdf.csv`, `data/housing_merged.csv` (public rent + ACS) | described, not committed | too large for the repo; data documented via `data_dict.md`, analysis reproducible from sources |
+
 ## Chapter 04 — Data Wrangling (DS 250, BYU-Idaho + STAT 624, TAMU)
 
 Inventory: `.superpowers/sdd/ch04-inventory.md` · Report: `.superpowers/sdd/ch04-report.md`

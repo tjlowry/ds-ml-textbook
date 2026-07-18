@@ -89,6 +89,7 @@ nav:
       - Multiple Linear: 03-statistics/regression/multiple-linear.md
       - Logistic: 03-statistics/regression/logistic.md
       - Assumptions: 03-statistics/regression/assumptions.md
+      - Model Selection & Regularization: 03-statistics/regression/model-selection-regularization.md
       - "Case Study: Regression Battleship": 03-statistics/regression/regression-battleship.md
 
   - Data Wrangling:
