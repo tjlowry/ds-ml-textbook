@@ -16,6 +16,7 @@ to come back to any topic and re-learn it from **work I actually did**, not gene
 - [Linear Algebra](02-linear-algebra/index.md) — systems, least squares, eigen/SVD, and optimization (MATH 677)
 - [Statistics](03-statistics/index.md) — probability, inference, regression (STAT 650)
 - [Data Wrangling](04-data-wrangling/index.md) — tidy data, reshaping, missing-value handling, feature prep (DS 250)
+- [Exploratory Data Analysis](05-exploratory-data-analysis/index.md) — first-look summaries, value_counts, distributions (DS 250 / CSE 450)
 - [Data Visualization](06-data-visualization/index.md) — matplotlib/seaborn/plotly, ggplot2, BI
 - [SQL & Databases](07-sql-and-databases/index.md) — queries, schema design, Python integration, NoSQL & compute (STAT 624 / DS 250)
 - [Machine Learning](08-machine-learning/index.md) — classification, clustering, ensembles, deep learning (ECEN 758/740)
