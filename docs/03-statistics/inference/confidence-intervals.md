@@ -674,7 +674,7 @@ against zero, I tested it against 2 by hand:
 
 ```r
 t  <- (1.4441 - 2) / 0.1901         # = -2.924
-2 * pt(-abs(t), 134)                # two-sided p-value = 0.00403
+2 * pt(-abs(t), 134)                # two-sided p-value = 0.0041
 ```
 
 With **p = 0.004** I rejected $H_0: \beta_1 = 2$ — the slope is significantly **less** than 2,
