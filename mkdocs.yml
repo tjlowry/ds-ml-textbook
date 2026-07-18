@@ -179,6 +179,24 @@ nav:
       - Senior Project Pipeline: 09-time-series-forecasting/notebooks/senior-project-pipeline.ipynb
       - Distribution Feature Engineering Demo: 09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb
 
+  - Python Programming:
+    - Overview: 11-python-programming/index.md
+    - Fundamentals:
+      - Data Structures: 11-python-programming/data-structures.md
+      - Functions: 11-python-programming/functions.md
+    - Object-Oriented:
+      - Classes & OOP: 11-python-programming/classes-and-oop.md
+      - Inheritance: 11-python-programming/inheritance.md
+    - Robust Code:
+      - Error Handling: 11-python-programming/error-handling.md
+      - File I/O: 11-python-programming/file-io.md
+      - Testing with pytest: 11-python-programming/testing-with-pytest.md
+    - Tooling:
+      - Modules & Packaging: 11-python-programming/modules-and-packaging.md
+      - Git Basics: 11-python-programming/git-basics.md
+    - Notebooks:
+      - Chemical Formula Parser: 11-python-programming/notebooks/chemical-formula-parser.ipynb
+
   - Scientific ML:
     - Overview: 12-scientific-ml/index.md
     - Foundations:
