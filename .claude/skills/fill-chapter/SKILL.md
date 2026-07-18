@@ -69,6 +69,7 @@ Instructor-content rules (the site is PUBLIC; personal use ≠ license to republ
 Then: add the chapter + pages to `nav:` in `mkdocs.yml`, add notebooks under a
 "Notebooks" sub-item, update `docs/roadmap.md` (remove the filled chapter), and update
 the chapter list in `docs/index.md`.
+Update `docs/sources.md`: add a row for EVERY source file consulted this chapter (snippet / worked-example / summarized / promoted-notebook / figure-basis / cited-only / examined-not-used).
 
 ## Step 3 — Review gate
 

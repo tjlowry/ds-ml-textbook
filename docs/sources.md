@@ -1,0 +1,235 @@
+# Source Manifest
+
+This page tracks every source file I've consulted while writing each chapter, and what
+happened to its content: excerpted as a code snippet, re-typeset as a worked example,
+paraphrased into prose, promoted into a runnable notebook, used as the basis for a
+regenerated figure, linked without incorporating its content, read and set aside, or (for
+SQL) inventoried ahead of a chapter that hasn't been drafted yet. The point is to answer
+one question fast: **"did I already use this file, and if so, where?"** — so a
+half-remembered PDF or notebook I stumble across later doesn't get re-read from scratch or,
+worse, silently duplicated into a second page.
+
+## How to check a new file
+
+1. **Grep this page for the filename** (basename is usually enough — paths get long):
+   `grep -i "some_file.ipynb" docs/sources.md`
+   If it shows up, the disposition column tells you what happened to it and the "landed"
+   column tells you where to go read the result.
+2. **Not found here?** Check the chapter's topic pages directly for a `Source:` line —
+   this manifest is generated from those lines plus the inventory/report notes, so it
+   should be complete, but the pages are the ultimate ground truth:
+   `git grep -n 'Source:' docs/<chapter>/`
+3. **Suspect an exact duplicate** (e.g. you found a second copy of a PDF/notebook in a
+   different folder)? Compare checksums instead of eyeballing filenames:
+   `md5 "course-files/path/to/file.pdf"` (macOS) and compare against the path recorded
+   here for the same topic — if the hash matches a file already listed, it's the same
+   content under a different name/location, not new material.
+4. Still unsure after both checks → treat it as new and read it; then add a row here
+   (see the `fill-chapter` skill, Step 2, for the exact instruction to do this going
+   forward).
+
+### Dispositions
+
+| Disposition | Meaning |
+|---|---|
+| `snippet` | Code excerpted onto a page under "How I did it" |
+| `worked-example` | Handwritten/scanned HW re-typeset as a worked example |
+| `summarized` | Concepts paraphrased into prose; nothing copied verbatim |
+| `promoted-notebook` | Copied, cleaned, and committed into `docs/**/notebooks/` |
+| `figure-basis` | A committed figure was remade from this file's concept/data |
+| `cited-only` | Linked or pointed to; its content was not incorporated |
+| `examined-not-used` | Read during inventory, ultimately not used for this chapter |
+| `inventoried-pending` | Surveyed for chapter 07 (SQL), which is not yet drafted |
+
+---
+
+## Chapter 02 — Linear Algebra (MATH 677, TAMU)
+
+Inventory: `.superpowers/sdd/ch02-inventory.md` · Report: `.superpowers/sdd/ch02-report.md`
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/02-linear-algebra/1+Solving+linear+systems+complete.pdf` | summarized | `02-linear-algebra/linear-systems.md` |
+| `course-files/02-linear-algebra/2 Solving least squares complete.pdf` | summarized | `02-linear-algebra/least-squares.md` |
+| `course-files/02-linear-algebra/3A Eigenvalues and eigenvectors complete.pdf` | summarized | `02-linear-algebra/eigenvalues-eigenvectors.md` |
+| `course-files/02-linear-algebra/3B Eigenvalues and eigenvectors complete.pdf` | summarized | `02-linear-algebra/eigenvalues-eigenvectors.md` |
+| `course-files/02-linear-algebra/4 SVD complete (1).pdf` | summarized | `02-linear-algebra/svd.md` |
+| `course-files/02-linear-algebra/5 Perron-Frobenius complete.pdf` | summarized | `02-linear-algebra/perron-frobenius.md` |
+| `course-files/02-linear-algebra/6+Dynamic+programming+complete.pdf` | summarized | `02-linear-algebra/dynamic-programming.md` |
+| `course-files/02-linear-algebra/7 General optimization complete.pdf` | summarized | `02-linear-algebra/gradient-descent.md` (also cross-ref in `svd.md`) |
+| `course-files/02-linear-algebra/8 Steepest descent complete.pdf` | summarized | `02-linear-algebra/gradient-descent.md` |
+| `course-files/02-linear-algebra/9 Convex optimization complete.pdf` | summarized | `02-linear-algebra/convex-optimization.md` |
+| `course-files/02-linear-algebra/10 Compressed sensing complete.pdf` | summarized | `02-linear-algebra/compressed-sensing.md` |
+| `course-files/02-linear-algebra/Theorem list.pdf` (BYU-I M341, misfiled — not MATH 677) | worked-example | `02-linear-algebra/theorem-reference.md` (re-typeset in own wording/layout) |
+| `course-files/02-linear-algebra/FinalExamReviewLinearAlgebra.pdf` (BYU-I M341, misfiled) | examined-not-used | — |
+| `course-files/02-linear-algebra/proj_gradient.py` (Tyler's own code) | snippet, promoted-notebook | `02-linear-algebra/gradient-descent.md`; `02-linear-algebra/notebooks/projected-gradient-descent.ipynb` |
+| `course-files/appendix/Homework/math_677_linAlg/linear_algebra_hw/` (whole subfolder: BYU-I M341 exam/cheatsheets/HW1-1…HW6-7/textbook PDF — not MATH 677) | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/1 Solving linear systems.pdf` (duplicate of Lecture 1 PDF) | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/fibonacci.py` (Tyler's own code, instructor skeleton + his loop) | snippet | `02-linear-algebra/dynamic-programming.md` |
+| `course-files/appendix/Homework/math_677_linAlg/HW1_written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/HW2_written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/HW3_Written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/Hw4.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/HW 5 Written.pdf` | worked-example | `02-linear-algebra/least-squares.md` (normal equations, x=[6/11,−1/33]) |
+| `course-files/appendix/Homework/math_677_linAlg/HW 6 Written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/HW 7 Written.pdf` | worked-example | `02-linear-algebra/eigenvalues-eigenvectors.md` (power-method convergence ≈24 iters) |
+| `course-files/appendix/Homework/math_677_linAlg/Hw 8 written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/Hw 9 written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/Hw 10 written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/Hw 11 written.pdf` | worked-example | `02-linear-algebra/gradient-descent.md` (steepest descent by hand, Armijo/Wolfe, Newton's method) |
+| `course-files/appendix/Homework/math_677_linAlg/Hw12_written.pdf` | examined-not-used | — |
+| `course-files/appendix/Homework/math_677_linAlg/Hw13 written.pdf` | examined-not-used | — |
+| `~/Projects/personal/nfl_prospect_recommender/.../nmf_model.py` (sklearn NMF) | examined-not-used | considered as SVD/low-rank motivation, not promoted (library call, not hand-derived) |
+| `~/Projects/personal/nfl_prospect_recommender/.../implicit_model.py` (implicit ALS/BPR) | examined-not-used | considered as least-squares motivation, not promoted |
+| `~/Projects/research/.../biomed_research/02_spateo_3d_reconstruction.ipynb` (PCA step) | examined-not-used | considered as SVD/PCA motivation, not promoted (calls `dyn.tl.reduceDimension`) |
+
+## Chapter 03 — Statistics
+
+**Legacy — written before source tracking.** Chapter 03 predates the inventory/report/`Source:`-line
+workflow used for 02/08/09, so there is no file-level manifest to reconstruct honestly. Known
+origins, from memory and the content's own style: **STAT 650 weekly notebooks** (TAMU) for
+inference/regression pages, and general **DS 350 R coursework** (BYU-Idaho) influence on some
+descriptive-stats framing. If chapter 03 is ever re-passed through the `fill-chapter` workflow,
+replace this note with real rows.
+
+## Chapter 06 — Data Visualization
+
+**Legacy — written before source tracking.** Same situation as chapter 03: no inventory/report
+exists for this chapter. Known origins: **STAT 650 weekly notebooks** (TAMU) for the Python
+plotting pages (matplotlib/seaborn/plotly), and **DS 350 R coursework** (BYU-Idaho) for the
+`ggplot2`/grammar-of-graphics pages. BI (DAX/dashboards) and best-practices pages have no
+specific traceable source. If chapter 06 is ever re-passed through `fill-chapter`, replace this
+note with real rows.
+
+## Chapter 08 — Machine Learning (ECEN 758/740, TAMU + BYU-Idaho side material)
+
+Inventory: `.superpowers/sdd/ch08-inventory.md` · Report: `.superpowers/sdd/ch08-report.md`
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/08-machine-learning/758 Lec 04 Dimensionality Reduction.pdf` | summarized | `08-machine-learning/dimensionality-reduction/pca.md` |
+| `course-files/08-machine-learning/758 Lec 05 Frequent Itemset Mining and Association Rules.pdf` | summarized | `08-machine-learning/other/itemset-mining.md` |
+| `course-files/08-machine-learning/758 Lec 06 Representative Clustering I.pdf` | summarized | `08-machine-learning/clustering/kmeans.md` |
+| `course-files/08-machine-learning/758 Lec 07 Representative Clustering II.pdf` | summarized | `08-machine-learning/clustering/kmeans.md` |
+| `course-files/08-machine-learning/758 Lec 08 Gaussian Mixture Models (1).pdf` | summarized | `08-machine-learning/clustering/gmm-em.md` |
+| `course-files/08-machine-learning/758 Lec 09 EM Algorithm (1).pdf` | summarized | `08-machine-learning/clustering/gmm-em.md` |
+| `course-files/08-machine-learning/758 Lec 10 Hierarchical Clustering.pdf` | summarized | `08-machine-learning/clustering/hierarchical.md` |
+| `course-files/08-machine-learning/758 Lec 11 Density_based Clustering (1).pdf` | summarized | `08-machine-learning/clustering/density-clustering.md` |
+| `course-files/08-machine-learning/758 Lec 12 Bayesian and Nearest Neighbor Classification.pdf` | summarized | `08-machine-learning/classification/knn.md`, `08-machine-learning/classification/naive-bayes.md` |
+| `course-files/08-machine-learning/758 Lec 13 Decision Tree Classification.pdf` | summarized | `08-machine-learning/classification/decision-trees.md`, `08-machine-learning/classification/random-forests.md` |
+| `course-files/08-machine-learning/758 Lec 14 Graphs, Pagerank and Search.pdf` | summarized | `08-machine-learning/other/pagerank.md` |
+| `course-files/08-machine-learning/758 Lec 15 Recommendation Systems I.pdf` | summarized | `08-machine-learning/other/recommenders.md` |
+| `course-files/08-machine-learning/758 Lec 16 Recommendation Systems II.pdf` | summarized | `08-machine-learning/other/recommenders.md` |
+| `course-files/08-machine-learning/758 Lec 18 Linear Regression*.pdf` | examined-not-used | belongs conceptually to statistics chapter, not cited in ch08 pages |
+| `course-files/08-machine-learning/758 Lec 19 Logistic Regression*.pdf` | examined-not-used | same as above |
+| `course-files/08-machine-learning/758 Lec 20 Support Vector Machines.pdf` | summarized | `08-machine-learning/classification/svm.md` (lecture-only, no code of mine) |
+| `course-files/08-machine-learning/758 Lec 20 Support Vector Machines (1).pdf` (duplicate) | examined-not-used | duplicate download, see flags in inventory |
+| `course-files/08-machine-learning/758 Lec 22 Deep Learning.pdf` | summarized | `08-machine-learning/deep-learning/cnns.md` |
+| `course-files/appendix/Homework/ecen758_hw/HW 1/ECEN758_HW1.ipynb` | snippet | `08-machine-learning/fundamentals/overview.md`, `08-machine-learning/dimensionality-reduction/pca.md` |
+| `course-files/appendix/Homework/ecen758_hw/HW 2/hw2.ipynb` | snippet, promoted-notebook | `08-machine-learning/clustering/gmm-em.md`; `08-machine-learning/notebooks/gmm-em-from-scratch.ipynb` |
+| `course-files/appendix/Homework/ecen758_hw/ecen758_hw3.ipynb` | snippet | `08-machine-learning/classification/knn.md`, `naive-bayes.md`; `08-machine-learning/clustering/kmeans.md`, `hierarchical.md`, `density-clustering.md` |
+| `course-files/appendix/Homework/ecen758_hw/group_project/ecen758_group_report.pdf` | summarized | `08-machine-learning/classification/random-forests.md`, `08-machine-learning/deep-learning/cnns.md`, `08-machine-learning/dimensionality-reduction/pca.md` |
+| `course-files/appendix/Homework/ecen758_hw/group_project/CNN_draft2.pdf` | summarized | `08-machine-learning/deep-learning/cnns.md` |
+| `course-files/appendix/Homework/ecen758_hw/group_project/data_explore.ipynb` | examined-not-used | not promoted (parent dir 355MB incl. CIFAR-100 binaries + 13MB checkpoint) |
+| `course-files/appendix/Homework/ecen758_hw/group_project/best_model.pth` | examined-not-used | — |
+| `course-files/appendix/Homework/ecen758_hw/group_project/` (CIFAR-100 train/test binaries) | examined-not-used | — |
+| `course-files/appendix/Homework/ecen758_hw/two_stage_pipeline.py` | examined-not-used | flagged misfiled (unrelated YOLO/U-Net scaffolding), excluded entirely |
+| `course-files/08-machine-learning/swampdonkey_ml_model.ipynb` (BYU-I capstone, misfiled into TAMU folder) | snippet | `08-machine-learning/ensembles/bagging-boosting.md` |
+| `course-files/08-machine-learning/week08-lesson2 - decision tree.ipynb` (DataCamp-tutorial-derived) | examined-not-used | — |
+| `course-files/08-machine-learning/week08-lesson2 - random forest.ipynb` (DataCamp-tutorial-derived) | examined-not-used | — |
+| `course-files/08-machine-learning/Week12. scikit-learn.ipynb` ("© Scott A. Bruce. Do not distribute.") | examined-not-used | never quoted or promoted (confirmed via privacy grep) |
+| `course-files/08-machine-learning/random_forest_classifier.qmd` (Tyler's own, DS 250/BYU-Idaho) | snippet | `08-machine-learning/classification/decision-trees.md`, `random-forests.md`, `08-machine-learning/fundamentals/overview.md` |
+| `course-files/08-machine-learning/ds250_challenge.py` | examined-not-used | scaffolding-dominated, minor value |
+| `course-files/appendix/Homework/cse450_hw/Team4-Module2-Executive-Summary.pdf` (names 4 teammates) | examined-not-used | — |
+| `course-files/appendix/Homework/cse450_hw/` (4 prediction CSVs + blank `executive-summary.docx`) | examined-not-used | — |
+| `~/Projects/school/tamu-grad/ecen740/Copy_of_ECEN740_Project1.ipynb` | snippet, promoted-notebook | `08-machine-learning/deep-learning/neural-network-fundamentals.md`; `08-machine-learning/notebooks/mlp-fundamentals.ipynb` |
+| `~/Projects/school/tamu-grad/ecen740/ECEN740_project3.ipynb` | snippet, promoted-notebook | `08-machine-learning/deep-learning/transformers-attention.md`; `08-machine-learning/notebooks/mini-gpt-from-scratch.ipynb` |
+| `~/Projects/school/tamu-grad/ecen740/PyTorch_Training_Guide.ipynb` | snippet | `08-machine-learning/deep-learning/neural-network-fundamentals.md` (5 named bugs) |
+| `~/Projects/school/tamu-grad/stat654/presentation/654Project2.ipynb` | snippet | `08-machine-learning/ensembles/xgboost.md`, `08-machine-learning/fundamentals/overview.md` |
+| `~/Projects/personal/nfl_prospect_recommender/src/models/ensemble.py` | snippet | `08-machine-learning/other/recommenders.md` |
+| `~/Projects/personal/nfl_prospect_recommender/src/similarity/gm_similarity.py` | snippet | `08-machine-learning/other/recommenders.md` |
+| `~/Projects/personal/nfl_prospect_recommender/claude.md` | summarized | `08-machine-learning/other/recommenders.md` |
+| `~/Projects/personal/{baseball_sim,dbacks-batting-sim}` (R Markdown baseball sim) | examined-not-used | not ML material |
+| `~/Projects/friends-family/family-hist-app` (Laravel/PHP) | examined-not-used | not ML material |
+
+## Chapter 09 — Time Series Forecasting (senior project + production forecasting work)
+
+Inventory: `.superpowers/sdd/task-6-inventory.md` · Report: `.superpowers/sdd/task-6-report.md`
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/09-time-series-forecasting/time-series-forecasting/forecasting-pipeline.py` | snippet | `09-time-series-forecasting/fundamentals/stationarity.md`, `seasonality-trends.md`, `autocorrelation.md`; `statistical/naive-methods.md`, `ets.md`, `arima.md`, `sarima.md`; `ml/feature-engineering.md`, `xgboost.md`; `transformations/log.md`, `sqrt.md`, `box-cox.md`, `differencing.md`; `evaluation/metrics.md`, `comparison.md` |
+| `course-files/09-time-series-forecasting/time-series-forecasting/resampling-utilities.py` | snippet | `09-time-series-forecasting/fundamentals/concepts.md` |
+| `course-files/09-time-series-forecasting/time-series-forecasting/forecast-visualization.py` | examined-not-used | fabricated-data illustrative script, not a snippet source |
+| `course-files/09-time-series-forecasting/time-series-forecasting/synthetic-data-generator.py` | promoted-notebook | basis for `09-time-series-forecasting/notebooks/senior-project-pipeline.ipynb` |
+| `course-files/09-time-series-forecasting/time-series-forecasting/streamlit-dashboard-main.py` | examined-not-used | broken imports as checked out, not executable |
+| `course-files/09-time-series-forecasting/time-series-forecasting/streamlit-data-overview.py` | examined-not-used | considered as EDA-workflow background reading, not directly cited |
+| `course-files/09-time-series-forecasting/time-series-forecasting/streamlit-model-comparison.py` | examined-not-used | considered as background reading, not directly cited |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/takeaways.md` | summarized | Gotchas sections across `transformations/`, `evaluation/`; `transformations/yeo-johnson.md` |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/model_info.md` | summarized | `09-time-series-forecasting/fundamentals/concepts.md` and general prose backbone |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/steps.md` | examined-not-used | trivial one-line stub |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/outline.md` | summarized | `09-time-series-forecasting/index.md` (scoped "planned vs implemented"), `ml/random-forest.md` |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/Questions.md` | examined-not-used | — |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/data_Privacy.py` | examined-not-used | privacy flag only (obfuscation script, not anonymization) — not incorporated |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/` (raw real demand-history export, private ERP source) | examined-not-used | private, never published |
+| `course-files/09-time-series-forecasting/time-series-forecasting/retail_data.csv`, `daily_sales.csv` | examined-not-used | derived from real data, not used as the public/runnable dataset |
+| `course-files/09-time-series-forecasting/time-series-forecasting/docs/time_series_outputs/*.png`, `time_series_plot.png` | examined-not-used | not embedded; plots regenerated from synthetic data instead |
+| `demand-forecast/README.md` (private distribution-forecasting repo) | summarized | `09-time-series-forecasting/index.md` |
+| `demand-forecast/docs/technical_summary.md` (private distribution-forecasting repo) | summarized | `09-time-series-forecasting/index.md`, `evaluation/selection-framework.md` |
+| `demand-forecast/src/features/lag.py` (private distribution-forecasting repo; `LagFeatureEngineer.transform`) | snippet | `09-time-series-forecasting/ml/feature-engineering.md` |
+| `demand-forecast/src/features/rolling.py` (private distribution-forecasting repo; `RollingFeatureEngineer._calculate_rolling_stat`) | snippet | `09-time-series-forecasting/ml/feature-engineering.md` |
+| `demand-forecast/src/features/demand_patterns.py` (private distribution-forecasting repo; simplified reconstruction) | snippet | `09-time-series-forecasting/evaluation/selection-framework.md` |
+| `demand-forecast/src/features/temporal.py`, `hierarchical.py`, `base.py` (private distribution-forecasting repo) | examined-not-used | secondary, not directly cited |
+| `demand-forecast/tests/test_data_leakage.py` (private distribution-forecasting repo) | summarized | leakage-assertion pattern mirrored in `09-time-series-forecasting/notebooks/distribution-feature-engineering-demo.ipynb` |
+| `demand-forecast/src/evaluation/metrics.py` (private distribution-forecasting repo; `mase`) | snippet | `09-time-series-forecasting/evaluation/metrics.md` |
+| `demand-forecast/src/ensemble/weighted.py` (private distribution-forecasting repo; `WeightedEnsemble._optimize_weights`) | snippet | `09-time-series-forecasting/evaluation/comparison.md` |
+| `demand-forecast/src/data/preprocessor.py` (private distribution-forecasting repo) | summarized | `09-time-series-forecasting/transformations/log.md` (log-transform-as-config) |
+| `demand-forecast/src/pipeline.py` (private distribution-forecasting repo) | summarized | `09-time-series-forecasting/index.md` (high-level "how it's wired together") |
+| `demand-forecast/legacy/forecast.py` (private distribution-forecasting repo) | summarized | evolution narrative contrast, `statistical/naive-methods.md` |
+| `demand-forecast/docs/legacy_comparison.md`, `new_methods_report.md`, `previous_model_report.md`, `docs_vs_reality.md`, `blind_audit.md` (private distribution-forecasting repo) | examined-not-used | skimmed for potential Gotchas material, not directly drawn from |
+| `demand-forecast/notebooks/forecast_eda.ipynb` (private distribution-forecasting repo) | examined-not-used | contains real stock IDs in outputs, cannot be published |
+| `demand-forecast/notebooks/chronos2_benchmark.ipynb` (private distribution-forecasting repo) | examined-not-used | out of scope for this chapter |
+| `demand-forecast/outputs/evaluation_200stocks_report.ipynb` (private distribution-forecasting repo) | examined-not-used | — |
+| `demand-forecast/models/*`, real demand-history exports, `brame_demand/models/*` (private distribution-forecasting repo) | examined-not-used | private, never published |
+| `scripts/` top-level (`brame_prophet.py`, `functions.py`, notebooks; private distribution-forecasting repo) | examined-not-used | lower quality/superseded, historical color only |
+| `monthly_forecast-2024/` (private distribution-forecasting repo) | examined-not-used | superseded by `demand-forecast/`, same privacy concerns |
+
+## Chapter 07 — SQL & Databases — inventoried, chapter pending
+
+Inventory: `.superpowers/sdd/ch07-inventory.md`. **This chapter has not been drafted yet** —
+everything below was surveyed for scope/feasibility only; nothing has landed on a page.
+
+| Path | Disposition | Note |
+|---|---|---|
+| `course-files/07-sql-and-databases/Week 2_Docker.pdf` | inventoried-pending | STAT 624 lecture, treat as restricted (same course as flagged copyrighted files) |
+| `course-files/07-sql-and-databases/STAT624_Docker_082523.pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
+| `course-files/07-sql-and-databases/Week 3_RDBM.pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
+| `course-files/07-sql-and-databases/Week 4_Basics of SQL.pdf` | inventoried-pending | treat as restricted (same course/instructor) |
+| `course-files/07-sql-and-databases/Week 6_Aggregation_Window Functions.pdf` | inventoried-pending | treat as restricted (same course/instructor) |
+| `course-files/07-sql-and-databases/Week 11_NoSQL (1).pdf` | inventoried-pending | "© 2023 Scott A. Bruce. Do not distribute." |
+| `course-files/07-sql-and-databases/Week7_sqlalchemy_pythonintro.ipynb` | inventoried-pending | "© Texas A&M" banner; mixed instructor scaffold + Tyler's answers; needs live docker Postgres to run |
+| `course-files/07-sql-and-databases/Week13_daskparallelization.ipynb` | inventoried-pending | "© Scott A. Bruce. Do not distribute." |
+| `course-files/07-sql-and-databases/Week14_Dask_Scheduler_Cluster (1).ipynb` | inventoried-pending | "Copyright @ Seung-Yeon Ha 2025"; needs TAMU HPRC GPU cluster |
+| `course-files/07-sql-and-databases/Dask-Ch13_ML (2).ipynb` | inventoried-pending | copied from O'Reilly "Scaling Python with Dask" book repo, not original |
+| `course-files/07-sql-and-databases/db_assignment/pokemon_erd.sql` | inventoried-pending | Tyler's own MySQL Workbench schema (2023, BYU-Idaho, not STAT 624) |
+| `course-files/07-sql-and-databases/db_assignment/pokemon.mwb`, `Queries.txt`, `How to add a pokemon.txt`, `Stuff for Insert Into.txt`, `sql_converter.py`, `pokemon_test.csv` | inventoried-pending | Tyler's own (BYU-Idaho) |
+| `course-files/07-sql-and-databases/baseball-report-sql.qmd` | inventoried-pending | Tyler's own (DS 250, BYU-Idaho), misfiled into TAMU folder |
+| `course-files/07-sql-and-databases/baseball-sql-analysis.py` / `sqlite.py` | inventoried-pending | Tyler's own (DS 250, BYU-Idaho) |
+| `course-files/07-sql-and-databases/week06.ipynb` | inventoried-pending | 2-cell orphan stub, duplicate of baseball script opening |
+| `~/Projects/school/byui-undergrad/DS_250/Project 3/` (`project3.qmd`, `project3.py`, `project3.html`, `week06.ipynb`, `lahmansbaseballdb.sqlite`) | inventoried-pending | better, self-contained copy of the baseball project (has the actual DB file) |
+| `~/Projects/personal/investing/databasemanager.py` | inventoried-pending | complementary own-code (pymysql production-style DB manager) |
+| `~/Projects/friends-family/family-hist-app` (Laravel migrations) | inventoried-pending | supplementary schema-as-code example, different paradigm |
+
+## Appendix
+
+The appendix pages (`docs/appendix/full-textbooks.md`, `misc-homework.md`,
+`external-resources.md`, `miscellaneous.md`) are themselves raw indexes of local file paths —
+homework PDFs, full textbook chapters, syllabi, and external links — linked for reference but
+not narratively incorporated into any chapter page. Every file listed on those four pages is
+effectively `cited-only` by definition; rather than duplicate hundreds of rows here, check
+those pages directly (they're already organized by course/topic and are just as greppable):
+
+    git grep -n 'Local:' docs/appendix/
+
+No separate inventory/report exists for the appendix — it is maintained by hand as files are
+added to `course-files/`.
