@@ -92,6 +92,31 @@ inference/regression pages, and general **DS 350 R coursework** (BYU-Idaho) infl
 descriptive-stats framing. If chapter 03 is ever re-passed through the `fill-chapter` workflow,
 replace this note with real rows.
 
+## Chapter 04 — Data Wrangling (DS 250, BYU-Idaho + STAT 624, TAMU)
+
+Inventory: `.superpowers/sdd/ch04-inventory.md` · Report: `.superpowers/sdd/ch04-report.md`
+
+Six pages + two notebooks. Built almost entirely from my own DS 250 coursework; the one
+STAT 624 file is instructor-copyrighted, do-not-distribute, so it is `cited-only` (concepts
+paraphrased from independently-written code, nothing reproduced). Instructor assignment
+prompts embedded in my own DS 250 files are paraphrased, never quoted. Public datasets
+(FiveThirtyEight Star Wars, byuidatascience flights/`table1`–`table5`) are linked, not
+re-hosted.
+
+| Path | Disposition | Where it landed |
+|---|---|---|
+| `course-files/04-data-wrangling/data_cleaning_starwars.qmd` (≡ `DS_250/Project5/project_5.qmd`, my own) | snippet | `04-data-wrangling/case-study-star-wars-survey.md`; `pandas-fundamentals.md` (rename dict, dtype cast) |
+| `course-files/04-data-wrangling/flights_data_wrangling.ipynb` (≡ `DS_250/Project 2/Project2.qmd`, my own) | snippet, promoted-notebook | `04-data-wrangling/missing-data-case-study.md`; `04-data-wrangling/notebooks/flights-data-wrangling.ipynb` (Desktop path scrubbed → public URL, prompts paraphrased, re-executed) |
+| `course-files/04-data-wrangling/data_cleaning_lesson.ipynb` (own-typed; ≡ `DS_250/Project5/week11_class/week10-lesson2.ipynb`) | snippet, promoted-notebook | `04-data-wrangling/tidy-data-reshaping.md`, `pandas-fundamentals.md` (`.str` methods); `04-data-wrangling/notebooks/tidy-data-lesson.ipynb` (title/context added, local StarWars read removed, re-executed) |
+| `course-files/04-data-wrangling/ds250-final-chal-wrangling.qmd` (≡ `DS_250/Coding_challenge/ds250_challenge.qmd`, my own) | snippet | `04-data-wrangling/pandas-fundamentals.md` (multi-sentinel `replace`), `tidy-data-reshaping.md` (age-range split); instructor "## Instructions" block paraphrased, not quoted |
+| `course-files/04-data-wrangling/Week 12. NumPy and pandas.ipynb` (© 2023 Scott A. Bruce, STAT 624, "Do not distribute") | cited-only | `04-data-wrangling/numpy-arrays.md` (concepts learned-from; **zero** text/code/output reproduced, all examples written from scratch) |
+| `course-files/04-data-wrangling/pandas-ml-challenge.py` (≡ `DS_250/Coding_challenge/ds250_challenge.py`, my own) | examined-not-used | duplicate of the `.qmd` above in script form, less complete — no new material |
+| `course-files/04-data-wrangling/inclass-tidydata.ipynb` (own-typed lecture follow-along, `mpg`/`covid`) | examined-not-used | weaker/generic vs. the two promoted notebooks; not needed |
+| `course-files/04-data-wrangling/pandas-ml-challenge.textClipping` | examined-not-used | macOS Finder text-clipping artifact, 243 B, no content |
+| byuidatascience `flights_missing.json` ([public repo](https://github.com/byuidatascience/data4missing)) | cited-only | linked/loaded at runtime by the flights notebook; not re-hosted in this repo |
+| FiveThirtyEight Star Wars survey CSV ([public repo](https://github.com/fivethirtyeight/data/tree/master/star-wars-survey)) | cited-only | linked from the Star Wars case study; not re-hosted |
+| `docs/04-data-wrangling/img/tidy-vs-long.png` (+ `img/generators/make_reshape_figure.py`, my own) | figure-basis | `04-data-wrangling/tidy-data-reshaping.md` (wide↔long melt/pivot diagram, generated) |
+
 ## Chapter 06 — Data Visualization
 
 **Legacy — written before source tracking.** Same situation as chapter 03: no inventory/report

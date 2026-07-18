@@ -89,6 +89,17 @@ nav:
       - Logistic: 03-statistics/regression/logistic.md
       - Assumptions: 03-statistics/regression/assumptions.md
 
+  - Data Wrangling:
+    - Overview: 04-data-wrangling/index.md
+    - pandas Fundamentals: 04-data-wrangling/pandas-fundamentals.md
+    - NumPy Arrays: 04-data-wrangling/numpy-arrays.md
+    - Tidy Data & Reshaping: 04-data-wrangling/tidy-data-reshaping.md
+    - Missing Data Case Study: 04-data-wrangling/missing-data-case-study.md
+    - Case Study — Star Wars Survey: 04-data-wrangling/case-study-star-wars-survey.md
+    - Notebooks:
+      - "Flights: Missing Data": 04-data-wrangling/notebooks/flights-data-wrangling.ipynb
+      - Tidy Data Lesson: 04-data-wrangling/notebooks/tidy-data-lesson.ipynb
+
   - Data Visualization:
     - Overview: 06-data-visualization/index.md
     - Python:
