@@ -86,6 +86,39 @@ nav:
       - Chart Selection: 06-data-visualization/best-practices/chart-selection.md
       - Design Principles: 06-data-visualization/best-practices/design-principles.md
 
+  - Machine Learning:
+    - Overview: 08-machine-learning/index.md
+    - Fundamentals:
+      - ML Overview & Workflow: 08-machine-learning/fundamentals/overview.md
+    - Classification:
+      - k-Nearest Neighbors: 08-machine-learning/classification/knn.md
+      - Naive Bayes: 08-machine-learning/classification/naive-bayes.md
+      - Decision Trees: 08-machine-learning/classification/decision-trees.md
+      - Random Forests: 08-machine-learning/classification/random-forests.md
+      - Support Vector Machines: 08-machine-learning/classification/svm.md
+    - Clustering:
+      - k-Means: 08-machine-learning/clustering/kmeans.md
+      - Hierarchical: 08-machine-learning/clustering/hierarchical.md
+      - Density-Based: 08-machine-learning/clustering/density-clustering.md
+      - GMM & EM: 08-machine-learning/clustering/gmm-em.md
+    - Dimensionality Reduction:
+      - PCA: 08-machine-learning/dimensionality-reduction/pca.md
+    - Ensembles:
+      - Bagging & Boosting: 08-machine-learning/ensembles/bagging-boosting.md
+      - XGBoost: 08-machine-learning/ensembles/xgboost.md
+    - Deep Learning:
+      - Neural Network Fundamentals: 08-machine-learning/deep-learning/neural-network-fundamentals.md
+      - Convolutional Neural Networks: 08-machine-learning/deep-learning/cnns.md
+      - Transformers & Attention: 08-machine-learning/deep-learning/transformers-attention.md
+    - Other Methods:
+      - Recommender Systems: 08-machine-learning/other/recommenders.md
+      - PageRank & Graph Methods: 08-machine-learning/other/pagerank.md
+      - Frequent Itemset Mining: 08-machine-learning/other/itemset-mining.md
+    - Notebooks:
+      - Mini-GPT From Scratch: 08-machine-learning/notebooks/mini-gpt-from-scratch.ipynb
+      - MLP Fundamentals: 08-machine-learning/notebooks/mlp-fundamentals.ipynb
+      - GMM & EM From Scratch: 08-machine-learning/notebooks/gmm-em-from-scratch.ipynb
+
   - Time Series Forecasting:
     - Overview: 09-time-series-forecasting/index.md
     - Fundamentals:
