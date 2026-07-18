@@ -804,3 +804,50 @@ Source: `~/Projects/school/byui-undergrad/MATH425/ClassActivity-RegressionDiagno
   original units).
 - **Fixed-x and independent errors matter too.** Beyond the residual-vs-fitted and Q-Q plots, a
   residuals-vs-order plot catches the independence violations the other two miss.
+
+## How I Did It — STAT 654 (TAMU)
+
+The synthetic VIF example above shows the *mechanic*; here's what multicollinearity looked
+like on a real model. In a graduate regression project I fit median city rent on ~20 Census
+demographic predictors, and `car::vif()` immediately flagged a problem:
+
+```r
+library(car)
+fit_full <- lm(price_overall ~ ., data = df_model)   # ~20 demographic predictors
+vif(fit_full)
+```
+
+In my first, bigger specification (65 predictors including state dummies) several VIFs blew
+past 10. In the leaner 21-predictor model the picture was more instructive:
+
+- **A correlated cluster, not a structural trap.** The worst offenders were the
+  bachelor's-degree share (VIF ≈ 8.4), median household income (≈ 6.1), and the
+  professional-employment share (≈ 6.1) — three measures of the same "educated, high-earning
+  city" signal, each inflating the others' variance.
+- **The trap I expected wasn't there.** My data dictionary claimed the industry
+  employment shares (`pct_emp_professional`, `pct_emp_manufacturing`, …) were mutually
+  exclusive and summed to ~100%, which would make them nearly linearly dependent by
+  construction. Checking the actual data, they sum to ~52% — the ACS slice is partial — and
+  every employment share except professional had a VIF under 3. Verify constructed-variable
+  claims against the data before reasoning from them.
+
+The VIFs didn't hurt the model's *predictions* — $R^2$ and RMSE were fine — but they made
+the individual coefficients unstable and their standard errors untrustworthy, which is the
+classic multicollinearity signature. Rather than hand-pruning correlated columns, I let
+[model selection and regularization](model-selection-regularization.md) handle it: LASSO's
+L1 penalty is designed to keep one of a correlated group and zero the rest, and best-subsets
+selection sidesteps the dependency by never fitting the redundant variables together.
+
+Source: `~/Projects/school/tamu-grad/stat654/regression_no_states.Rmd`
+
+### Gotchas
+
+- **VIF diagnoses, it doesn't prescribe.** A VIF > 10 tells you a coefficient's variance is
+  inflated ~10× — it does *not* tell you which variable to drop. That's a modeling decision
+  (or a job for LASSO), not something the VIF table decides for you.
+- **Some collinearity is structural, not incidental.** Shares that sum to a constant, or a
+  variable and its own log, will always be collinear. Recognize the by-construction cases —
+  more data won't rescue them.
+- **Multicollinearity breaks inference, not prediction.** If you only care about forecasting
+  rent, high VIFs may be harmless. If you care about *interpreting* which driver matters and
+  by how much, they're disqualifying until addressed.
