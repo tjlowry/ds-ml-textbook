@@ -309,6 +309,17 @@ those pages directly (they're already organized by course/topic and are just as 
 No separate inventory/report exists for the appendix — it is maintained by hand as files are
 added to `course-files/`.
 
+The **Cheat Sheet** (`docs/appendix/cheat-sheet.md`) is a compiled quick-reference: it condenses
+formulas and decision rules already published across the chapters and links back to them, so it
+introduces no new derivations. Two files were consulted directly for the formula re-typesetting:
+
+| Path | Disposition | Notes |
+|---|---|---|
+| `course-files/appendix/Homework/ecen758_hw/ECEN758 Final review.pdf` (my own condensed study sheet — pdfTeX-typeset, no copyright/instructor/name markers) | verified own work | PageRank, recommender, and Ridge/Lasso formulas re-typeset in our own LaTeX; ideas not expression |
+| `course-files/appendix/Homework/ecen758_hw/Midterm review cheat sheet.pdf` (my own handwritten review notes — macOS Quartz scan, no markers) | verified own work | consulted; formulas cross-checked against chapter pages |
+
+Report: `.superpowers/sdd/cheatsheet-report.md`.
+
 ## Chapter 12 — Scientific Machine Learning & PINNs
 
 Course: **ECEN 744 Scientific Machine Learning**, Texas A&M, Spring 2026, instructor

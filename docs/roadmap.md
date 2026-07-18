@@ -7,7 +7,6 @@ run `/fill-chapter <name>` in Claude Code (see `.claude/skills/fill-chapter/`).
 |---|---|
 | 01 Introduction | `course-files/01-introduction/` |
 | 05 Exploratory Data Analysis | `course-files/05-exploratory-data-analysis/` (star wars, name-pop EDA notebooks) |
-| Appendix: cheat sheets | rewrite from scratch as they become useful |
 
 Pruned stubs are recoverable from git history (commit before "prune stub pages").
 
