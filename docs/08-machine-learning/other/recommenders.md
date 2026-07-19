@@ -9,6 +9,18 @@ user–item interaction matrix — users who agreed before will agree again) and
 features). Modern systems, including mine, blend both and often factor the interaction
 matrix into latent user/item embeddings.
 
+That factoring is the heart of the collaborative-filtering family: approximate the sparse
+user×item ratings matrix $R$ as a product $U V^{T}$ of low-rank latent factors, then read a
+missing rating straight off the dot product of a user row and an item column. The schematic
+below works one such prediction end to end — every number is self-consistent, so the
+highlighted empty cell's value is exactly the dot product of the highlighted factors.
+
+![Matrix-factorization schematic: a 6×5 user×item ratings grid with several observed integer
+ratings and grey missing cells, approximated by U (6×2 latent user factors) times Vᵀ (2×5
+latent item factors). The missing User 5 × Item 3 cell is predicted as the dot product of the
+highlighted U row (1.2, 1.2) and Vᵀ column (1.5, 1.4): (1.2)(1.5) + (1.2)(1.4) =
+3.48.](../img/matrix-factorization.png)
+
 I studied recommenders in ECEN 758 (Lectures 15–16) and built a full hybrid recommender as
 a personal project: an NFL-draft prospect recommender that treats GMs/coaches as "users" and
 draft prospects as "items."

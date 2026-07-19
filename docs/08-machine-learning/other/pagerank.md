@@ -10,6 +10,17 @@ computable as the dominant eigenvector of the (damped) transition matrix. It's t
 that originally ranked web pages and generalizes to any network centrality question
 (citations, social graphs, recommendation).
 
+The core idea in one picture — a node's rank comes from *who* links to it, not merely *how
+many*. In the graph below, node **A** has only two in-links, but both come from the important
+hubs C and D, so it outranks node **B**, which collects three in-links from minor leaf pages
+E, F, G. The PageRank values shown are computed by power iteration (damping 0.85) on this
+exact adjacency, and each node's circle is drawn proportional to its score.
+
+![Seven-node directed graph with node circles sized proportional to PageRank. Node A has two
+in-links from the important hubs C and D and scores PR 0.20; node B has three in-links from
+the minor leaf pages E, F, G but scores only PR 0.17 — fewer, better-connected in-links
+win.](../img/pagerank-graph.png)
+
 **I don't have my own implementation of this one.** PageRank and graph search are covered in
 my ECEN 758 notes but I never used them in a project or homework — no code of mine exists to
 show. This page is a concept summary from the lecture.
