@@ -36,6 +36,16 @@ This is applied use, not a derivation: the concept understanding (why `k` trades
 variance, why the distance metric matters) comes from the lecture, and the fit/predict is
 scikit-learn.
 
+That bias-variance trade-off is easiest to *see* on a synthetic two-class problem. The
+figure below fits `KNeighborsClassifier` on the same seeded two-moons data at two values of
+`k` (not from my coursework — a demo built to isolate the effect):
+
+![Two-panel figure of kNN decision boundaries on the same synthetic two-moons dataset. Left panel, k equals 1: a jagged boundary with small isolated islands that wraps individual points, the overfit case. Right panel, k equals 15: a smooth boundary that ignores individual noisy points and follows the overall two-class shape.](../img/knn-k1-vs-k15.png)
+
+At `k=1` every point is its own neighbor, so the boundary is jagged and carves out little
+islands around noise — high variance. At `k=15` the vote averages over more neighbors and
+the boundary smooths out. That is the dial the first gotcha below is about.
+
 ## Gotchas
 
 - **Scale first.** kNN is pure distance, so an unscaled large-magnitude feature dominates

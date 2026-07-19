@@ -40,6 +40,18 @@ correlation with `yrbuilt` was above +0.2 or below −0.2 — so the tree split 
 that actually separated pre-/post-1980 homes (number of stories, living area, bathroom
 count).
 
+The reason a tree is the most *interpretable* model is that you can read it as a flowchart
+and watch the yes/no splits carve feature space into rectangles. Fitting a small depth-3
+tree on two interpretable iris features (petal length and petal width) shows both halves
+side by side:
+
+![Two-panel figure. Left panel: a depth-3 decision tree fit on iris, drawn as a flowchart of nodes labeled with their split threshold, sample counts, class counts, and majority class, with nodes tinted blue for Setosa, orange for Versicolor, and green for Virginica. Right panel: the same tree's decision regions in petal length vs petal width space, shown as axis-aligned rectangular pastel blocks in the matching colors with the iris data overlaid.](../img/decision-tree-and-regions.png)
+
+Each split in the flowchart (left) is one horizontal or vertical cut in feature space
+(right): `petal width <= 0.8` peels off the Setosa block along the bottom, and the deeper
+splits chop the Versicolor/Virginica overlap into rectangles. That axis-aligned,
+rectangles-only geometry is the second gotcha below.
+
 ## Gotchas
 
 - **A single tree overfits.** Left unconstrained it grows until every leaf is pure, which
