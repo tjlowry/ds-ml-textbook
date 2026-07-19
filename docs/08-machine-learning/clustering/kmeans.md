@@ -7,6 +7,19 @@ alternate between assigning each point to its nearest centroid and recomputing e
 centroid as the mean of its members, until assignments stop changing. It's fast and simple
 but assumes roughly spherical, equally-sized clusters and needs `k` up front.
 
+That spherical assumption is easiest to appreciate by breaking it. Below, plain
+k-means (`k=5`) runs on an illustrative synthetic mix of three Gaussian blobs, two
+interleaved half-moons, and a little uniform noise. Because it partitions space
+purely by proximity to the nearest centroid, it recovers the convex blobs cleanly
+but slices straight through the two moons — no single centroid can wrap a crescent:
+
+![k-Means with k=5 on a synthetic dataset of three Gaussian blobs plus two interleaved half-moons: the three blobs are each recovered as a clean pastel cluster, while the two moons are cut through the middle by the cluster boundaries, with red X markers at the five centroids](../img/kmeans-shared-data.png)
+
+*Illustrative synthetic demo built for this page. The same seeded dataset is
+re-used by the [DBSCAN](density-clustering.md), [GMM](gmm-em.md), and
+[hierarchical](hierarchical.md) pages so you can compare how each method handles
+the identical blobs-plus-moons.*
+
 I studied representative clustering in ECEN 758 (Lectures 6–7). In HW 3 I used the
 **bisecting** k-means variant — which repeatedly splits the worst cluster in two — rather
 than plain Lloyd's k-means, so my hands-on code is the bisecting version; the vanilla
