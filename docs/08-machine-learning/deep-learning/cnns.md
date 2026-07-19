@@ -41,6 +41,19 @@ the CNN **learned** its own filters end to end, which is exactly why it jumped f
 52% on the same data. (These are the group's reported numbers from a draft report; the
 final write-up's results section was still in progress.)
 
+The two operations that make up each of those convolutional blocks are worth seeing
+concretely. A 3×3 kernel slides over the input and each window position produces one cell of
+the feature map (with ReLU applied); then 2×2 max-pooling downsamples that map, keeping the
+strongest response in each little window. The schematic below traces one window through both
+stages — the same 3×3-kernel-plus-max-pool building blocks our CIFAR-100 CNN stacked three
+times.
+
+![Convolution-and-pooling schematic. An 8×8 input has a 3×3 kernel window highlighted, with an
+arrow to the single cell it produces in the 6×6 feature map (8 − 3 + 1 = 6, stride 1, valid,
+plus ReLU). A 2×2 window on the feature map maps by max-pooling to one cell of the 3×3 pooled
+map (6 / 2 = 3). These are the building blocks of the CIFAR-100 CNN's convolutional
+blocks.](../img/cnn-conv-pool.png)
+
 ## Course notebook
 
 The ECEN 740 material's deep-learning lecture (ECEN 758 Lecture 22) references a repository
