@@ -9,6 +9,18 @@ canonical example (core points, reachability, an `eps` radius); **Mean Shift** �
 I used — instead slides a kernel window uphill toward the densest point until every window
 converges to a mode, and the number of clusters falls out of the bandwidth.
 
+The payoff of not assuming spherical clusters shows up on the same synthetic
+dataset the [k-means page](kmeans.md) slices apart. Here DBSCAN (`eps=0.55`,
+`min_samples=5`) recovers all five structures — the three Gaussian blobs *and* the
+two non-convex moons — as whole clusters, and flags 11 of the sparse points as
+noise (red x's) rather than forcing them into a cluster:
+
+![DBSCAN on the shared synthetic dataset with eps=0.55 and min_samples=5: the two interleaved half-moons are each recovered as a complete crescent-shaped cluster alongside the three Gaussian blobs, for five clusters total, while eleven low-density points are marked as noise with red x markers](../img/dbscan-shared-data.png)
+
+*Illustrative synthetic demo built for this page. Those parameters were tuned
+until DBSCAN genuinely produced the five-clusters-plus-noise result shown; a
+larger `eps` starts merging the moon with a neighboring blob.*
+
 I studied density clustering in ECEN 758 (Lecture 11) and implemented Mean Shift in HW 3
 on the iris petals.
 

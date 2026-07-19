@@ -10,6 +10,25 @@ it with **Expectation-Maximization (EM)**: alternate between the **E-step** (com
 responsibilities given current parameters) and the **M-step** (re-estimate parameters
 weighted by those responsibilities), climbing the log-likelihood each round.
 
+Those two ideas — soft responsibilities and per-component covariance — are what a
+GMM adds over k-means. On the same synthetic dataset used across this chapter, a
+5-component GMM colors each point by its *soft* blend of component memberships
+(boundary points look muddy) and fits a full covariance ellipse per component. It
+wraps the three blobs tightly and stretches two broad Gaussians over the moon
+region — a reminder that a mixture of Gaussians still models convex components:
+
+![Five-component Gaussian mixture on the shared synthetic dataset: points colored by their soft responsibility-weighted blend of component colors, with a two-sigma covariance ellipse drawn for each of the five components, three tight ellipses over the Gaussian blobs and two large elongated ellipses spanning the two moons](../img/gmm-shared-data.png)
+
+The EM fit itself is iterative. Starting from a deliberately loose random
+initialization, the panels below show the same 5-component model after 1, 3, and
+10 EM iterations (fixed seed): the ellipses start broad and overlapping, then
+tighten onto the blobs as the mean log-likelihood climbs toward its optimum.
+
+![Three-panel figure showing EM refining a five-component GMM after 1, 3, and 10 iterations from a fixed random initialization: the covariance ellipses begin large and overlapping and progressively tighten onto the three Gaussian blobs, with the mean log-likelihood rising from about -4.13 to -3.79 across the panels](../img/gmm-em-iterations.png)
+
+*Both are re-demos built for this page — the ECEN 758 homework implemented EM
+by hand on a 1-D three-coin problem, not this 2-D data.*
+
 This is the topic I understand best in the chapter, because ECEN 758 HW 2 had me implement
 EM *by hand* — no `sklearn.mixture.GaussianMixture`, just the update equations.
 

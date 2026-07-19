@@ -9,6 +9,18 @@ single-link (nearest pair), complete-link (farthest pair), average, or Ward. You
 to commit to `k` in advance: cut the dendrogram at whatever height gives the number of
 clusters you want.
 
+The two panels below make that concrete on a 40-point subsample of the same
+synthetic dataset used across this chapter. The left panel is the Ward dendrogram;
+the dashed line marks the height where cutting yields `k=5` clusters. The right
+panel shows those same points colored by that cut — Ward recovers the three
+Gaussian blobs but, being a variance-minimizing (convex) method, splits the two
+interleaved moons by proximity rather than following their crescents:
+
+![Two-panel hierarchical clustering figure: on the left a Ward dendrogram of a 40-point subsample with a dashed horizontal line marking the cut height for five clusters and link colors matching the clusters; on the right the same points scattered and colored by the five-cluster cut, with the three Gaussian blobs recovered as distinct clusters and the two moons split into two clusters by proximity](../img/hierarchical-shared-data.png)
+
+*Illustrative synthetic demo built for this page; the subsample excludes the
+uniform-noise points so the dendrogram leaves stay readable.*
+
 I worked through this in ECEN 758 (Lecture 10) and implemented it in HW 3, including a
 hand-worked single-link example on a small point set.
 
