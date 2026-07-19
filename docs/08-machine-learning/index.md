@@ -4,19 +4,16 @@
 
 This chapter is the "how I actually built the model" companion to the more
 statistics-flavored chapters. It covers the classic supervised and unsupervised
-algorithms, the ensemble methods I reach for most, and the deep-learning work where I
-implemented the pieces from scratch rather than calling a library.
+algorithms and the ensemble methods I reach for most; neural networks from backprop up
+to transformers live in the [Deep Learning](deep-learning/index.md) chapter.
 
-It draws on three streams of my own work:
+It draws on two streams of my own work:
 
 - **ECEN 758 — Data Mining and Analysis (Texas A&M grad).** Dr. Peeples' course: the
   clustering / classification / dimensionality-reduction backbone. My contributions are
   the homework notebooks (from-scratch EM, hierarchical/density clustering, PCA, applied
-  kNN/Naive Bayes) and a CIFAR-100 image-classification group project.
-- **ECEN 740 — Machine Learning Engineering (Texas A&M grad).** The deep-learning
-  engineering course: two from-scratch projects — an MLP-fundamentals project (backprop,
-  initialization, BatchNorm, dropout) and a mini-GPT transformer language model — plus my
-  own PyTorch training/debugging reference notes.
+  kNN/Naive Bayes) and a CIFAR-100 image-classification group project (written up in the
+  [Deep Learning chapter's case study](case-study-cifar100.md)).
 - **Earlier coursework and side projects.** DS 250 (BYU-Idaho) tree/random-forest client
   report, a STAT 654 XGBoost regression model, a PySpark ensemble revenue model, and a
   personal NFL-draft recommender system.
@@ -33,11 +30,6 @@ the ECEN 758 lecture instead of pretending I have an implementation.
 
 ## Notebooks
 
-- [Mini-GPT From Scratch](notebooks/mini-gpt-from-scratch.ipynb) — byte-level BPE,
-  multi-head causal self-attention, RMSNorm, SwiGLU, and top-p decoding, built up
-  component by component (ECEN 740).
-- [MLP Fundamentals](notebooks/mlp-fundamentals.ipynb) — backprop by hand, hinge vs
-  cross-entropy loss, Xavier/Kaiming init, BatchNorm, and a dropout sweep (ECEN 740).
 - [GMM & EM From Scratch](notebooks/gmm-em-from-scratch.ipynb) — the E-step / M-step of
   Expectation-Maximization coded by hand on a Gaussian mixture and the three-coin problem
   (ECEN 758). Re-executed locally.
@@ -73,29 +65,22 @@ the ECEN 758 lecture instead of pretending I have an implementation.
 - [Bagging & Boosting](ensembles/bagging-boosting.md)
 - [XGBoost](ensembles/xgboost.md)
 
-### Deep Learning
-
-- [Neural Network Fundamentals](deep-learning/neural-network-fundamentals.md)
-- [Convolutional Neural Networks](deep-learning/cnns.md)
-- [Transformers & Attention](deep-learning/transformers-attention.md)
-
 ### Other Methods
 
 - [Recommender Systems](other/recommenders.md)
 - [PageRank & Graph Methods](other/pagerank.md)
 - [Frequent Itemset Mining](other/itemset-mining.md)
 
-### Case Study
-
-- [CIFAR-100 Image Classification](case-study-cifar100.md) — Random Forest vs custom CNN vs
-  CLIP transfer learning on 100 classes, and an honest lesson about finishing the write-up.
+Neural networks, CNNs, transformers, and the CIFAR-100 case study moved to the
+[Deep Learning](deep-learning/index.md) chapter.
 
 ## Key Takeaways
 
 - **Know which half you're in.** Supervised (labels) vs unsupervised (structure) changes
   the metric, the validation strategy, and what "done" means.
-- **Implement one from scratch.** The EM, backprop, and attention pages are the ones I
-  understand best precisely because I wrote the update rules by hand.
+- **Implement one from scratch.** The EM page (and the backprop and attention pages in
+  the Deep Learning chapter) are the ones I understand best precisely because I wrote
+  the update rules by hand.
 - **Ensembles are the workhorse.** For tabular problems, gradient-boosted trees (XGBoost /
   Spark GBT) were consistently my strongest baseline.
 - **Honest sourcing beats coverage.** A few topics here are lecture-only; the page says so

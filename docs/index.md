@@ -13,16 +13,17 @@ to come back to any topic and re-learn it from **work I actually did**, not gene
 
 ## Chapters
 
-- [Linear Algebra](02-linear-algebra/index.md) — systems, least squares, eigen/SVD, and optimization (MATH 677)
 - [Statistics](03-statistics/index.md) — probability, inference, regression (STAT 650)
+- [Linear Algebra](02-linear-algebra/index.md) — systems, least squares, eigen/SVD, and optimization (MATH 677)
+- [Machine Learning](08-machine-learning/index.md) — classification, clustering, dimensionality reduction, ensembles (ECEN 758)
+- [Deep Learning](08-machine-learning/deep-learning/index.md) — neural nets from scratch, CNNs, transformers, CIFAR-100 case study (ECEN 740/758)
+- [Time Series Forecasting](09-time-series-forecasting/index.md) — senior project + distribution demand forecasting
+- [Model Evaluation](10-model-evaluation/index.md) — metrics, cross-validation, and leakage, synthesized across chapters (STAT 650 / ECEN 758)
 - [Data Wrangling](04-data-wrangling/index.md) — tidy data, reshaping, missing-value handling, feature prep (DS 250)
 - [Exploratory Data Analysis](05-exploratory-data-analysis/index.md) — first-look summaries, value_counts, distributions (DS 250 / CSE 450)
 - [Data Visualization](06-data-visualization/index.md) — matplotlib/seaborn/plotly, ggplot2, BI
 - [SQL & Databases](07-sql-and-databases/index.md) — queries, schema design, Python integration, NoSQL & compute (STAT 624 / DS 250)
-- [Machine Learning](08-machine-learning/index.md) — classification, clustering, ensembles, deep learning (ECEN 758/740)
-- [Time Series Forecasting](09-time-series-forecasting/index.md) — senior project + distribution demand forecasting
-- [Model Evaluation](10-model-evaluation/index.md) — metrics, cross-validation, and leakage, synthesized across chapters (STAT 650 / ECEN 758)
-- [Python Programming](11-python-programming/index.md) — fundamentals, OOP, testing, and Git (CSE 111 / STAT 624)
+- [Python Basics](11-python-programming/index.md) — fundamentals, OOP, testing, and Git (CSE 111 / STAT 624)
 - [Scientific Machine Learning & PINNs](12-scientific-ml/index.md) — physics-informed neural networks + SA-PINN optimizer study (ECEN 744)
 - [Sources](sources.md) — per-chapter ledger of the files each page was built from
 - [Appendix](appendix/full-textbooks.md) — textbooks and homework archive

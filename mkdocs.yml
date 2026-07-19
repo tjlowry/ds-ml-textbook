@@ -48,43 +48,6 @@ plugins:
 nav:
   - Home: index.md
 
-  - Python Programming:
-    - 11-python-programming/index.md
-    - Fundamentals:
-      - Data Structures: 11-python-programming/data-structures.md
-      - Functions: 11-python-programming/functions.md
-    - Object-Oriented:
-      - Classes & OOP: 11-python-programming/classes-and-oop.md
-      - Inheritance: 11-python-programming/inheritance.md
-    - Robust Code:
-      - Error Handling: 11-python-programming/error-handling.md
-      - File I/O: 11-python-programming/file-io.md
-      - Testing with pytest: 11-python-programming/testing-with-pytest.md
-    - Tooling:
-      - Modules & Packaging: 11-python-programming/modules-and-packaging.md
-      - Git Basics: 11-python-programming/git-basics.md
-    - Notebooks:
-      - Chemical Formula Parser: 11-python-programming/notebooks/chemical-formula-parser.ipynb
-
-  - Linear Algebra:
-    - 02-linear-algebra/index.md
-    - Linear Algebra in ML: 02-linear-algebra/linear-algebra-in-ml.md
-    - Solving & Factoring:
-      - Linear Systems: 02-linear-algebra/linear-systems.md
-      - Least Squares: 02-linear-algebra/least-squares.md
-      - Eigenvalues & Eigenvectors: 02-linear-algebra/eigenvalues-eigenvectors.md
-      - Singular Value Decomposition: 02-linear-algebra/svd.md
-      - Perron-Frobenius: 02-linear-algebra/perron-frobenius.md
-    - Optimization:
-      - Dynamic Programming: 02-linear-algebra/dynamic-programming.md
-      - Gradient Descent: 02-linear-algebra/gradient-descent.md
-      - Convex Optimization: 02-linear-algebra/convex-optimization.md
-      - Compressed Sensing: 02-linear-algebra/compressed-sensing.md
-    - Reference:
-      - Theorem Reference: 02-linear-algebra/theorem-reference.md
-    - Notebooks:
-      - Projected Gradient Descent: 02-linear-algebra/notebooks/projected-gradient-descent.ipynb
-
   - Statistics:
     - 03-statistics/index.md
     - Descriptive:
@@ -107,49 +70,24 @@ nav:
       - Model Selection & Regularization: 03-statistics/regression/model-selection-regularization.md
       - "Case Study: Regression Battleship": 03-statistics/regression/regression-battleship.md
 
-  - Data Wrangling:
-    - 04-data-wrangling/index.md
-    - pandas Fundamentals: 04-data-wrangling/pandas-fundamentals.md
-    - NumPy Arrays: 04-data-wrangling/numpy-arrays.md
-    - Tidy Data & Reshaping: 04-data-wrangling/tidy-data-reshaping.md
-    - Missing Data Case Study: 04-data-wrangling/missing-data-case-study.md
-    - Case Study — Star Wars Survey: 04-data-wrangling/case-study-star-wars-survey.md
+  - Linear Algebra:
+    - 02-linear-algebra/index.md
+    - Linear Algebra in ML: 02-linear-algebra/linear-algebra-in-ml.md
+    - Solving & Factoring:
+      - Linear Systems: 02-linear-algebra/linear-systems.md
+      - Least Squares: 02-linear-algebra/least-squares.md
+      - Eigenvalues & Eigenvectors: 02-linear-algebra/eigenvalues-eigenvectors.md
+      - Singular Value Decomposition: 02-linear-algebra/svd.md
+      - Perron-Frobenius: 02-linear-algebra/perron-frobenius.md
+    - Optimization:
+      - Dynamic Programming: 02-linear-algebra/dynamic-programming.md
+      - Gradient Descent: 02-linear-algebra/gradient-descent.md
+      - Convex Optimization: 02-linear-algebra/convex-optimization.md
+      - Compressed Sensing: 02-linear-algebra/compressed-sensing.md
+    - Reference:
+      - Theorem Reference: 02-linear-algebra/theorem-reference.md
     - Notebooks:
-      - "Flights: Missing Data": 04-data-wrangling/notebooks/flights-data-wrangling.ipynb
-      - Tidy Data Lesson: 04-data-wrangling/notebooks/tidy-data-lesson.ipynb
-
-  - Exploratory Data Analysis:
-    - 05-exploratory-data-analysis/index.md
-    - Summaries & Distributions: 05-exploratory-data-analysis/summary-and-distributions.md
-    - "Case Study: Name Popularity": 05-exploratory-data-analysis/case-study-name-popularity.md
-    - Notebooks:
-      - Name-Popularity EDA: 05-exploratory-data-analysis/notebooks/name-popularity-eda.ipynb
-
-  - Data Visualization:
-    - 06-data-visualization/index.md
-    - Python:
-      - Matplotlib: 06-data-visualization/python/matplotlib.md
-      - Seaborn: 06-data-visualization/python/seaborn.md
-      - Plotly: 06-data-visualization/python/plotly.md
-    - R:
-      - ggplot2: 06-data-visualization/r/ggplot2.md
-      - Grammar of Graphics: 06-data-visualization/r/grammar-of-graphics.md
-    - Business Intelligence:
-      - DAX: 06-data-visualization/bi/dax.md
-      - Dashboards: 06-data-visualization/bi/dashboards.md
-    - Best Practices:
-      - Chart Selection: 06-data-visualization/best-practices/chart-selection.md
-      - Design Principles: 06-data-visualization/best-practices/design-principles.md
-
-  - SQL & Databases:
-    - 07-sql-and-databases/index.md
-    - SQL Essentials: 07-sql-and-databases/sql-essentials.md
-    - Schema Design: 07-sql-and-databases/schema-design.md
-    - Python & Databases: 07-sql-and-databases/python-and-databases.md
-    - Database Types: 07-sql-and-databases/database-types.md
-    - Docker & Compute: 07-sql-and-databases/docker-and-compute.md
-    - Notebooks:
-      - Pokemon SQL: 07-sql-and-databases/notebooks/pokemon-sql.ipynb
+      - Projected Gradient Descent: 02-linear-algebra/notebooks/projected-gradient-descent.ipynb
 
   - Machine Learning:
     - 08-machine-learning/index.md
@@ -171,21 +109,24 @@ nav:
     - Ensembles:
       - Bagging & Boosting: 08-machine-learning/ensembles/bagging-boosting.md
       - XGBoost: 08-machine-learning/ensembles/xgboost.md
-    - Deep Learning:
-      - Neural Network Fundamentals: 08-machine-learning/deep-learning/neural-network-fundamentals.md
-      - Convolutional Neural Networks: 08-machine-learning/deep-learning/cnns.md
-      - Transformers & Attention: 08-machine-learning/deep-learning/transformers-attention.md
     - Other Methods:
       - Recommender Systems: 08-machine-learning/other/recommenders.md
       - PageRank & Graph Methods: 08-machine-learning/other/pagerank.md
       - Frequent Itemset Mining: 08-machine-learning/other/itemset-mining.md
+    - Notebooks:
+      - GMM & EM From Scratch: 08-machine-learning/notebooks/gmm-em-from-scratch.ipynb
+
+  - Deep Learning:
+    - 08-machine-learning/deep-learning/index.md
+    - Neural Network Fundamentals: 08-machine-learning/deep-learning/neural-network-fundamentals.md
+    - Convolutional Neural Networks: 08-machine-learning/deep-learning/cnns.md
+    - Transformers & Attention: 08-machine-learning/deep-learning/transformers-attention.md
     - "Case Study: CIFAR-100": 08-machine-learning/case-study-cifar100.md
     - Notebooks:
       - Mini-GPT From Scratch: 08-machine-learning/notebooks/mini-gpt-from-scratch.ipynb
       - MLP Fundamentals: 08-machine-learning/notebooks/mlp-fundamentals.ipynb
-      - GMM & EM From Scratch: 08-machine-learning/notebooks/gmm-em-from-scratch.ipynb
 
-  - Time Series Forecasting:
+  - Time Series:
     - 09-time-series-forecasting/index.md
     - Fundamentals:
       - Concepts: 09-time-series-forecasting/fundamentals/concepts.md
@@ -227,6 +168,68 @@ nav:
       - Leakage Patterns: 10-model-evaluation/leakage-patterns.md
     - Notebooks:
       - Classification Metrics Demo: 10-model-evaluation/notebooks/classification-metrics-demo.ipynb
+
+  - Data Wrangling:
+    - 04-data-wrangling/index.md
+    - pandas Fundamentals: 04-data-wrangling/pandas-fundamentals.md
+    - NumPy Arrays: 04-data-wrangling/numpy-arrays.md
+    - Tidy Data & Reshaping: 04-data-wrangling/tidy-data-reshaping.md
+    - Missing Data Case Study: 04-data-wrangling/missing-data-case-study.md
+    - Case Study — Star Wars Survey: 04-data-wrangling/case-study-star-wars-survey.md
+    - Notebooks:
+      - "Flights: Missing Data": 04-data-wrangling/notebooks/flights-data-wrangling.ipynb
+      - Tidy Data Lesson: 04-data-wrangling/notebooks/tidy-data-lesson.ipynb
+
+  - EDA:
+    - 05-exploratory-data-analysis/index.md
+    - Summaries & Distributions: 05-exploratory-data-analysis/summary-and-distributions.md
+    - "Case Study: Name Popularity": 05-exploratory-data-analysis/case-study-name-popularity.md
+    - Notebooks:
+      - Name-Popularity EDA: 05-exploratory-data-analysis/notebooks/name-popularity-eda.ipynb
+
+  - Data Visualization:
+    - 06-data-visualization/index.md
+    - Python:
+      - Matplotlib: 06-data-visualization/python/matplotlib.md
+      - Seaborn: 06-data-visualization/python/seaborn.md
+      - Plotly: 06-data-visualization/python/plotly.md
+    - R:
+      - ggplot2: 06-data-visualization/r/ggplot2.md
+      - Grammar of Graphics: 06-data-visualization/r/grammar-of-graphics.md
+    - Business Intelligence:
+      - DAX: 06-data-visualization/bi/dax.md
+      - Dashboards: 06-data-visualization/bi/dashboards.md
+    - Best Practices:
+      - Chart Selection: 06-data-visualization/best-practices/chart-selection.md
+      - Design Principles: 06-data-visualization/best-practices/design-principles.md
+
+  - SQL & Databases:
+    - 07-sql-and-databases/index.md
+    - SQL Essentials: 07-sql-and-databases/sql-essentials.md
+    - Schema Design: 07-sql-and-databases/schema-design.md
+    - Python & Databases: 07-sql-and-databases/python-and-databases.md
+    - Database Types: 07-sql-and-databases/database-types.md
+    - Docker & Compute: 07-sql-and-databases/docker-and-compute.md
+    - Notebooks:
+      - Pokemon SQL: 07-sql-and-databases/notebooks/pokemon-sql.ipynb
+
+  - Python Basics:
+    - 11-python-programming/index.md
+    - Fundamentals:
+      - Data Structures: 11-python-programming/data-structures.md
+      - Functions: 11-python-programming/functions.md
+    - Object-Oriented:
+      - Classes & OOP: 11-python-programming/classes-and-oop.md
+      - Inheritance: 11-python-programming/inheritance.md
+    - Robust Code:
+      - Error Handling: 11-python-programming/error-handling.md
+      - File I/O: 11-python-programming/file-io.md
+      - Testing with pytest: 11-python-programming/testing-with-pytest.md
+    - Tooling:
+      - Modules & Packaging: 11-python-programming/modules-and-packaging.md
+      - Git Basics: 11-python-programming/git-basics.md
+    - Notebooks:
+      - Chemical Formula Parser: 11-python-programming/notebooks/chemical-formula-parser.ipynb
 
   - Scientific ML:
     - 12-scientific-ml/index.md
