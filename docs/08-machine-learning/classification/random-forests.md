@@ -45,6 +45,19 @@ Source: our ECEN 758 CIFAR-100 group project report
     story — EDA, the CNN that beat it, and the honest lessons — is on the
     [CIFAR-100 case-study page](../case-study-cifar100.md).
 
+**Why averaging trees helps, visually.** The whole point of a forest is variance reduction:
+one deep tree fits its training set so tightly that its boundary is brittle, but averaging
+many bootstrapped trees cancels that noise. Fitting a single unconstrained tree and a
+200-tree forest on the same seeded noisy data (a synthetic demo, not my coursework) shows
+the effect directly:
+
+![Two-panel figure on the same synthetic two-moons dataset. Left panel, a single deep decision tree: a brittle boundary of axis-aligned steps with thin slivers and isolated islands that wrap individual points. Right panel, a 200-tree random forest: a much smoother boundary that follows the two-class shape without chasing individual points.](../img/rf-tree-vs-forest.png)
+
+The single tree (left) carves brittle little rectangles around individual points — it has
+memorized noise. The 200-tree forest (right) averages those unstable boundaries into a
+smooth, stable one. Same data, same bias; the forest just has far less variance. That is the
+bagging story, and the first gotcha below is its caveat.
+
 ## Gotchas
 
 - **Forests fix variance, not bias.** Averaging trees tames overfitting, but if every tree

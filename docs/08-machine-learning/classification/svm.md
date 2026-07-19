@@ -53,6 +53,15 @@ it's the feature doing most of the separating — and Virginica's much larger ma
 ($-3.333$, bias $13.475$) reflect that its boundary sits out at the long-petal end of the
 data, far from the origin in feature space.
 
+Plotting those three rows as lines $w_1 x_1 + w_2 x_2 + w_0 = 0$ straight from the table —
+no refitting — over the real iris data makes the one-vs-rest picture concrete:
+
+![Three one-vs-rest linear SVM boundaries drawn from the fitted coefficient table, over a scatter of iris petal length vs sepal width colored by class. The Setosa line cleanly walls off the short-petal Setosa cluster on the left; the Virginica line walls off the long-petal Virginica cluster on the right; the Versicolor line — the middle class, which is not linearly separable from the rest — sits between Setosa and the other two.](../img/svm-ovr-hyperplanes.png)
+
+Setosa and Virginica each get a clean wall (petal length does the work), while the middle
+Versicolor class — not linearly separable from the other two — gets the weakest, least
+committal boundary, which is exactly why its weights are the smallest in the table.
+
 **The margin, geometrically.** The reason those weights aren't arbitrary is what the SVM
 optimizes: it places each hyperplane to maximize the margin. The distance from a point $x$ to
 the boundary is $|w^\top x + w_0| / \lVert w \rVert$, and the SVM maximizes the gap
@@ -82,6 +91,17 @@ the **linear kernel can only draw straight boundaries**, while the **RBF kernel 
 boundary** between clusters of points to follow the overlap. That flexibility is exactly the
 kernel trick — the RBF model is fitting a linear boundary in an implicit higher-dimensional
 space, which is a curved boundary back in the original two features.
+
+To picture the difference I refit both kernels on the same two features purely for the plot
+(these are `SVC` estimators, which fit one-vs-one under the hood — not the `LinearSVC`
+one-vs-rest fit whose coefficients the table above reports, per the multi-class gotcha
+below — so read this as an illustrative re-demo of *straight vs curved*, not the exact
+assignment model):
+
+![Two-panel figure of SVC decision regions on the same iris petal-length vs sepal-width features. Left panel, linear kernel: three pastel regions separated by straight slanted boundaries. Right panel, RBF kernel with gamma equals scale: the same three regions but with the Versicolor-Virginica boundary visibly bowed to follow the overlapping points.](../img/svm-linear-vs-rbf.png)
+
+Both kernels wall Setosa off with a nearly identical line; the visible difference is where
+Versicolor and Virginica overlap, where the RBF boundary curves and the linear one cannot.
 
 ## Gotchas
 
