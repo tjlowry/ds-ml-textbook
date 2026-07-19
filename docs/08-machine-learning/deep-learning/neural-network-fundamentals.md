@@ -85,6 +85,17 @@ matter once you stack many of these layers. (The assignment extends the same han
 to a one-hidden-layer network, $y \approx 0.378$ on its forward pass, which is the two-layer
 chain-rule bookkeeping the from-scratch project above then automates.)
 
+The plot below is that example read straight off the sigmoid curve: at the worked point
+$z = 4$ the activation has all but saturated ($\sigma = 0.982$), and its slope
+$\sigma'(4) = \sigma(1-\sigma) = 0.0177$ is the exact gradient factor that shrank the backprop
+step to $0.036 \times 0.0177 = 0.00064$ — about $56\times$ smaller than the perceptron update.
+
+![Plot of the sigmoid σ(z) and its derivative σ′(z) = σ(z)(1−σ(z)) over z from −8 to 8, with
+the saturation regions |z| > 4 shaded. The worked-example point z = 4 is marked: σ(4) = 0.982
+on the sigmoid and σ′(4) = 0.0177 on the derivative, the tiny slope that made the backprop
+weight update ≈56× smaller than the perceptron rule. For reference the derivative peaks at
+just 0.25 at z = 0.](../img/sigmoid-saturation.png)
+
 Source: my ECEN 758 Assignment 4 solutions
 (`course-files/appendix/Homework/ecen758_hw/Assignment_4_ECEN_758_Solutions.pdf`, my own work;
 instructor prompt paraphrased).

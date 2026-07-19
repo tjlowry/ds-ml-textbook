@@ -16,6 +16,17 @@ strategies:
 For tabular problems these are almost always my strongest baseline, ahead of a single tree
 or a linear model.
 
+The contrast is really about *how* the weak learners are wired together. Bagging trains them
+**in parallel** on independent bootstrap resamples and combines them by an equal vote;
+boosting trains them **sequentially**, each new model fit on what the previous ones still got
+wrong — the arrows literally carry the residuals forward.
+
+![Two-panel schematic. Left, bagging: one training set is bootstrap-resampled into three
+independent samples, each grows a tree in parallel, and the trees are combined by an averaged
+majority vote (reduces variance). Right, boosting: models are trained in sequence, each one
+fed the previous model's residuals / reweighted errors, and combined as a weighted sum
+(reduces bias).](../img/bagging-boosting.png)
+
 ## How I did it
 
 My clearest side-by-side ensemble project is a **PySpark** model predicting fast-food

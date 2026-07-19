@@ -10,6 +10,18 @@ than chance). **Apriori** prunes the search using the downward-closure property 
 superset of an infrequent set is itself infrequent — and **FP-Growth** does the same job
 faster with a compressed prefix tree.
 
+Downward closure is easiest to see on the subset lattice. In the picture below, over four
+items {A, B, C, D}, the singleton {C} turns out to be infrequent — so *every* itemset that
+contains C (all seven of its supersets) is guaranteed infrequent too and is pruned without
+ever being counted. That is the whole reason Apriori stays tractable instead of testing all
+$2^4 - 1$ candidate itemsets.
+
+![Apriori subset lattice over items A, B, C, D, drawn from singletons at the top down to the
+full set ABCD. The singleton {C} is marked infrequent in red; all seven of its supersets —
+AC, BC, CD, ABC, ACD, BCD, ABCD — are greyed out and struck through as pruned, while the
+itemsets containing no C (A, B, D, AB, AD, BD, ABD) remain live
+candidates.](../img/apriori-lattice.png)
+
 **I don't have my own implementation of this one.** Frequent-pattern mining is covered in my
 ECEN 758 notes but I never used it in a project or homework — no code of mine exists to show.
 This page is a concept summary from the lecture.
